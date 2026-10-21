@@ -1,0 +1,13 @@
+:host {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+}
+
+main {
+  padding: 1.5rem;
+  max-width: 1000px;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0 auto;
+}

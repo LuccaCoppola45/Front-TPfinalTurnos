@@ -1,0 +1,182 @@
+:host {
+  display: block;
+}
+
+.site-footer {
+  position: relative;
+  overflow: hidden;
+  background: #102a43;
+  color: #eaf3f8;
+}
+
+.site-footer::before {
+  position: absolute;
+  top: 0;
+  left: max(1.5rem, calc((100% - 1000px) / 2));
+  width: 3.5rem;
+  height: 3px;
+  background: #43d6ae;
+  content: '';
+}
+
+.footer-content,
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding-right: 1.5rem;
+  padding-left: 1.5rem;
+}
+
+.footer-content {
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-top: 1.75rem;
+  padding-bottom: 1.5rem;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.brand-icon {
+  display: grid;
+  width: 2.6rem;
+  height: 2.6rem;
+  place-items: center;
+  border: 1px solid rgb(67 214 174 / 24%);
+  border-radius: 0.85rem;
+  background: rgb(67 214 174 / 10%);
+  color: #63e4c1;
+  transition:
+    background-color 180ms ease,
+    transform 180ms ease;
+}
+
+.brand-icon svg {
+  width: 1.35rem;
+  height: 1.35rem;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+}
+
+.brand-name {
+  font-size: 1rem;
+  font-weight: 750;
+  letter-spacing: -0.03em;
+}
+
+.brand-name span {
+  color: #63e4c1;
+}
+
+.footer-message {
+  margin: 0;
+  color: #b8c9d6;
+  font-size: 0.92rem;
+}
+
+.home-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.65rem 0.9rem;
+  border: 1px solid rgb(234 243 248 / 20%);
+  border-radius: 999px;
+  color: #eaf3f8;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease;
+}
+
+.home-link svg {
+  width: 1rem;
+  height: 1rem;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+  transition: transform 180ms ease;
+}
+
+.home-link:hover {
+  border-color: #63e4c1;
+  background: #63e4c1;
+  color: #102a43;
+}
+
+.home-link:hover svg {
+  transform: translateX(3px);
+}
+
+.brand:hover .brand-icon {
+  transform: rotate(-6deg) scale(1.05);
+  background: rgb(67 214 174 / 18%);
+}
+
+.brand:focus-visible,
+.home-link:focus-visible {
+  outline: 3px solid #63e4c1;
+  outline-offset: 4px;
+}
+
+.footer-bottom {
+  gap: 0.55rem;
+  min-height: 2.75rem;
+  border-top: 1px solid rgb(234 243 248 / 12%);
+  color: #9db1c1;
+  font-size: 0.75rem;
+}
+
+.footer-dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #63e4c1;
+}
+
+@media (max-width: 600px) {
+  .site-footer::before {
+    left: 1rem;
+  }
+
+  .footer-content {
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1.5rem 1rem 1.25rem;
+  }
+
+  .footer-message {
+    order: 1;
+    flex-basis: 100%;
+    font-size: 0.85rem;
+  }
+
+  .home-link {
+    margin-left: auto;
+  }
+
+  .footer-bottom {
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}
