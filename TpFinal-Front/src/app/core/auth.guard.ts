@@ -1,7 +1,7 @@
 import { inject } from "@angular/core";
 import { CanActivateFn } from "@angular/router";
 import { Auth } from "../services/auth";
-import { Router } from "express";
+import { Router } from "@angular/router";
 import { Rol } from "../Models/auth";
 
 // Guard para proteger rutas: solo deja pasar si el usuario está logueado

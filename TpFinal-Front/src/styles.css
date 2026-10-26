@@ -1,1 +1,38 @@
-/* You can add global styles to this file, and also import other style files */
+/* Reset global: sin márgenes del navegador ni fondo blanco alrededor de la app */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100vh;
+  background-color: #111317;
+  color: #f5f1e8;
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Evita cualquier desborde horizontal que deje una franja visible */
+html,
+body {
+  overflow-x: hidden;
+}

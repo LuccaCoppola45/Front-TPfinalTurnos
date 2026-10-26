@@ -1,1 +1,31 @@
-<p>header works!</p>
+<header class="site-header">
+  <div class="header-content">
+    <a class="brand" routerLink="/" aria-label="Turnos MDP, ir al inicio">
+      <span class="brand-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none">
+          <rect x="3.5" y="5" width="17" height="15.5" rx="3" />
+          <path d="M7.5 3.5v3M16.5 3.5v3M3.5 9.5h17M8 13h3m2 0h3m-8 3.5h3" />
+        </svg>
+      </span>
+      <span class="brand-name">Turnos <span>MDP</span></span>
+    </a>
+
+    <nav class="header-nav" aria-label="Navegación principal">
+      <a
+        class="nav-link"
+        routerLink="/"
+        routerLinkActive="is-active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        Inicio
+      </a>
+      <a class="nav-link" routerLink="/login" routerLinkActive="is-active">Ingresar</a>
+      <a class="nav-cta" routerLink="/registro" routerLinkActive="is-active">
+        <span>Crear cuenta</span>
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M5 12h14m-6-6 6 6-6 6" />
+        </svg>
+      </a>
+    </nav>
+  </div>
+</header>
