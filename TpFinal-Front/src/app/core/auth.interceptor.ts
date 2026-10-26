@@ -13,7 +13,7 @@ const auth = inject(Auth);
   const esPublica = req.url.startsWith(`${API_URL}/api/auth/`);
 
   if (token && !esPublica && tokenVencido(token)) {
-    auth.l();
+    auth.logout();
     return throwError(
       () =>
         new HttpErrorResponse({

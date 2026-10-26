@@ -5,8 +5,8 @@
 .site-footer {
   position: relative;
   overflow: hidden;
-  background: #102a43;
-  color: #eaf3f8;
+  background: linear-gradient(180deg, #1c1f25 0%, #14161a 100%);
+  color: #f5f1e8;
 }
 
 .site-footer::before {
@@ -15,7 +15,7 @@
   left: max(1.5rem, calc((100% - 1000px) / 2));
   width: 3.5rem;
   height: 3px;
-  background: #43d6ae;
+  background: #d8b36a;
   content: '';
 }
 
@@ -49,10 +49,10 @@
   width: 2.6rem;
   height: 2.6rem;
   place-items: center;
-  border: 1px solid rgb(67 214 174 / 24%);
+  border: 1px solid rgb(216 179 106 / 24%);
   border-radius: 0.85rem;
-  background: rgb(67 214 174 / 10%);
-  color: #63e4c1;
+  background: rgb(216 179 106 / 10%);
+  color: #e8c987;
   transition:
     background-color 180ms ease,
     transform 180ms ease;
@@ -74,12 +74,12 @@
 }
 
 .brand-name span {
-  color: #63e4c1;
+  color: #e8c987;
 }
 
 .footer-message {
   margin: 0;
-  color: #b8c9d6;
+  color: #cbc4b7;
   font-size: 0.92rem;
 }
 
@@ -88,9 +88,9 @@
   align-items: center;
   gap: 0.6rem;
   padding: 0.65rem 0.9rem;
-  border: 1px solid rgb(234 243 248 / 20%);
+  border: 1px solid rgb(245 241 232 / 20%);
   border-radius: 999px;
-  color: #eaf3f8;
+  color: #f5f1e8;
   font-size: 0.85rem;
   font-weight: 600;
   text-decoration: none;
@@ -111,9 +111,9 @@
 }
 
 .home-link:hover {
-  border-color: #63e4c1;
-  background: #63e4c1;
-  color: #102a43;
+  border-color: #e8c987;
+  background: #e8c987;
+  color: #14161a;
 }
 
 .home-link:hover svg {
@@ -122,20 +122,20 @@
 
 .brand:hover .brand-icon {
   transform: rotate(-6deg) scale(1.05);
-  background: rgb(67 214 174 / 18%);
+  background: rgb(216 179 106 / 18%);
 }
 
 .brand:focus-visible,
 .home-link:focus-visible {
-  outline: 3px solid #63e4c1;
+  outline: 3px solid #e8c987;
   outline-offset: 4px;
 }
 
 .footer-bottom {
   gap: 0.55rem;
   min-height: 2.75rem;
-  border-top: 1px solid rgb(234 243 248 / 12%);
-  color: #9db1c1;
+  border-top: 1px solid rgb(245 241 232 / 12%);
+  color: #a8a196;
   font-size: 0.75rem;
 }
 
@@ -143,7 +143,7 @@
   width: 3px;
   height: 3px;
   border-radius: 50%;
-  background: #63e4c1;
+  background: #e8c987;
 }
 
 @media (max-width: 600px) {
