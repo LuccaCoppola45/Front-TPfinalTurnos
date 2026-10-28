@@ -1,1 +1,80 @@
-<p>home works!</p>
+<h2>Hola, {{auth.usuario()?.nombre}}{{auth-usuario()?.apellido}}</h2>
+
+@switch(auth.rol()){
+    @case('CLIENTE'){
+        <p class="subtitulo">¿Que queres hacer hoy?</p>
+        <div class="grilla">
+            <article class="card">
+                <h3>Reserva un turno</h3>
+                <p>Busca un comercio, elegi un servicio y reserva un horario disponible.</p>
+                <a class="boton" routerLink="/comercios">Ver comercios</a>
+            </article>
+            <article class="card">
+                <h3>Mis turnos</h3>
+                <p>Consulta, reprograma o cancela tus reservas.</p>
+                <a class="boton" routerLink="/mis-turnos">Ver mis turnos</a>
+            </article>
+            <article class="card">
+                <h3>Ofrecer mis servicios</h3>
+                <p>Si tenes un comercio envia una solicitud para que te habilitemos en la app</p>
+                <a class="boton" routerLink="/solicitar-comercio">Enviar solicitud</a>
+            </article>
+        </div>
+    }
+    @case('COMERCIO'){
+    <p class="subtitulo">Administra tu comercio</p>
+    <div class="grilla">
+        <article class="card">
+            <h3>Datos del Comercio</h3>
+            <p>Nombre, telefono, direccion y categorias</p>
+            <a class="boton" routerLink="/mi-comercio">Editar datos</a>
+        </article>
+        <article class="card">
+            <h3>Servicios</h3>
+            <p>Carga lo que ofreces, con su duracion y precio</p>
+            <a class="boton" routerLink="/mi-comercio/servicios">Gestionar Servicios</a>
+        </article>
+        <article class="card">
+            <h3>Horarios de Atencion</h3>
+            <p>Defini los dias y horarios para que puedan reservar un turno</p>
+            <a class="boton" routerLink="/mi-comercio/horarios">Gestiona tus horarios</a>
+        </article>
+        <article class="card">
+            <h3>Agenda</h3>
+            <p>Mi los turnos reservados de tu comercio.</p> 
+            <a class="boton" routerLink="/mi-comercio/agenda">Ver agenda</a>
+
+        </article>
+    </div>
+}
+@case('ADMIN'){
+<p class="subtitulo">Panel de Administracion</p>
+<div class="grilla">
+    <article class="card">
+        <h3>Solicitudes</h3>
+        <p>Aproba o Rechaza las solicitudes de convercion a comercio.</p>
+        <a class="boton" routerLink="/admin/solicitudes">Ver solicitudes</a>
+    </article>
+    <article class="card">
+        <h3>Categorias</h3>
+        <p>Alta, Baja y Modificacion de categorias</p>
+        <a class="boton" routerLink="/admin/categorias">Gestionar categorias</a>
+    </article>
+    <article class="card">
+        <h3>Comercios</h3>
+        <p>Listar Comercios Registrados.</p>
+        <a class="boton" routerLink="/admin/comercios">Ver comercios</a>
+    </article>
+    <article class="card">
+        <h3>Usuarios</h3>
+        <p>Listas Usuarios Registrados y sus roles</p>
+        <a class="boton" routerLink="/admin/usuarios">Ver Usuarios</a>
+    </article>
+    <article class="card">
+        <h3>Cancelaciones</h3>
+        <p>Historial de turnos cancelados y sus motivos.</p>
+        <a class="boton" routerLink="/admin/cancelaciones">Ver cancelaciones</a>
+    </article>
+</div>
+}
+}
