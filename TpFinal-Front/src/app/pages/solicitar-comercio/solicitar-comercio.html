@@ -1,1 +1,97 @@
-<p>solicitar-comercio works!</p>
+<section class="registro-container">
+  <div class="registro-card">
+    <h2>Solicitar Comercio</h2>
+    <p class="subtitle">Envía tu propuesta de comercio para revisión</p>
+
+    <!-- Mensaje de éxito -->
+    @if (ok()) {
+      <div class="alert-success" role="alert">
+        {{ ok() }}
+      </div>
+    }
+
+    <!-- Mensaje de error general -->
+    @if (error()) {
+      <div class="alert-error" role="alert">
+        {{ error() }}
+      </div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="enviar()">
+      
+      <!-- Campo Nombre del Comercio Propuesto -->
+      <div class="campo">
+        <label for="nombreComercioPropuesto">Nombre del comercio:</label>
+        <input 
+          id="nombreComercioPropuesto" 
+          type="text" 
+          formControlName="nombreComercioPropuesto" 
+          [class.is-invalid]="form.get('nombreComercioPropuesto')?.invalid && form.get('nombreComercioPropuesto')?.touched" 
+        />
+        @if (form.get('nombreComercioPropuesto')?.invalid && form.get('nombreComercioPropuesto')?.touched) {
+          <span class="error-message">
+            El nombre del comercio es obligatorio.
+          </span>
+        }
+      </div>
+
+      <!-- Campo Dirección -->
+      <div class="campo">
+        <label for="direccion">Dirección:</label>
+        <input 
+          id="direccion" 
+          type="text" 
+          formControlName="direccion" 
+          [class.is-invalid]="form.get('direccion')?.invalid && form.get('direccion')?.touched" 
+        />
+        @if (form.get('direccion')?.invalid && form.get('direccion')?.touched) {
+          <span class="error-message">
+            La dirección es obligatoria.
+          </span>
+        }
+      </div>
+
+      <!-- Campo Teléfono -->
+      <div class="campo">
+        <label for="telefono">Teléfono:</label>
+        <input 
+          id="telefono" 
+          type="text" 
+          formControlName="telefono" 
+          [class.is-invalid]="form.get('telefono')?.invalid && form.get('telefono')?.touched" 
+        />
+        @if (form.get('telefono')?.invalid && form.get('telefono')?.touched) {
+          <span class="error-message">
+            {{ form.get('telefono')?.hasError('required') ? 'El teléfono es obligatorio.' : 'Introduce un teléfono válido.' }}
+          </span>
+        }
+      </div>
+
+      <!-- Campo Descripción -->
+      <div class="campo">
+        <label for="descripcion">Descripción:</label>
+        <textarea 
+          id="descripcion" 
+          formControlName="descripcion" 
+          rows="3"
+          [class.is-invalid]="form.get('descripcion')?.invalid && form.get('descripcion')?.touched"
+        ></textarea>
+        @if (form.get('descripcion')?.invalid && form.get('descripcion')?.touched) {
+          <span class="error-message">
+            {{ form.get('descripcion')?.hasError('required') ? 'La descripción es obligatoria.' : 'Máximo 100 caracteres.' }}
+          </span>
+        }
+      </div>
+
+      <!-- Botón de Envío -->
+      <button type="submit" class="btn-submit" [disabled]="enviado()">
+        @if (enviado()) {
+          Enviando...
+        } @else {
+          Enviar solicitud
+        }
+      </button>
+
+    </form>
+  </div>
+</section>
