@@ -14,7 +14,7 @@
       <!-- Campo Nombre -->
       <div class="campo">
         <label for="nombre">Nombre:</label>
-        <input id="nombre" type="text" formControlName="nombre" #nombre="ngForm" [class.is-invalid]="form.get('nombre')?.invalid && form.get('nombre')?.touched" />
+        <input id="nombre" type="text" formControlName="nombre" [class.is-invalid]="form.get('nombre')?.invalid && form.get('nombre')?.touched" />
         @if (form.get('nombre')?.invalid && form.get('nombre')?.touched) {
           <span class="error-message">
             {{ form.get('nombre')?.hasError('required') ? 'El nombre es obligatorio.' : 'Debe tener al menos 3 caracteres.' }}

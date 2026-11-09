@@ -1,7 +1,9 @@
-<h2>Hola, {{auth.usuario()?.nombre}}{{auth-usuario()?.apellido}}</h2>
 
 @switch(auth.rol()){
     @case('CLIENTE'){
+    <h2>Hola, {{auth.usuario()?.nombre}} {{auth.usuario()?.apellido}}</h2>
+
+
         <p class="subtitulo">¿Que queres hacer hoy?</p>
         <div class="grilla">
             <article class="card">

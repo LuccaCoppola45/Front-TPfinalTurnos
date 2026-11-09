@@ -68,8 +68,8 @@
       </div>
 
       <!-- Botón de Envío -->
-      <button type="submit" class="btn-submit" [disabled]="enviado()">
-        @if (enviado()) {
+      <button type="submit" class="btn-submit" [disabled]="enviando()">
+        @if (enviando()) {
           Guardando...
         } @else {
           Guardar cambios
