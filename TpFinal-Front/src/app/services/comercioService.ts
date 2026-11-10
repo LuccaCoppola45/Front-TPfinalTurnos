@@ -14,7 +14,7 @@ export class ComercioService {
     }
 
     buscar(id:number):Observable<Comercio>{
-        return this.http.get<Comercio>('${this.url}/${id}');
+        return this.http.get<Comercio>(`${this.url}/${id}`);
     }
 
     miComercio(idUsuario: number):Observable<Comercio|null>{
@@ -24,11 +24,11 @@ export class ComercioService {
     }
 
     actualizar(id:number, datos: ComercioRequest):Observable<Comercio>{
-        return this.http.put<Comercio>('${this.url}/${id}', datos);
+        return this.http.put<Comercio>(`${this.url}/${id}`, datos);
     }
 
     eliminar(id:number):Observable<void>{
-        return this.http.delete<void>('${this.url}/{id}');
+        return this.http.delete<void>(`${this.url}/{id}`);
     }
 
 }

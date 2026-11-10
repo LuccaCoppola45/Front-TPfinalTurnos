@@ -15,10 +15,10 @@ export class ServicioService {
     }
 
     actualizar(id: number, datos: ServicioRequest):Observable<Servicio>{
-        return this.http.put<Servicio>('${this.url}/${id}', datos);
+        return this.http.put<Servicio>(`${this.url}/${id}`, datos);
     }
 
     eliminar(id: number): Observable<void>{
-        return this.http.delete<void>('${this.url}/${id}');
+        return this.http.delete<void>(`${this.url}/${id}`);
     }
 }

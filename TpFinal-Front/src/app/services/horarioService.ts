@@ -14,10 +14,10 @@ export class HorarioService {
     }
 
     actualizar(id: number, datos: HorarioAtencionRequest):Observable<HorarioAtencion>{
-        return this.http.put<HorarioAtencion>('${this.url}/${id}',datos);
+        return this.http.put<HorarioAtencion>(`${this.url}/${id}`,datos);
     }
 
     eliminar(id:number):Observable<void>{
-        return this.http.delete<void>('${this.url}/${id}');
+        return this.http.delete<void>(`${this.url}/${id}`);
     }
 }

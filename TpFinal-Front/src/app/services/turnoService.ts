@@ -16,7 +16,7 @@ export class TurnoService {
     }
 
     buscar(id: number):Observable<Turno>{
-        return this.http.get<Turno>(this.url + '/' + id);
+        return this.http.get<Turno>(`${this.url}/${id}`);
     }
 
     crear(datos: TurnoRequest):Observable <Turno>{
@@ -24,6 +24,6 @@ export class TurnoService {
     } 
 
     actualizar(id: number, datos: TurnoRequest): Observable<Turno>{
-        return this.http.put<Turno>(this.url+ '/'+ id,datos);
+        return this.http.put<Turno>(`${this.url}/${id}`,datos);
     }  
 }

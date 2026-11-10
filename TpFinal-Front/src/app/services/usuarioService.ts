@@ -19,7 +19,7 @@ export class UsuarioService {
     }
 
     eliminar(id:number):Observable<void>{
-        return this.http.delete<void>(this.url+'/'+id);
+        return this.http.delete<void>(`${this.url}/${id}`);
     }
 }
 

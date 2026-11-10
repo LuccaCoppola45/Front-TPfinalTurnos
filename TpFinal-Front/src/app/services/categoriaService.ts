@@ -18,11 +18,11 @@ export class CategoriaService {
     }
 
     actualizar(id:number, datos: CategoriaRequest):Observable<Categoria>{
-        return this.http.put<Categoria>('${this.url}/${id}', datos);
+        return this.http.put<Categoria>(`${this.url}/${id}`, datos);
     }
 
     eliminar(id:number):Observable<void>{
-        return this.http.delete<void>('${this.url}/${id}');
+        return this.http.delete<void>(`${this.url}/${id}`);
     }
 
 

@@ -18,10 +18,10 @@ export class SolicitudService {
     }
 
     aprobar(id: number): Observable<SolicitudConversion>{
-        return this.http.put<SolicitudConversion>('${this.url}/${id}/aprobar', {});
+        return this.http.put<SolicitudConversion>(`${this.url}/${id}/aprobar`, {});
     }
 
     rechazar(id:number):Observable<SolicitudConversion>{
-        return this.http.put<SolicitudConversion>('${this.url}/${id}/rechazar', {});
+        return this.http.put<SolicitudConversion>(`${this.url}/${id}/rechazar`, {});
     }
 }
