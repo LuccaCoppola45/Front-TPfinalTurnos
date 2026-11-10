@@ -6,7 +6,7 @@ import { API_URL } from '../core/api';
 
 @Service()
 export class CancelacionService {
-    private readonly url = '${API_URL}/api/cancelaciones';
+    private readonly url = `${API_URL}/cancelaciones`;
     private readonly http = inject(HttpClient);
 
     listar():Observable<Cancelacion[]>{

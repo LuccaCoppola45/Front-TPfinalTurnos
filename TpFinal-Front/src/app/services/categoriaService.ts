@@ -6,7 +6,7 @@ import { API_URL } from '../core/api';
 
 @Service()
 export class CategoriaService {
-    private readonly url = '${API_URL}/api/categorias'
+    private readonly url = `${API_URL}/categorias`
     private readonly http = inject(HttpClient);
 
     listar():Observable<Categoria[]>{

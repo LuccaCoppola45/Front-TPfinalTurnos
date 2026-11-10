@@ -6,7 +6,7 @@ import { API_URL } from '../core/api';
 
 @Service()
 export class ComercioService {
-    private readonly url = '${API_URL}/api/comercios';
+    private readonly url = `${API_URL}/api/comercios`;
     private readonly http = inject(HttpClient);
 
     listar():Observable<Comercio[]>{
@@ -28,7 +28,7 @@ export class ComercioService {
     }
 
     eliminar(id:number):Observable<void>{
-        return this.http.delete<void>(`${this.url}/{id}`);
+        return this.http.delete<void>(`${this.url}/${id}`);
     }
 
 }

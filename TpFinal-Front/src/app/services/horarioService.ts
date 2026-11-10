@@ -6,7 +6,7 @@ import { API_URL } from '../core/api';
 
 @Service()
 export class HorarioService {
-    private readonly url = '${API_URL}/api/horarioAtencion';
+    private readonly url = `${API_URL}/api/horarios-atencion`;
     private readonly http = inject(HttpClient);
 
     crear(datos:HorarioAtencionRequest):Observable<HorarioAtencion>{

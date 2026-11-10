@@ -6,7 +6,7 @@ import { API_URL } from '../core/api';
 
 @Service()
 export class SolicitudService {
-    private readonly url = '${API_URL}/api/solicitudes';
+    private readonly url = `${API_URL}/api/solicitudes`;
     private readonly http = inject(HttpClient);
 
     crear(datos: SolicitudRequest): Observable<SolicitudConversion>{

@@ -8,7 +8,7 @@ import { API_URL } from '../core/api';
 
 @Service()
 export class TurnoService {
-    private readonly url = '${API_URL}/turnos';
+    private readonly url = `${API_URL}/turnos`;
     private readonly http = inject(HttpClient);
 
     listar(): Observable<Turno[]>{

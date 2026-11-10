@@ -8,7 +8,7 @@ import { API_URL } from '../core/api';
 @Service()
 export class UsuarioService {
     private readonly http = inject(HttpClient);
-    private readonly url = '${API_URL}/usuarios';
+    private readonly url = `${API_URL}/usuarios`;
 
     listar(): Observable<Usuario[]>{
         return this.http.get<Usuario[] | null>(this.url).pipe(map((lista)=>lista??[]));

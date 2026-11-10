@@ -7,7 +7,7 @@ import { API_URL } from '../core/api';
 
 @Service()
 export class ServicioService {
-    private readonly url = '${API_URL}/api/servicios';
+    private readonly url = `${API_URL}/api/servicios`;
     private readonly http = inject(HttpClient); 
 
     crear(datos: ServicioRequest):Observable<Servicio> {
