@@ -461,7 +461,7 @@
 }
 
 @keyframes temblar {
-  0%, 100% { transform: translateX(0); }
+  0%, 100% { transform: translateX(0px); }
   25% { transform: translateX(-5px); }
   50% { transform: translateX(4px); }
   75% { transform: translateX(-2px); }
