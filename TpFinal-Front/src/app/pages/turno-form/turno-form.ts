@@ -1,6 +1,6 @@
+import { CurrencyPipe } from '@angular/common';
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Router } from 'express';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ComercioService } from '../../services/comercioService';
 import { TurnoService } from '../../services/turnoService';
 import { aHora, aMinutos, diaDeLaSemana, hoyISO, minutosAhora, NOMBRE_DIA, recortarHora } from '../../core/fechas';
@@ -10,7 +10,7 @@ import { forkJoin } from 'rxjs';
 import { mensajeDeError } from '../../core/http-error';
 
 @Component({
-  imports: [],
+  imports: [RouterLink, CurrencyPipe],
   selector: 'app-turno-form',
   styleUrl: './turno-form.css',
   templateUrl: './turno-form.html',
