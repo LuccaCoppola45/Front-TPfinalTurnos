@@ -1,0 +1,569 @@
+/* Solicitar comercio: misma estética que login y registro (fondo oscuro, tarjeta y acento dorado) */
+:host {
+  display: block;
+}
+
+.registro-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100dvh - 160px);
+  padding: 2rem 1.5rem;
+  background:
+    radial-gradient(1200px 800px at 50% -10%, rgb(216 179 106 / 12%), transparent),
+    radial-gradient(800px 600px at 100% 0%, rgb(28 31 37 / 60%), transparent),
+    #111317;
+  overflow: hidden;
+}
+
+.registro-container::before {
+  position: absolute;
+  top: 0;
+  left: max(1.5rem, calc((100% - 560px) / 2));
+  width: 3.5rem;
+  height: 3px;
+  background: #d8b36a;
+  content: '';
+}
+
+.registro-card {
+  position: relative;
+  width: min(560px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 2.5rem 2.25rem 2.25rem;
+  border: 1px solid rgb(245 241 232 / 14%);
+  border-radius: 1.2rem;
+  background:
+    linear-gradient(180deg, rgb(245 241 232 / 10%) 0%, transparent 100%),
+    linear-gradient(160deg, rgb(28 31 37 / 98%) 0%, rgb(20 22 26 / 98%) 100%);
+  box-shadow:
+    0 60px 120px -80px rgb(216 179 106 / 40%),
+    0 40px 80px -60px rgb(8 9 11 / 90%);
+  backdrop-filter: blur(12px);
+}
+
+/* Encabezado */
+.registro-card h2 {
+  margin: 0;
+  text-align: center;
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  font-weight: 750;
+  letter-spacing: -0.05em;
+  color: #f9f5ed;
+}
+
+.subtitle {
+  margin: -1rem 0 0;
+  text-align: center;
+  color: #cbc4b7;
+  font-size: 0.98rem;
+}
+
+/* Formulario: nombre arriba, dirección y teléfono lado a lado, descripción abajo */
+.registro-card form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.1rem 1rem;
+}
+
+.campo:nth-of-type(1),
+.campo:nth-of-type(4),
+.btn-submit {
+  grid-column: 1 / -1;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  min-width: 0;
+}
+
+.campo label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #e6dfd2;
+}
+
+.campo input,
+.campo textarea {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.9rem;
+  background: rgb(245 241 232 / 8%);
+  color: #f9f5ed;
+  font-size: 0.98rem;
+  font-family: inherit;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    background-color 160ms ease;
+}
+
+/* La descripción se puede agrandar solo para abajo */
+.campo textarea {
+  min-height: 6rem;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.campo input:hover,
+.campo textarea:hover {
+  background: rgb(245 241 232 / 12%);
+}
+
+.campo input:focus-visible,
+.campo textarea:focus-visible {
+  outline: none;
+  border-color: rgb(216 179 106 / 80%);
+  box-shadow: 0 0 0 4px rgb(216 179 106 / 14%);
+  background: rgb(245 241 232 / 14%);
+}
+
+/* Autocompletado del navegador: que no pinte el input de blanco/amarillo */
+.campo input:-webkit-autofill {
+  -webkit-text-fill-color: #f9f5ed;
+  box-shadow: 0 0 0 1000px #23262c inset;
+  caret-color: #f9f5ed;
+}
+
+.campo input.is-invalid,
+.campo textarea.is-invalid {
+  border-color: rgb(248 113 113 / 80%);
+}
+
+.campo input.is-invalid:focus-visible,
+.campo textarea.is-invalid:focus-visible {
+  border-color: rgb(248 113 113 / 90%);
+  box-shadow: 0 0 0 4px rgb(248 113 113 / 16%);
+}
+
+.error-message {
+  margin-top: -0.2rem;
+  color: #fca5a5;
+  font-size: 0.85rem;
+}
+
+/* Mensajes que vienen del backend */
+.alert-success,
+.alert-error {
+  padding: 0.8rem 1rem;
+  border-radius: 0.9rem;
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.alert-success {
+  border: 1px solid rgb(74 222 128 / 40%);
+  background: rgb(74 222 128 / 12%);
+  color: #bbf7d0;
+}
+
+.alert-error {
+  border: 1px solid rgb(248 113 113 / 40%);
+  background: rgb(248 113 113 / 14%);
+  color: #fecaca;
+}
+
+/* Botón */
+.btn-submit {
+  margin-top: 0.4rem;
+  width: 100%;
+  padding: 0.95rem 1.2rem;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #d8b36a 0%, #e8c987 100%);
+  color: #14161a;
+  font-size: 0.98rem;
+  font-weight: 700;
+  font-family: inherit;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    filter 160ms ease;
+}
+
+.btn-submit:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 18px 40px -24px rgb(216 179 106 / 90%);
+}
+
+.btn-submit:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.btn-submit:focus-visible {
+  outline: 3px solid rgb(216 179 106 / 80%);
+  outline-offset: 4px;
+}
+
+.btn-submit:disabled {
+  cursor: not-allowed;
+  filter: grayscale(12%);
+  opacity: 0.7;
+}
+
+/* Celular: una sola columna */
+@media (max-width: 560px) {
+  .registro-container {
+    min-height: calc(100dvh - 140px);
+    padding: 1.5rem 1rem;
+  }
+
+  .registro-container::before {
+    left: 1rem;
+  }
+
+  .registro-card {
+    padding: 2rem 1.6rem;
+    gap: 1.25rem;
+  }
+
+  .registro-card form {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ====================================================================
+   DETALLES EXTRA  ·  explicados para aprender
+   ====================================================================
+
+   Antes de arrancar, las 3 herramientas que se usan en todo este bloque:
+
+   1) TRANSITION  →  "cuando esta propiedad cambie, cambiala despacio".
+        transition: color 160ms ease;
+      No hace nada por sí sola: espera a que algo cambie (un :hover, un
+      :focus, una clase nueva) y anima del valor viejo al nuevo.
+      Sirve para efectos que van de A a B y vuelven.
+
+   2) @KEYFRAMES + ANIMATION  →  "reproducí esta secuencia".
+        @keyframes nombre { from {...} to {...} }   ← la secuencia
+        animation: nombre 500ms ease 100ms both;   ← cuándo y cómo
+                   │      │     │    │     └ fill-mode: "both" mantiene el
+                   │      │     │    │       primer cuadro mientras espera
+                   │      │     │    │       y el último cuando termina
+                   │      │     │    └ delay: cuánto espera antes de arrancar
+                   │      │     └ curva de velocidad (ease, linear...)
+                   │      └ duración
+                   └ nombre del @keyframes
+      Arranca sola, sin que el usuario haga nada. Sirve para entradas,
+      cosas que se repiten (infinite) o secuencias de varios pasos.
+
+   3) PSEUDO-ELEMENTOS ::before y ::after  →  dos "elementos fantasma" que
+      cada etiqueta HTML trae de regalo, sin tocar el HTML. Solo existen si
+      les ponés  content: '';  y se usan para dibujar adornos (un borde que
+      gira, un brillo, un ícono) encima o debajo del elemento real.
+
+   Regla de oro para que una animación sea fluida: animá solo TRANSFORM
+   (mover, escalar, rotar) y OPACITY. El navegador las resuelve con la
+   placa de video. Animar width, height, top o margin obliga a recalcular
+   toda la página en cada cuadro y se nota "trabado".
+   ==================================================================== */
+
+
+/* --------------------------------------------------------------------
+   1. BORDE DORADO QUE GIRA
+   --------------------------------------------------------------------
+   Idea: un círculo de colores (conic-gradient) que gira, recortado para
+   que solo se vea el contorno de la tarjeta.
+
+   Paso A · La variable animable
+   Una variable CSS normal (--algo) es solo texto: el navegador no sabe
+   que "0deg" y "360deg" son ángulos, así que no puede ir pasando por
+   1deg, 2deg, 3deg... y saltaría de golpe. Con @property le decimos
+   "esto es un <angle>" y entonces sí lo puede animar.
+   -------------------------------------------------------------------- */
+@property --angulo {
+  syntax: '<angle>';      /* el tipo de dato */
+  initial-value: 0deg;    /* valor de arranque */
+  inherits: false;        /* los hijos no la heredan (no la necesitan) */
+}
+
+/* Paso B · El "elemento fantasma" que dibuja el borde */
+.registro-card::before {
+  /* Lo pegamos encima de la tarjeta. inset: -2px es el atajo de
+     top/right/bottom/left = -2px: queda 2px más grande para cada lado,
+     y esos 2px son el grosor del borde. Funciona porque .registro-card
+     tiene position: relative (arriba en el archivo). */
+  position: absolute;
+  inset: -2px;
+  z-index: 1;
+  padding: 2px;                 /* el mismo grosor: ver paso C */
+  border-radius: inherit;       /* copia el redondeo de la tarjeta */
+
+  /* conic-gradient pinta los colores en círculo, como las agujas de un
+     reloj, empezando en el ángulo "from". Acá: casi todo transparente y
+     una franja dorada entre 50° y 110°. Si --angulo va de 0° a 360°, la
+     franja da la vuelta completa. */
+  background: conic-gradient(
+    from var(--angulo),
+    transparent 0deg,
+    #e8c987 50deg,
+    #fff3d6 80deg,              /* el centro más claro = el "brillo" */
+    #e8c987 110deg,
+    transparent 170deg,
+    transparent 360deg
+  );
+  filter: drop-shadow(0 0 6px rgb(232 201 135 / 70%));   /* resplandor */
+
+  /* Paso C · El recorte (la parte más ingeniosa).
+     mask decide qué partes se ven. Le pasamos dos capas negras:
+       - la 1ª ocupa solo el "content-box" (todo menos el padding)
+       - la 2ª ocupa todo el elemento
+     mask-composite: exclude se queda con lo que está en una sola de las
+     dos, o sea: todo MENOS el centro → solo queda visible el anillo de
+     2px de padding. Así el dorado se ve solo en el borde. */
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+
+  /* Paso D · Hacerlo girar: 5 segundos por vuelta, a velocidad constante
+     (linear, si no frenaría en cada vuelta), para siempre (infinite). */
+  animation: girar-borde 5s linear infinite;
+
+  content: '';                  /* sin esto el ::before no existe */
+  pointer-events: none;         /* los clics lo atraviesan */
+}
+
+@keyframes girar-borde {
+  /* Sin "from": arranca del initial-value (0deg) */
+  to {
+    --angulo: 360deg;
+  }
+}
+
+
+/* --------------------------------------------------------------------
+   2. ENTRADA EN CASCADA
+   --------------------------------------------------------------------
+   Todos los elementos usan la MISMA animación ("aparecer"), pero cada
+   uno con un delay un poco mayor. Ese escalonado es lo que hace que
+   parezca que entran uno detrás del otro.
+   -------------------------------------------------------------------- */
+.registro-card {
+  /* isolation: isolate crea una "capa" propia para la tarjeta, así el
+     ::before del borde no se mezcla con lo que hay detrás de la página. */
+  isolation: isolate;
+  /* cubic-bezier es una curva de velocidad a medida: esta arranca
+     rápido y frena suave al final, que se siente más natural que ease. */
+  animation: aparecer 600ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.subtitle,
+.campo,
+.btn-submit {
+  animation: aparecer 500ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+/* El escalonado: 60ms entre cada uno. Probá cambiar estos números y vas
+   a ver cómo cambia el ritmo. ("both" es lo que hace que estén
+   invisibles mientras esperan su turno.) El título tiene su delay en el
+   punto 3. */
+.subtitle { animation-delay: 180ms; }
+.campo:nth-of-type(1) { animation-delay: 260ms; }
+.campo:nth-of-type(2) { animation-delay: 320ms; }
+.campo:nth-of-type(3) { animation-delay: 380ms; }
+.campo:nth-of-type(4) { animation-delay: 440ms; }
+.btn-submit { animation-delay: 520ms; }
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(14px);   /* arranca 14px más abajo */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);      /* termina en su lugar */
+  }
+}
+
+
+/* --------------------------------------------------------------------
+   3. REFLEJO EN EL TÍTULO
+   --------------------------------------------------------------------
+   Truco: el texto no tiene color, tiene un FONDO recortado con la forma
+   de las letras. Y ese fondo se desliza.
+   -------------------------------------------------------------------- */
+.registro-card h2 {
+  /* Un degradé casi todo blanco con una franja dorada en el medio */
+  background: linear-gradient(
+    90deg,
+    #f9f5ed 0%,
+    #f9f5ed 35%,
+    #d8b36a 50%,
+    #f9f5ed 65%,
+    #f9f5ed 100%
+  );
+  /* El fondo mide 2,5 veces el título, así hay lugar para deslizarlo */
+  background-size: 250% auto;
+  /* background-clip: text recorta el fondo con la forma de las letras.
+     -webkit- es el prefijo que todavía piden algunos navegadores. */
+  background-clip: text;
+  -webkit-background-clip: text;
+  /* Si el texto tuviera color, taparía el fondo: lo hacemos transparente */
+  color: transparent;
+
+  /* Dos animaciones a la vez, separadas por coma: la entrada (una vez) y
+     el reflejo (cada 4s, para siempre, arrancando a los 700ms). */
+  animation:
+    aparecer 500ms cubic-bezier(0.2, 0.8, 0.2, 1) 120ms both,
+    reflejo-titulo 4s ease-in-out 700ms infinite;
+}
+
+/* Mover background-position desliza el fondo: la franja dorada cruza
+   las letras de izquierda a derecha. */
+@keyframes reflejo-titulo {
+  from { background-position: 100% 0; }
+  to { background-position: -150% 0; }
+}
+
+
+/* --------------------------------------------------------------------
+   4. ETIQUETA QUE SE ACTIVA AL ESCRIBIR
+   --------------------------------------------------------------------
+   :focus        → se cumple en el elemento que tiene el foco (el input).
+   :focus-within → se cumple en el PADRE si algún hijo tiene el foco.
+   Por eso lo ponemos en .campo: cuando escribís en su input, el .campo
+   "se entera" y puede cambiarle el estilo al label, que es su hermano.
+   Esto es TRANSITION (no keyframes): va de A a B y vuelve sola al salir.
+   -------------------------------------------------------------------- */
+.campo label {
+  transition: color 160ms ease, transform 160ms ease;
+}
+
+.campo:focus-within label {
+  color: #e8c987;
+  transform: translateX(3px);
+}
+
+
+/* --------------------------------------------------------------------
+   5. EL CAMPO CON ERROR TIEMBLA
+   --------------------------------------------------------------------
+   Una animación se reproduce cuando la regla EMPIEZA a aplicarse. Angular
+   le agrega la clase .is-invalid al input cuando hay error, y en ese
+   momento arranca el temblor. Sin "infinite", tiembla una sola vez.
+
+   Los porcentajes son momentos de la animación (0% = inicio, 100% = fin):
+   va a la izquierda, a la derecha, un poco a la izquierda y vuelve.
+   Cada sacudida es más chica que la anterior: así se siente natural.
+   -------------------------------------------------------------------- */
+.campo input.is-invalid,
+.campo textarea.is-invalid {
+  animation: temblar 320ms ease;
+}
+
+@keyframes temblar {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(4px); }
+  75% { transform: translateX(-2px); }
+}
+
+/* Reutilizamos "aparecer": el mensaje rojo entra suave en vez de saltar */
+.error-message {
+  animation: aparecer 220ms ease both;
+}
+
+
+/* --------------------------------------------------------------------
+   6. AVISOS QUE ENTRAN + TILDE DE ÉXITO
+   --------------------------------------------------------------------
+   Los avisos están dentro de un @if en el HTML: Angular los CREA cuando
+   aparecen. Como son elementos nuevos, la animación arranca sola.
+   -------------------------------------------------------------------- */
+.alert-success,
+.alert-error {
+  animation: aparecer 300ms ease both;
+}
+
+/* flex para poner el tilde y el texto en la misma fila */
+.alert-success {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* El tilde es un ::before: un ícono sin agregar nada al HTML.
+   content puede ser cualquier texto o emoji. */
+.alert-success::before {
+  display: grid;
+  flex-shrink: 0;               /* que no se aplaste si el texto es largo */
+  place-items: center;          /* centra el ✓ adentro del círculo */
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;           /* cuadrado + 50% de redondeo = círculo */
+  background: rgb(74 222 128 / 22%);
+  color: #bbf7d0;
+  font-weight: 700;
+  content: '✓';
+}
+
+
+/* --------------------------------------------------------------------
+   7. BRILLO QUE CRUZA EL BOTÓN
+   --------------------------------------------------------------------
+   Un ::after con una franja blanca en diagonal, escondido a la izquierda
+   del botón. Con :hover se desliza hasta la derecha.
+   -------------------------------------------------------------------- */
+.btn-submit {
+  position: relative;     /* para que el ::after se ubique respecto al botón */
+  overflow: hidden;       /* lo que sale del botón no se ve: así la franja
+                             "aparece" al entrar y "desaparece" al salir */
+}
+
+.btn-submit::after {
+  position: absolute;
+  inset: 0;               /* mismo tamaño que el botón */
+  background: linear-gradient(
+    110deg,               /* inclinado: queda como un reflejo de luz */
+    transparent 30%,
+    rgb(255 255 255 / 45%) 50%,
+    transparent 70%
+  );
+  transform: translateX(-120%);   /* escondido a la izquierda */
+  content: '';
+  pointer-events: none;
+}
+
+/* Detalle: la transition está SOLO en el :hover. Entonces al entrar con
+   el mouse se desliza despacio (700ms), pero al salir vuelve de golpe a
+   la izquierda, sin que se vea. Así el brillo siempre va en una sola
+   dirección. Si la pusieras en .btn-submit::after, volvería para atrás. */
+.btn-submit:hover:not(:disabled)::after {
+  transform: translateX(120%);
+  transition: transform 700ms ease;
+}
+
+/* Mientras envía ([disabled]="enviado()" en el HTML), el botón titila.
+   infinite + ida y vuelta (0% y 100% iguales) = un loop sin saltos. */
+.btn-submit:disabled {
+  animation: respirar 1.2s ease-in-out infinite;
+}
+
+@keyframes respirar {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 0.45; }
+}
+
+
+/* --------------------------------------------------------------------
+   PARA SEGUIR APRENDIENDO
+   --------------------------------------------------------------------
+   - Mirar animaciones en cámara lenta: en Chrome, F12 → los tres puntos
+     → More tools → Animations. Podés pausarlas y bajarles la velocidad.
+   - Accesibilidad: con  @media (prefers-reduced-motion: reduce) { ... }
+     se pueden apagar las animaciones para quien lo pidió en su sistema
+     (Windows: Accesibilidad → Efectos visuales). Login y registro lo
+     tienen; acá lo sacamos para que se vea siempre.
+   - Probá romper cosas: sacá el "mask" del punto 1 y vas a ver el círculo
+     de colores entero; sacá "color: transparent" del punto 3 y el
+     reflejo desaparece. Es la mejor forma de entender qué hace cada línea.
+   -------------------------------------------------------------------- */
