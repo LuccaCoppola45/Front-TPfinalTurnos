@@ -1,1 +1,51 @@
-<p>mis-turnos works!</p>
+<section class="mis-turnos">
+  <header class="encabezado">
+    <div>
+      <h1>Mis turnos</h1>
+      <p>Revisá, reprogramá o cancelá tus reservas.</p>
+    </div>
+    <a class="btn-primario" routerLink="/comercios">Nuevo turno</a>
+  </header>
+
+  @if (error()) {
+    <div class="alerta" role="alert">{{ error() }}</div>
+  }
+
+  @if (cargando()) {
+    <p class="mensaje">Cargando tus turnos...</p>
+  } @else if (turnos().length === 0) {
+    <div class="vacio">
+      <p>Todavía no tenés turnos reservados.</p>
+      <a class="btn-primario" routerLink="/comercios">Buscar un comercio</a>
+    </div>
+  } @else {
+    <ul class="lista">
+      @for (turno of turnos(); track turno.idTurno) {
+        <li class="tarjeta">
+          <!-- Fecha grande a la izquierda -->
+          <div class="fecha">
+            <span class="dia">{{ turno.fecha | date: 'dd' }}</span>
+            <span class="mes">{{ turno.fecha | date: 'MMM' }}</span>
+          </div>
+
+          <div class="info">
+            <h2>{{ nombreComercio(turno.idComercio) }}</h2>
+            <p>{{ turno.horaInicio.slice(0, 5) }} a {{ turno.horaFin.slice(0, 5) }} hs</p>
+          </div>
+
+          <!-- La clase del estado (estado-pendiente, estado-cancelado...) define el color -->
+          <span [class]="'estado estado-' + turno.estado.toLowerCase()">
+            {{ turno.estado }}
+          </span>
+
+          @if (puedeModificar(turno)) {
+            <div class="acciones">
+              <a class="btn-secundario" [routerLink]="['/turnos', turno.idTurno, 'reprogramar']">Reprogramar</a>
+              <button class="btn-peligro" type="button" (click)="cancelar(turno)">Cancelar</button>
+            </div>
+          }
+        </li>
+      }
+    </ul>
+  }
+</section>

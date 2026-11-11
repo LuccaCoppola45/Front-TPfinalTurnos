@@ -1,9 +1,9 @@
-export type EstadoTurno=
-'PENDIENTE'
-'CONFIRMADO'
-'CANCELADO'
-'RESERVADO'
-'FINALIZADO'
+export type EstadoTurno =
+  | 'PENDIENTE'
+  | 'CONFIRMADO'
+  | 'CANCELADO'
+  | 'RESERVADO'
+  | 'FINALIZADO';
 
 export interface Turno {
     idTurno: number;
@@ -34,7 +34,7 @@ export interface Cancelacion {
     idCancelacion: number;
     fechaCancelacion: string;
     motivo: string;
-    isUsuario: number;
+    idUsuario: number;
 }
 
 
