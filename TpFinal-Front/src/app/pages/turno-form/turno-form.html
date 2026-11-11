@@ -1,1 +1,55 @@
-<p>turno-form works!</p>
+<p><a routerLink="/mis-turnos">← Volver</a></p>
+
+@if (cargando()) {
+  <p class="vacio" role="status">Cargando...</p>
+} @else if (comercio(); as c) {
+  @if (servicio(); as s) {
+    <h2>{{ esReprogramacion() ? 'Reprogramar turno' : 'Reservar turno' }}</h2>
+
+    <article class="card resumen">
+      <h3>{{ s.nombreServicio }}</h3>
+      <p>{{ c.nombre }} · {{ c.direccion }}</p>
+      <p>{{ s.duracionDelServicio }} minutos · {{ s.precio | currency: 'ARS' : 'symbol-narrow' : '1.0-0' }}</p>
+    </article>
+
+    <div class="campo">
+      <label for="fecha">Fecha</label>
+      <input id="fecha" type="date" [min]="hoy" [value]="fecha()" (change)="alCambiarFecha($event)" />
+    </div>
+
+    @if (fecha()) {
+      @if (horariosDelDia().length === 0) {
+        <p class="ayuda">El comercio no atiende ese día. Elegí otra fecha.</p>
+      } @else if (horasDisponibles().length === 0) {
+        <p class="ayuda">No quedan horarios libres ese día. Probá con otra fecha.</p>
+      } @else {
+        <p id="titulo-horas">Horarios disponibles</p>
+        <div class="slots" role="group" aria-labelledby="titulo-horas">
+          @for (hora of horasDisponibles(); track hora) {
+            <button
+              type="button"
+              class="slot"
+              [class.elegido]="hora === horaElegida()"
+              [attr.aria-pressed]="hora === horaElegida()"
+              (click)="horaElegida.set(hora)"
+            >
+              {{ hora }}
+            </button>
+          }
+        </div>
+      }
+    }
+
+    @if (error()) {
+      <p class="error" role="alert">{{ error() }}</p>
+    }
+
+    <button class="boton" type="button" [disabled]="!horaElegida() || enviando()" (click)="confirmar()">
+      {{ esReprogramacion() ? 'Guardar cambios' : 'Confirmar reserva' }}
+    </button>
+  } @else {
+    <p class="error" role="alert">No se encontró el servicio elegido en este comercio.</p>
+  }
+} @else {
+  <p class="error" role="alert">{{ error() || 'No se pudo cargar el comercio.' }}</p>
+}
