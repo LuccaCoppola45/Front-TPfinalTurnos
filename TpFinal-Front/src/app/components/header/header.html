@@ -1,3 +1,5 @@
+
+
 <header class="site-header">
   <div class="header-content">
     <a class="brand" routerLink="/" aria-label="Turnos MDP, ir al inicio">
@@ -19,13 +21,27 @@
       >
         Inicio
       </a>
-      <a class="nav-link" routerLink="/login" routerLinkActive="is-active">Ingresar</a>
+
+      @if (auth.estalogueado()){
+        @if (auth.rol() === 'CLIENTE') {
+          <a class="nav-link" routerLink="/mis-turnos" routerLinkActive="is-active">Mis turnos</a>
+        }
+        <a class="nav-link" routerLink="/perfil" routerLinkActive="is-active">
+          {{ auth.usuario()?.nombre }}
+        </a>
+        <button type="button" class="nav-cta" (click)="auth.logout()">
+          <span>Cerrar sesión</span>
+        </button>
+      } @else {
+        <a class="nav-link" routerLink="/login" routerLinkActive="is-active">Ingresar</a>
+      
       <a class="nav-cta" routerLink="/registro" routerLinkActive="is-active">
         <span>Crear cuenta</span>
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <path d="M5 12h14m-6-6 6 6-6 6" />
         </svg>
       </a>
+    }
     </nav>
   </div>
 </header>
