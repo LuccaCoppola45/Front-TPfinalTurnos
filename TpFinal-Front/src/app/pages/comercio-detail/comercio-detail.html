@@ -1,1 +1,37 @@
-<p>comercio-detail works!</p>
+<p><a routerLink="/comercios">← Volver a comercios</a></p>
+
+@if (error()) {
+  <p class="error" role="alert">{{ error() }}</p>
+} @else if (comercio(); as c) {
+  <h2>{{ c.nombre }}</h2>
+  <p>{{ c.direccion }} · Tel. {{ c.telefono }}</p>
+  @if (c.descripcion) {
+    <p>{{ c.descripcion }}</p>
+  }
+
+  <h3>Horarios de atención</h3>
+  @if (horarios().length === 0) {
+    <p class="ayuda">Este comercio todavía no cargó sus horarios.</p>
+  } @else {
+    <ul>
+      @for (h of horarios(); track h.idHorarioAtencion) {
+        <li>{{ nombreDia[h.diaSemana] }}: {{ recortarHora(h.horaApertura) }} a {{ recortarHora(h.horaCierre) }}</li>
+      }
+    </ul>
+  }
+
+  <h3>Servicios</h3>
+  <div class="grilla">
+    @for (s of c.servicios ?? []; track s.idServicio) {
+      <article class="card">
+        <h3>{{ s.nombreServicio }}</h3>
+        <p>{{ s.duracionDelServicio }} minutos · {{ s.precio | currency: 'ARS' : 'symbol-narrow' : '1.0-0' }}</p>
+        <a class="boton" [routerLink]="['/comercios', c.idComercio, 'reservar', s.idServicio]">Reservar turno</a>
+      </article>
+    } @empty {
+      <p class="vacio">Este comercio todavía no cargó servicios.</p>
+    }
+  </div>
+} @else {
+  <p class="vacio" role="status">Cargando...</p>
+}
