@@ -1,1 +1,37 @@
-<p>comercio-agenda works!</p>
+<h2>Agenda</h2>
+
+@if (error()) {
+  <p class="error" role="alert">{{ error() }}</p>
+} @else if (cargando()) {
+  <p class="vacio" role="status">Cargando...</p>
+} @else {
+  <div class="tabla-scroll">
+    <table>
+      <caption class="ayuda">Turnos reservados en tu comercio</caption>
+      <thead>
+        <tr>
+          <th scope="col">Fecha</th>
+          <th scope="col">Horario</th>
+          <th scope="col">Cliente</th>
+          <th scope="col">Servicio</th>
+          <th scope="col">Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (f of filas(); track f.turno.idTurno) {
+          <tr>
+            <td>{{ f.turno.fecha | date: 'dd/MM/yyyy' }}</td>
+            <td>{{ recortarHora(f.turno.horaInicio) }} a {{ recortarHora(f.turno.horaFin) }}</td>
+            <td>{{ f.cliente }}</td>
+            <td>{{ f.servicio }}</td>
+            <td><span class="badge" [attr.data-estado]="f.turno.estado">{{ f.turno.estado }}</span></td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="5" class="vacio">Todavía no hay turnos reservados.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}
