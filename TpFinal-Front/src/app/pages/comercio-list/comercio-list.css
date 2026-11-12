@@ -1,0 +1,354 @@
+/* =====================================================================
+   LISTADO DE COMERCIOS
+   Misma paleta que mis-turnos y registro: fondo oscuro + acento dorado.
+   ===================================================================== */
+
+/* Colores en variables: si querés cambiar el dorado, lo cambiás acá y listo */
+:host {
+  --dorado: #d8b36a;
+  --dorado-claro: #e8c987;
+  --texto: #f5f1e8;
+  --texto-suave: #cbc4b7;
+  --tarjeta: #1c1f25;
+  --borde: rgb(245 241 232 / 12%);
+
+  display: block;
+}
+
+/* ===== Contenedor ===== */
+.comercios {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 4rem;
+  color: var(--texto);
+}
+
+/* ===== Encabezado ===== */
+.encabezado {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* La "etiqueta" chiquita arriba del título */
+.etiqueta {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  padding: 0.3rem 0.8rem;
+  border: 1px solid rgb(216 179 106 / 35%);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dorado-claro);
+}
+
+.encabezado h1 {
+  margin: 0;
+  /* clamp(mínimo, ideal, máximo): el título crece con la pantalla pero con topes */
+  font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+  font-weight: 750;
+  letter-spacing: -0.04em;
+}
+
+.encabezado p {
+  margin: 0.6rem auto 0;
+  max-width: 46ch; /* "ch" = ancho de un carácter: limita el largo de la línea */
+  color: var(--texto-suave);
+}
+
+/* ===== Buscador + chips ===== */
+.filtros {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+/* El label envuelve el ícono y el input, así todo parece una sola caja */
+.buscador {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: min(520px, 100%);
+  padding: 0.75rem 1.1rem;
+  border: 1px solid var(--borde);
+  border-radius: 999px;
+  background: var(--tarjeta);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* :focus-within = "cuando algo de adentro tiene foco" (el input) */
+.buscador:focus-within {
+  border-color: var(--dorado);
+  box-shadow: 0 0 0 4px rgb(216 179 106 / 15%);
+}
+
+.buscador svg {
+  flex-shrink: 0;
+  width: 1.1rem;
+  height: 1.1rem;
+  stroke: var(--texto-suave);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.buscador input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--texto);
+  font: inherit;
+}
+
+.buscador input::placeholder {
+  color: rgb(203 196 183 / 60%);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.chip {
+  padding: 0.45rem 1rem;
+  border: 1px solid var(--borde);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--texto-suave);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.chip:hover {
+  border-color: rgb(216 179 106 / 45%);
+  color: var(--texto);
+}
+
+/* El chip elegido se pinta de dorado */
+.chip.activo {
+  border-color: transparent;
+  background: linear-gradient(90deg, var(--dorado), var(--dorado-claro));
+  color: #14161a;
+  font-weight: 600;
+}
+
+.resultado {
+  margin: 0 0 1rem;
+  font-size: 0.85rem;
+  color: var(--texto-suave);
+}
+
+/* ===== Grilla de tarjetas =====
+   auto-fill + minmax: entran tantas columnas de mínimo 300px como quepan.
+   En celu queda 1 columna, en notebook 2 o 3, sin escribir media queries. */
+.grilla {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tarjeta {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem;
+  border: 1px solid var(--borde);
+  border-radius: 1.1rem;
+  background:
+    linear-gradient(180deg, rgb(245 241 232 / 5%) 0%, transparent 60%),
+    var(--tarjeta);
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+
+  /* Entrada escalonada: cada tarjeta espera 70ms más que la anterior.
+     --i lo pone el HTML con [style.--i]="i" (0, 1, 2, ...) */
+  animation: aparecer 0.5s ease-out both;
+  animation-delay: calc(var(--i, 0) * 70ms);
+}
+
+.tarjeta:hover {
+  border-color: rgb(216 179 106 / 40%);
+  transform: translateY(-4px);
+  box-shadow: 0 24px 50px -30px rgb(216 179 106 / 45%);
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Avatar con la inicial + nombre + dirección */
+.tarjeta-cabecera {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.avatar {
+  display: grid;
+  place-items: center; /* centra en los dos ejes con una sola línea */
+  flex-shrink: 0;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.9rem;
+  background: rgb(216 179 106 / 14%);
+  color: var(--dorado-claro);
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.tarjeta h2 {
+  margin: 0;
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+}
+
+.direccion {
+  margin: 0.15rem 0 0;
+  font-size: 0.85rem;
+  color: var(--texto-suave);
+}
+
+.categorias {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.pastilla {
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  background: rgb(245 241 232 / 8%);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--texto-suave);
+}
+
+.descripcion {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--texto-suave);
+}
+
+/* ===== Servicios dentro de la tarjeta ===== */
+.servicios {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--borde);
+}
+
+.servicios li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--borde);
+}
+
+.servicio-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.servicio-nombre {
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+
+.servicio-meta {
+  font-size: 0.8rem;
+  color: var(--texto-suave);
+}
+
+.btn-reservar {
+  flex-shrink: 0;
+  padding: 0.45rem 0.95rem;
+  border: 1px solid rgb(216 179 106 / 45%);
+  border-radius: 999px;
+  color: var(--dorado-claro);
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.btn-reservar:hover {
+  background: var(--dorado);
+  color: #14161a;
+}
+
+.sin-servicios {
+  margin: 0;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--texto-suave);
+}
+
+/* margin-top: auto empuja el teléfono al fondo de la tarjeta,
+   así todas las tarjetas de una fila terminan alineadas */
+.telefono {
+  margin-top: auto;
+  font-size: 0.85rem;
+  color: var(--texto-suave);
+  text-decoration: none;
+}
+
+.telefono:hover {
+  color: var(--dorado-claro);
+}
+
+/* ===== Cargando: tarjetas "esqueleto" con un brillo que pasa ===== */
+.esqueleto {
+  min-height: 260px;
+  background:
+    linear-gradient(100deg, transparent 30%, rgb(245 241 232 / 6%) 50%, transparent 70%) 0 0 / 200% 100%,
+    var(--tarjeta);
+  animation: brillo 1.4s linear infinite;
+}
+
+@keyframes brillo {
+  to {
+    background-position: -200% 0, 0 0;
+  }
+}
+
+/* ===== Mensajes ===== */
+.vacio {
+  padding: 3rem 1rem;
+  border: 1px dashed var(--borde);
+  border-radius: 1rem;
+  text-align: center;
+  color: var(--texto-suave);
+}
+
+.alerta {
+  margin-bottom: 1.5rem;
+  padding: 0.9rem 1.1rem;
+  border: 1px solid rgb(248 113 113 / 40%);
+  border-radius: 0.8rem;
+  background: rgb(248 113 113 / 10%);
+  color: #fca5a5;
+}

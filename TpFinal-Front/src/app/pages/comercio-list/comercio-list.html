@@ -1,1 +1,110 @@
-<p>comercio-list works!</p>
+<section class="comercios">
+  <header class="encabezado">
+    <span class="etiqueta">Mar del Plata</span>
+    <h1>Encontrá dónde sacar tu turno</h1>
+    <p>Elegí un comercio, mirá sus servicios y reservá en un par de clics.</p>
+  </header>
+
+  <!-- Buscador + filtros por categoría -->
+  <div class="filtros">
+    <label class="buscador">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="m20 20-3.5-3.5" />
+      </svg>
+      <input
+        type="search"
+        placeholder="Buscar por nombre o dirección"
+        [value]="busqueda()"
+        (input)="alBuscar($event)"
+      />
+    </label>
+
+    <div class="chips" role="group" aria-label="Filtrar por categoría">
+      <button
+        type="button"
+        class="chip"
+        [class.activo]="categoriaElegida() === null"
+        (click)="elegirCategoria(null)"
+      >
+        Todas
+      </button>
+      @for (categoria of categorias(); track categoria) {
+        <button
+          type="button"
+          class="chip"
+          [class.activo]="categoriaElegida() === categoria"
+          (click)="elegirCategoria(categoria)"
+        >
+          {{ categoria }}
+        </button>
+      }
+    </div>
+  </div>
+
+  @if (error()) {
+    <div class="alerta" role="alert">{{ error() }}</div>
+  }
+
+  @if (cargando()) {
+    <!-- Tarjetas "fantasma" mientras carga (skeleton) -->
+    <ul class="grilla">
+      @for (n of [1, 2, 3]; track n) {
+        <li class="tarjeta esqueleto"></li>
+      }
+    </ul>
+  } @else if (comerciosFiltrados().length === 0) {
+    <p class="vacio">No encontramos comercios con esos filtros.</p>
+  } @else {
+    <p class="resultado">{{ comerciosFiltrados().length }} comercios</p>
+
+    <ul class="grilla">
+      @for (comercio of comerciosFiltrados(); track comercio.idComercio; let i = $index) {
+        <!-- --i se usa en el CSS para que cada tarjeta entre un poquito después -->
+        <li class="tarjeta" [style.--i]="i">
+          <div class="tarjeta-cabecera">
+            <span class="avatar" aria-hidden="true">{{ inicial(comercio.nombre) }}</span>
+            <div>
+              <h2>{{ comercio.nombre }}</h2>
+              <p class="direccion">{{ comercio.direccion }}</p>
+            </div>
+          </div>
+
+          @if (comercio.categorias?.length) {
+            <div class="categorias">
+              @for (cat of comercio.categorias; track cat) {
+                <span class="pastilla">{{ cat }}</span>
+              }
+            </div>
+          }
+
+          @if (comercio.descripcion) {
+            <p class="descripcion">{{ comercio.descripcion }}</p>
+          }
+
+          @if (comercio.servicios?.length) {
+            <ul class="servicios">
+              @for (s of comercio.servicios; track s.idServicio) {
+                <li>
+                  <div class="servicio-info">
+                    <span class="servicio-nombre">{{ s.nombreServicio }}</span>
+                    <span class="servicio-meta">
+                      {{ s.duracionDelServicio }} min · {{ s.precio | currency: 'ARS' : 'symbol-narrow' : '1.0-0' }}
+                    </span>
+                  </div>
+                  <a class="btn-reservar" [routerLink]="['/comercios', comercio.idComercio, 'reservar', s.idServicio]">
+                    Reservar
+                  </a>
+                </li>
+              }
+            </ul>
+          } @else {
+            <p class="sin-servicios">Este comercio todavía no cargó servicios.</p>
+          }
+
+          <a class="telefono" [href]="'tel:' + comercio.telefono">📞 {{ comercio.telefono }}</a>
+        </li>
+      }
+    </ul>
+  }
+</section>
