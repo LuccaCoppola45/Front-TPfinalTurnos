@@ -1,0 +1,245 @@
+/* =====================================================================
+   AGENDA (Mi comercio > Agenda)
+   Misma estética que Servicios: fondo oscuro + dorado.
+   Los colores de estado son los mismos que en "Mis turnos".
+   ===================================================================== */
+
+:host {
+  --dorado: #d8b36a;
+  --dorado-claro: #e8c987;
+  --texto: #f9f5ed;
+  --texto-suave: #cbc4b7;
+  --borde: rgb(245 241 232 / 14%);
+
+  display: block;
+  min-height: calc(100dvh - 160px);
+  padding: 3rem 1.5rem;
+  background:
+    radial-gradient(900px 600px at 50% -10%, rgb(216 179 106 / 12%), transparent),
+    #111317;
+  color: var(--texto);
+}
+
+h2 {
+  margin: 0 0 1.75rem;
+  text-align: center;
+  font-size: clamp(1.7rem, 4vw, 2.2rem);
+  font-weight: 750;
+  letter-spacing: -0.05em;
+}
+
+/* ===== Tarjeta con la tabla ===== */
+.tabla-scroll {
+  width: min(960px, 100%);
+  margin: 0 auto;
+  overflow-x: auto;
+  border: 1px solid var(--borde);
+  border-radius: 1.2rem;
+  background:
+    linear-gradient(180deg, rgb(245 241 232 / 6%) 0%, transparent 100%),
+    linear-gradient(160deg, rgb(28 31 37 / 98%) 0%, rgb(20 22 26 / 98%) 100%);
+  box-shadow: 0 40px 80px -60px rgb(8 9 11 / 90%);
+  animation: subir 0.5s ease-out both;
+}
+
+@keyframes subir {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+caption {
+  padding: 1.25rem 1.5rem 0.75rem;
+  text-align: left;
+  color: var(--texto-suave);
+  font-size: 0.9rem;
+}
+
+th {
+  padding: 0.75rem 1.5rem;
+  border-bottom: 1px solid var(--borde);
+  text-align: left;
+  color: var(--dorado);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+td {
+  padding: 0.9rem 1.5rem;
+  border-bottom: 1px solid rgb(245 241 232 / 6%);
+  font-variant-numeric: tabular-nums; /* fechas y horas alineadas */
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+tbody tr {
+  transition: background-color 0.16s, opacity 0.16s;
+}
+
+tbody tr:hover {
+  background: rgb(245 241 232 / 4%);
+}
+
+/* Fecha en dorado y horario en negrita: es lo primero que mira el comercio */
+td:first-child {
+  color: var(--dorado-claro);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+td:nth-child(2) {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+td:nth-child(4) {
+  color: var(--texto-suave);
+}
+
+/* Turnos que ya no van a ocurrir: más apagados, así resaltan los activos */
+tr:has([data-estado='CANCELADO']),
+tr:has([data-estado='FINALIZADO']) {
+  opacity: 0.55;
+}
+
+tr:has([data-estado='CANCELADO']) td:nth-child(2) {
+  text-decoration: line-through;
+}
+
+/* ===== Estado del turno: pastilla de color (igual que en Mis turnos) ===== */
+.badge {
+  display: inline-block;
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.badge[data-estado='PENDIENTE'],
+.badge[data-estado='RESERVADO'] {
+  background: rgb(250 204 21 / 15%);
+  color: #fde68a;
+}
+
+.badge[data-estado='CONFIRMADO'] {
+  background: rgb(74 222 128 / 15%);
+  color: #86efac;
+}
+
+.badge[data-estado='CANCELADO'] {
+  background: rgb(248 113 113 / 15%);
+  color: #fca5a5;
+}
+
+.badge[data-estado='FINALIZADO'] {
+  background: rgb(245 241 232 / 10%);
+  color: var(--texto-suave);
+}
+
+/* ===== Mensajes ===== */
+/* td.vacio le gana a td:first-child (si no, el texto saldría dorado) */
+.vacio,
+td.vacio {
+  padding: 2rem 1rem;
+  text-align: center;
+  color: var(--texto-suave);
+  font-weight: 400;
+}
+
+.error {
+  width: min(960px, 100%);
+  margin: 0 auto;
+  padding: 0.8rem 1rem;
+  border: 1px solid rgb(248 113 113 / 40%);
+  border-radius: 0.9rem;
+  background: rgb(248 113 113 / 14%);
+  color: #fecaca;
+  font-size: 0.92rem;
+}
+
+/* ===== Celular: cada turno es una tarjeta ===== */
+@media (max-width: 640px) {
+  :host {
+    padding: 2rem 1rem;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tr,
+  td {
+    display: block;
+  }
+
+  tbody tr {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.35rem 1rem;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--borde);
+  }
+
+  td {
+    padding: 0;
+    border: none;
+  }
+
+  /* Fila 1: fecha a la izquierda, estado a la derecha */
+  td:first-child {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  td:last-child {
+    grid-column: 2;
+    grid-row: 1;
+    text-align: right;
+  }
+
+  /* Filas siguientes: horario, cliente y servicio a lo ancho */
+  td:nth-child(2),
+  td:nth-child(3),
+  td:nth-child(4) {
+    grid-column: 1 / -1;
+  }
+
+  td:nth-child(2) {
+    font-size: 1.1rem;
+  }
+
+  td:nth-child(3)::before {
+    content: 'Cliente: ';
+    color: var(--texto-suave);
+  }
+
+  td:nth-child(4)::before {
+    content: 'Servicio: ';
+  }
+
+  td.vacio {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: var(--texto-suave);
+    font-weight: 400;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tabla-scroll {
+    animation: none;
+  }
+}
