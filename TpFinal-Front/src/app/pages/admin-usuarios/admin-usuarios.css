@@ -1,0 +1,367 @@
+/* =====================================================================
+   USUARIOS (panel de administración)
+   Encabezado compacto (como Comercios) + filtros por rol + una fila
+   por usuario. En celular cada fila pasa a ser una tarjetita.
+   ===================================================================== */
+
+:host {
+  --dorado: #d8b36a;
+  --dorado-claro: #e8c987;
+  --texto: #f5f1e8;
+  --texto-suave: #cbc4b7;
+  --tarjeta: #1c1f25;
+  --borde: rgb(245 241 232 / 12%);
+
+  display: block;
+}
+
+.usuarios {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 1.5rem 1.5rem 4rem;
+  color: var(--texto);
+}
+
+/* ===== Encabezado en UNA fila: título | filtros | buscador =====
+   grid-template-areas: cada nombre es una "zona"; en pantallas más chicas
+   se reacomodan cambiando solo esta línea (ver los @media de abajo). */
+.encabezado {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas: 'titulo filtros buscador';
+  align-items: center;
+  gap: 0.75rem 1.5rem;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  grid-area: titulo;
+  margin: 0;
+  font-size: 1.7rem;
+  font-weight: 750;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+/* Solo aparece cuando buscás algo */
+.resultado {
+  margin: -0.25rem 0 0.75rem;
+  color: var(--texto-suave);
+  font-size: 0.85rem;
+}
+
+.buscador {
+  grid-area: buscador;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 260px;
+  padding: 0.6rem 1rem;
+  border: 1px solid var(--borde);
+  border-radius: 999px;
+  background: var(--tarjeta);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.buscador:focus-within {
+  border-color: rgb(216 179 106 / 70%);
+  box-shadow: 0 0 0 4px rgb(216 179 106 / 12%);
+}
+
+.buscador svg {
+  flex-shrink: 0;
+  width: 1.1rem;
+  height: 1.1rem;
+  stroke: var(--texto-suave);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.buscador input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--texto);
+  font: inherit;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ===== Filtros por rol ===== */
+.filtros {
+  grid-area: filtros;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.filtro {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.95rem;
+  border: 1px solid var(--borde);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--texto-suave);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.16s, background-color 0.16s, color 0.16s;
+}
+
+.filtro:hover {
+  border-color: rgb(216 179 106 / 50%);
+  color: var(--texto);
+}
+
+.filtro.activo {
+  border-color: var(--dorado);
+  background: rgb(216 179 106 / 14%);
+  color: var(--dorado-claro);
+}
+
+.contador {
+  min-width: 1.4rem;
+  padding: 0.05rem 0.4rem;
+  border-radius: 999px;
+  background: rgb(245 241 232 / 10%);
+  font-size: 0.72rem;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.filtro:focus-visible,
+.btn-eliminar:focus-visible {
+  outline: 2px solid var(--dorado-claro);
+  outline-offset: 3px;
+}
+
+/* ===== Tabla ===== */
+.tabla {
+  overflow: hidden;
+  border: 1px solid var(--borde);
+  border-radius: 1.1rem;
+  background: var(--tarjeta);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  padding: 0.75rem 1.25rem;
+  border-bottom: 1px solid var(--borde);
+  text-align: left;
+  color: var(--dorado);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+td {
+  padding: 0.75rem 1.25rem;
+  border-bottom: 1px solid rgb(245 241 232 / 6%);
+  vertical-align: middle;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+tbody tr:hover {
+  background: rgb(245 241 232 / 3%);
+}
+
+/* Foto + nombre + email */
+.persona {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  min-width: 0;
+}
+
+.persona-datos {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.nombre {
+  font-weight: 600;
+}
+
+.email {
+  color: var(--texto-suave);
+  font-size: 0.82rem;
+  overflow-wrap: anywhere;
+}
+
+/* Marca "Vos" en la fila del admin que está mirando */
+.vos {
+  margin-left: 0.4rem;
+  padding: 0.05rem 0.45rem;
+  border: 1px solid rgb(216 179 106 / 45%);
+  border-radius: 999px;
+  color: var(--dorado-claro);
+  font-size: 0.68rem;
+  font-weight: 700;
+  vertical-align: middle;
+}
+
+/* ===== Pastilla del rol (el color depende de data-rol) ===== */
+.rol {
+  display: inline-block;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.rol[data-rol='CLIENTE'] {
+  background: rgb(245 241 232 / 10%);
+  color: var(--texto-suave);
+}
+
+.rol[data-rol='COMERCIO'] {
+  background: rgb(216 179 106 / 16%);
+  color: var(--dorado-claro);
+}
+
+.rol[data-rol='ADMIN'] {
+  background: linear-gradient(90deg, var(--dorado), var(--dorado-claro));
+  color: #14161a;
+}
+
+.turnos {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.acciones {
+  text-align: right;
+}
+
+.btn-eliminar {
+  padding: 0.45rem 0.95rem;
+  border: 1px solid rgb(248 113 113 / 45%);
+  border-radius: 999px;
+  background: transparent;
+  color: #fca5a5;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.16s;
+}
+
+.btn-eliminar:hover:not(:disabled) {
+  background: rgb(248 113 113 / 14%);
+}
+
+.btn-eliminar:disabled {
+  cursor: wait;
+  opacity: 0.55;
+}
+
+/* ===== Mensajes ===== */
+.alerta {
+  margin: 0 0 1.25rem;
+  padding: 0.8rem 1rem;
+  border-radius: 0.9rem;
+  font-size: 0.92rem;
+}
+
+.error {
+  border: 1px solid rgb(248 113 113 / 40%);
+  background: rgb(248 113 113 / 14%);
+  color: #fecaca;
+}
+
+.ok {
+  border: 1px solid rgb(74 222 128 / 40%);
+  background: rgb(74 222 128 / 12%);
+  color: #bbf7d0;
+}
+
+.vacio {
+  padding: 3rem 1rem;
+  text-align: center;
+  color: var(--texto-suave);
+}
+
+/* ===== Tablet: título y buscador arriba, filtros abajo ===== */
+@media (max-width: 900px) {
+  .encabezado {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      'titulo buscador'
+      'filtros filtros';
+  }
+}
+
+/* ===== Celular: todo apilado y cada usuario es una tarjetita ===== */
+@media (max-width: 640px) {
+  .usuarios {
+    padding: 1.25rem 1rem 3rem;
+  }
+
+  .encabezado {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'titulo'
+      'buscador'
+      'filtros';
+  }
+
+  .buscador {
+    width: 100%;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tr,
+  td {
+    display: block;
+  }
+
+  /* Fila 1: persona a lo ancho. Fila 2: rol, turnos y botón */
+  tbody tr {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 0.6rem 0.75rem;
+    padding: 0.9rem 1rem;
+    border-bottom: 1px solid rgb(245 241 232 / 6%);
+  }
+
+  td {
+    padding: 0;
+    border: none;
+  }
+
+  td:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .turnos::before {
+    content: 'Turnos: ';
+    color: var(--texto-suave);
+    font-weight: 400;
+  }
+}
