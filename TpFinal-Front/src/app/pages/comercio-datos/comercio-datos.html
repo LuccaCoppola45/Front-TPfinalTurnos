@@ -1,1 +1,65 @@
-<p>comercio-datos works!</p>
+<h2>Mi comercio</h2>
+
+@if (cargando()) {
+  <p class="vacio" role="status">Cargando...</p>
+} @else if (comercio(); as c) {
+  <section class="form-card">
+    @if (c.descripcion) {
+      <p class="ayuda">{{ c.descripcion }}</p>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="guardar()">
+      <div class="campo">
+        <label for="nombre">Nombre</label>
+        <input id="nombre" type="text" formControlName="nombre" />
+        @if (form.controls.nombre.touched && form.controls.nombre.invalid) {
+          <p class="error-campo" role="alert">El nombre es obligatorio.</p>
+        }
+      </div>
+
+      <div class="campo">
+        <label for="direccion">Dirección</label>
+        <input id="direccion" type="text" formControlName="direccion" />
+        @if (form.controls.direccion.touched && form.controls.direccion.invalid) {
+          <p class="error-campo" role="alert">La dirección es obligatoria.</p>
+        }
+      </div>
+
+      <div class="campo">
+        <label for="telefono">Teléfono</label>
+        <input id="telefono" type="tel" formControlName="telefono" />
+        @if (form.controls.telefono.touched && form.controls.telefono.invalid) {
+          <p class="error-campo" role="alert">Ingresá un teléfono válido (solo números, +, - y espacios).</p>
+        }
+      </div>
+
+      <fieldset class="campo">
+        <legend>Categorías</legend>
+        @for (cat of categorias(); track cat.uniqueId) {
+          <div>
+            <input
+              type="checkbox"
+              [id]="'cat-' + cat.uniqueId"
+              [checked]="seleccionadas().includes(cat.uniqueId)"
+              (change)="alternarCategoria(cat.uniqueId)"
+            />
+            <label class="inline" [for]="'cat-' + cat.uniqueId">{{ cat.nombreCategoria }}</label>
+          </div>
+        } @empty {
+          <p class="ayuda">Todavía no hay categorías cargadas. Pedile al administrador que cree alguna.</p>
+        }
+      </fieldset>
+
+      @if (error()) {
+        <p class="error" role="alert">{{ error() }}</p>
+      }
+      @if (ok()) {
+        <p class="ok" role="status">{{ ok() }}</p>
+      }
+
+      <button class="boton" type="submit" [disabled]="enviando()">Guardar cambios</button>
+    </form>
+  </section>
+} @else {
+  <p class="error" role="alert">{{ error() || 'No encontramos un comercio asociado a tu cuenta.' }}</p>
+}
