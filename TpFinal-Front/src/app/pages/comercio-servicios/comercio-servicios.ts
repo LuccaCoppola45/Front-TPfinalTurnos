@@ -1,18 +1,19 @@
-import { Component, inject, signal } from "@angular/core";
-import { NonNullableFormBuilder, Validators } from "@angular/forms";
+import { Component, inject, OnInit, signal } from "@angular/core";
+import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Auth } from "../../services/auth";
 import { ComercioService } from "../../services/comercioService";
 import { ServicioService } from "../../services/servicioService";
 import { Comercio, Servicio } from "../../Models/catalogo";
 import { mensajeDeError } from "../../core/http-error";
+import { CurrencyPipe } from "@angular/common";
 
 @Component({
-  imports: [],
+  imports: [ReactiveFormsModule, CurrencyPipe],
   selector: "app-comercio-servicios",
   styleUrl: "./comercio-servicios.css",
   templateUrl: "./comercio-servicios.html",
 })
-export class ComercioServicios {
+export class ComercioServicios implements OnInit{
    private readonly fb = inject(NonNullableFormBuilder);
   private readonly auth = inject(Auth);
   private readonly comercioService = inject(ComercioService);
