@@ -141,6 +141,10 @@ import { mensajeDeError } from '../../core/http-error';
       font-size: 0.8rem;
     }
 
+    .ayuda span {
+      margin: 0 0.35rem;
+    }
+
     .btn-quitar {
       padding: 0;
       border: none;

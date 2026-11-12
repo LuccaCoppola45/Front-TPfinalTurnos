@@ -1,4 +1,281 @@
-/* Foto del comercio arriba del formulario */
-.foto-comercio {
-  margin-bottom: 1.5rem;
+/* =====================================================================
+   MI COMERCIO (editar datos del comercio)
+   Misma estética que Mi perfil y Solicitar comercio: fondo oscuro,
+   tarjeta y acento dorado. Las categorías son "pastillas" que se
+   pintan de dorado cuando están marcadas (todo con CSS, sin tocar el HTML).
+   ===================================================================== */
+
+:host {
+  --dorado: #d8b36a;
+  --dorado-claro: #e8c987;
+  --texto: #f9f5ed;
+  --texto-suave: #cbc4b7;
+  --borde: rgb(245 241 232 / 14%);
+
+  display: block;
+  min-height: calc(100dvh - 160px);
+  padding: 3rem 1.5rem;
+  background:
+    radial-gradient(900px 600px at 50% -10%, rgb(216 179 106 / 12%), transparent),
+    #111317;
+}
+
+/* ===== Título ===== */
+h2 {
+  margin: 0 0 1.75rem;
+  text-align: center;
+  color: var(--texto);
+  font-size: clamp(1.7rem, 4vw, 2.2rem);
+  font-weight: 750;
+  letter-spacing: -0.05em;
+}
+
+/* ===== Tarjeta ===== */
+.form-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  width: min(560px, 100%);
+  margin: 0 auto;
+  padding: 2.25rem;
+  border: 1px solid var(--borde);
+  border-radius: 1.2rem;
+  background:
+    linear-gradient(180deg, rgb(245 241 232 / 8%) 0%, transparent 100%),
+    linear-gradient(160deg, rgb(28 31 37 / 98%) 0%, rgb(20 22 26 / 98%) 100%);
+  box-shadow:
+    0 60px 120px -80px rgb(216 179 106 / 40%),
+    0 40px 80px -60px rgb(8 9 11 / 90%);
+  animation: subir 0.5s ease-out both;
+}
+
+@keyframes subir {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+/* Descripción del comercio: como una cita */
+.ayuda {
+  margin: 0;
+  padding: 0.8rem 1rem;
+  border-left: 3px solid var(--dorado);
+  border-radius: 0 0.6rem 0.6rem 0;
+  background: rgb(216 179 106 / 8%);
+  color: var(--texto-suave);
+  font-size: 0.92rem;
+  font-style: italic;
+}
+
+/* ===== Formulario ===== */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.campo > label,
+legend {
+  padding: 0;
+  color: var(--texto-suave);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+
+.campo:focus-within > label,
+.campo:focus-within legend {
+  color: var(--dorado-claro);
+}
+
+.campo input:not([type='checkbox']) {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.9rem;
+  background: rgb(245 241 232 / 8%);
+  color: var(--texto);
+  font: inherit;
+  transition: border-color 0.16s, box-shadow 0.16s, background-color 0.16s;
+}
+
+.campo input:not([type='checkbox']):hover {
+  background: rgb(245 241 232 / 12%);
+}
+
+.campo input:not([type='checkbox']):focus-visible {
+  outline: none;
+  border-color: rgb(216 179 106 / 80%);
+  box-shadow: 0 0 0 4px rgb(216 179 106 / 14%);
+  background: rgb(245 241 232 / 14%);
+}
+
+/* Campo inválido: borde rojo (Angular le pone .ng-invalid y .ng-touched) */
+.campo input.ng-invalid.ng-touched {
+  border-color: rgb(248 113 113 / 80%);
+}
+
+.error-campo {
+  margin: 0;
+  color: #fca5a5;
+  font-size: 0.85rem;
+}
+
+/* ===== Categorías como pastillas ===== */
+fieldset.campo {
+  flex-flow: row wrap;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+  padding-top: 1.2rem;
+  border-top: 1px dashed var(--borde);
+}
+
+legend {
+  float: left; /* hace que el legend se comporte como un bloque normal */
+  width: 100%;
+  margin-bottom: 0.3rem;
+}
+
+fieldset.campo > div {
+  position: relative;
+  display: inline-flex;
+}
+
+/* El checkbox real queda invisible pero sigue funcionando con el teclado */
+fieldset.campo input[type='checkbox'] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+label.inline {
+  padding: 0.45rem 0.95rem;
+  border: 1px solid var(--borde);
+  border-radius: 999px;
+  color: var(--texto-suave);
+  font-size: 0.85rem;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.16s, border-color 0.16s, color 0.16s;
+}
+
+label.inline:hover {
+  border-color: rgb(216 179 106 / 50%);
+  color: var(--texto);
+}
+
+/* :checked + label = la pastilla de la categoría marcada */
+input[type='checkbox']:checked + label.inline {
+  border-color: var(--dorado);
+  background: rgb(216 179 106 / 16%);
+  color: var(--dorado-claro);
+}
+
+input[type='checkbox']:checked + label.inline::before {
+  margin-right: 0.35rem;
+  content: '✓';
+}
+
+input[type='checkbox']:focus-visible + label.inline {
+  outline: 2px solid var(--dorado);
+  outline-offset: 2px;
+}
+
+/* ===== Mensajes ===== */
+.error,
+.ok {
+  margin: 0;
+  padding: 0.8rem 1rem;
+  border-radius: 0.9rem;
+  font-size: 0.92rem;
+  animation: subir 0.3s ease-out;
+}
+
+.error {
+  border: 1px solid rgb(248 113 113 / 40%);
+  background: rgb(248 113 113 / 14%);
+  color: #fecaca;
+}
+
+.ok {
+  border: 1px solid rgb(74 222 128 / 40%);
+  background: rgb(74 222 128 / 12%);
+  color: #bbf7d0;
+}
+
+/* El error de "no tenés comercio" aparece fuera de la tarjeta */
+:host > .error {
+  width: min(560px, 100%);
+  margin: 0 auto;
+}
+
+.vacio {
+  text-align: center;
+  color: var(--texto-suave);
+}
+
+/* ===== Botón ===== */
+.boton {
+  margin-top: 0.4rem;
+  width: 100%;
+  padding: 0.95rem 1.2rem;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--dorado), var(--dorado-claro));
+  color: #14161a;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.16s, box-shadow 0.16s, opacity 0.16s;
+}
+
+.boton:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 18px 40px -24px rgb(216 179 106 / 90%);
+}
+
+.boton:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.boton:focus-visible {
+  outline: 2px solid var(--dorado-claro);
+  outline-offset: 3px;
+}
+
+.boton:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+/* ===== Celular ===== */
+@media (max-width: 520px) {
+  :host {
+    padding: 2rem 1rem;
+  }
+
+  .form-card {
+    padding: 1.75rem 1.4rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .form-card,
+  .error,
+  .ok {
+    animation: none;
+  }
 }

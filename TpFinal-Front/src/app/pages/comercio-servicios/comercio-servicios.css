@@ -1,0 +1,360 @@
+/* =====================================================================
+   GESTIONAR SERVICIOS (Mi comercio > Servicios)
+   Misma estética que Mi comercio y Mi perfil: fondo oscuro + dorado.
+   Arriba el formulario (alta / edición) y abajo la tabla de servicios.
+   ===================================================================== */
+
+:host {
+  --dorado: #d8b36a;
+  --dorado-claro: #e8c987;
+  --texto: #f9f5ed;
+  --texto-suave: #cbc4b7;
+  --borde: rgb(245 241 232 / 14%);
+  --rojo: #fca5a5;
+
+  display: block;
+  min-height: calc(100dvh - 160px);
+  padding: 3rem 1.5rem;
+  background:
+    radial-gradient(900px 600px at 50% -10%, rgb(216 179 106 / 12%), transparent),
+    #111317;
+  color: var(--texto);
+}
+
+h2 {
+  margin: 0 0 1.75rem;
+  text-align: center;
+  font-size: clamp(1.7rem, 4vw, 2.2rem);
+  font-weight: 750;
+  letter-spacing: -0.05em;
+}
+
+/* ===== Tarjetas (formulario y tabla) ===== */
+.card,
+.tabla-scroll {
+  width: min(880px, 100%);
+  margin: 0 auto 1.5rem;
+  border: 1px solid var(--borde);
+  border-radius: 1.2rem;
+  background:
+    linear-gradient(180deg, rgb(245 241 232 / 6%) 0%, transparent 100%),
+    linear-gradient(160deg, rgb(28 31 37 / 98%) 0%, rgb(20 22 26 / 98%) 100%);
+  box-shadow: 0 40px 80px -60px rgb(8 9 11 / 90%);
+  animation: subir 0.5s ease-out both;
+}
+
+@keyframes subir {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+/* ===== Formulario ===== */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding: 1.75rem 2rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Modo edición: solo existe el botón "Cancelar edición" cuando estás editando */
+.card:has(.secundario) {
+  border-color: rgb(216 179 106 / 55%);
+  box-shadow: 0 0 0 4px rgb(216 179 106 / 8%), 0 40px 80px -60px rgb(8 9 11 / 90%);
+}
+
+.card h3 {
+  margin: 0;
+  color: var(--dorado-claro);
+  font-size: 1.1rem;
+}
+
+/* Nombre más ancho; duración y precio más angostos */
+.fila-form {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 1rem;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.campo label {
+  color: var(--texto-suave);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+
+.campo:focus-within label {
+  color: var(--dorado-claro);
+}
+
+.campo input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.9rem;
+  background: rgb(245 241 232 / 8%);
+  color: var(--texto);
+  font: inherit;
+  transition: border-color 0.16s, box-shadow 0.16s, background-color 0.16s;
+}
+
+.campo input:hover {
+  background: rgb(245 241 232 / 12%);
+}
+
+.campo input:focus-visible {
+  outline: none;
+  border-color: rgb(216 179 106 / 80%);
+  box-shadow: 0 0 0 4px rgb(216 179 106 / 14%);
+  background: rgb(245 241 232 / 14%);
+}
+
+.campo input.ng-invalid.ng-touched {
+  border-color: rgb(248 113 113 / 80%);
+}
+
+.error-campo {
+  margin: 0;
+  color: var(--rojo);
+  font-size: 0.82rem;
+}
+
+/* ===== Botones ===== */
+.acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.boton {
+  padding: 0.75rem 1.4rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--dorado), var(--dorado-claro));
+  color: #14161a;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.16s, background-color 0.16s, border-color 0.16s, color 0.16s;
+}
+
+.boton:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.boton:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.boton:focus-visible {
+  outline: 2px solid var(--dorado-claro);
+  outline-offset: 3px;
+}
+
+.boton:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.boton.secundario {
+  border-color: rgb(216 179 106 / 45%);
+  background: transparent;
+  color: var(--dorado-claro);
+}
+
+.boton.secundario:hover {
+  background: rgb(216 179 106 / 12%);
+}
+
+.boton.peligro {
+  border-color: rgb(248 113 113 / 45%);
+  background: transparent;
+  color: var(--rojo);
+}
+
+.boton.peligro:hover {
+  background: rgb(248 113 113 / 14%);
+}
+
+/* Botones chicos dentro de la tabla */
+td .boton {
+  padding: 0.45rem 0.95rem;
+  font-size: 0.8rem;
+}
+
+/* ===== Tabla ===== */
+.tabla-scroll {
+  overflow-x: auto;
+  animation-delay: 80ms;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+caption {
+  padding: 1.25rem 1.5rem 0.75rem;
+  text-align: left;
+  color: var(--texto-suave);
+  font-size: 0.9rem;
+}
+
+th {
+  padding: 0.75rem 1.5rem;
+  border-bottom: 1px solid var(--borde);
+  text-align: left;
+  color: var(--dorado);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+td {
+  padding: 0.9rem 1.5rem;
+  border-bottom: 1px solid rgb(245 241 232 / 6%);
+  font-variant-numeric: tabular-nums; /* los números quedan alineados */
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+tbody tr {
+  transition: background-color 0.16s;
+}
+
+tbody tr:hover {
+  background: rgb(245 241 232 / 4%);
+}
+
+/* Nombre del servicio destacado; precio en dorado */
+td:first-child {
+  font-weight: 600;
+}
+
+td:nth-child(3) {
+  color: var(--dorado-claro);
+  font-weight: 600;
+}
+
+/* ===== Mensajes ===== */
+.vacio {
+  padding: 1rem;
+  text-align: center;
+  color: var(--texto-suave);
+}
+
+.error {
+  margin: 0;
+  padding: 0.8rem 1rem;
+  border: 1px solid rgb(248 113 113 / 40%);
+  border-radius: 0.9rem;
+  background: rgb(248 113 113 / 14%);
+  color: #fecaca;
+  font-size: 0.92rem;
+}
+
+/* El error de "no tenés comercio" aparece fuera de la tarjeta */
+:host > .error {
+  width: min(880px, 100%);
+  margin: 0 auto;
+}
+
+/* ===== Tablet: el nombre ocupa toda la fila ===== */
+@media (max-width: 720px) {
+  .fila-form {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .fila-form .campo:first-child {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ===== Celular: la tabla se convierte en tarjetas ===== */
+@media (max-width: 560px) {
+  :host {
+    padding: 2rem 1rem;
+  }
+
+  .card {
+    padding: 1.4rem;
+  }
+
+  .acciones .boton {
+    flex: 1;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tr,
+  td {
+    display: block;
+  }
+
+  tbody tr {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--borde);
+  }
+
+  td {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.3rem 0;
+    border: none;
+  }
+
+  /* Etiqueta de cada dato (reemplaza al encabezado de la tabla) */
+  td:nth-child(2)::before {
+    content: 'Duración';
+  }
+
+  td:nth-child(3)::before {
+    content: 'Precio';
+  }
+
+  td:nth-child(2)::before,
+  td:nth-child(3)::before {
+    color: var(--texto-suave);
+    font-weight: 400;
+  }
+
+  td:first-child {
+    font-size: 1.05rem;
+  }
+
+  td:last-child {
+    padding-top: 0.75rem;
+  }
+
+  td:last-child .acciones {
+    width: 100%;
+  }
+
+  td.vacio {
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .tabla-scroll {
+    animation: none;
+  }
+}
