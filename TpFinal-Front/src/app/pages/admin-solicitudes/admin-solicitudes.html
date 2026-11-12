@@ -1,1 +1,91 @@
-<p>admin-solicitudes works!</p>
+<section class="solicitudes">
+  <header class="encabezado">
+    <span class="etiqueta">Administración</span>
+    <h1>Solicitudes de comercio</h1>
+    <p>Usuarios que quieren ofrecer sus servicios. Al aprobar, su cuenta pasa a ser COMERCIO.</p>
+  </header>
+
+  @if (error()) {
+    <p class="alerta error" role="alert">{{ error() }}</p>
+  }
+  @if (ok()) {
+    <p class="alerta ok" role="status">{{ ok() }}</p>
+  }
+
+  @if (cargando()) {
+    <!-- Tarjetas "fantasma" mientras carga -->
+    <ul class="grilla">
+      @for (n of [1, 2]; track n) {
+        <li class="tarjeta esqueleto"></li>
+      }
+    </ul>
+  } @else if (solicitudes().length === 0) {
+    <div class="vacio">
+      <span class="vacio-icono" aria-hidden="true">✓</span>
+      <p>No hay solicitudes pendientes.</p>
+    </div>
+  } @else {
+    <p class="resultado">
+      {{ solicitudes().length }} {{ solicitudes().length === 1 ? 'solicitud pendiente' : 'solicitudes pendientes' }}
+    </p>
+
+    <ul class="grilla">
+      @for (s of solicitudes(); track s.id; let i = $index) {
+        <!-- --i se usa en el CSS para que cada tarjeta entre un poquito después -->
+        <li class="tarjeta" [style.--i]="i">
+          <div class="tarjeta-cabecera">
+            <h2>{{ s.nombreComercioPropuesto }}</h2>
+            <span class="estado">Pendiente</span>
+          </div>
+
+          @if (solicitante(s.usuarioId); as u) {
+            <div class="solicitante">
+              <span class="solicitante-nombre">{{ u.nombre }} {{ u.apellido }}</span>
+              <span class="solicitante-email">{{ u.email }}</span>
+            </div>
+          } @else {
+            <div class="solicitante">
+              <span class="solicitante-nombre">Usuario #{{ s.usuarioId }}</span>
+            </div>
+          }
+
+          <dl class="datos">
+            <div>
+              <dt>Dirección</dt>
+              <dd>{{ s.direccion }}</dd>
+            </div>
+            <div>
+              <dt>Teléfono</dt>
+              <dd>{{ s.telefono }}</dd>
+            </div>
+          </dl>
+
+          @if (s.descripcion) {
+            <p class="descripcion">{{ s.descripcion }}</p>
+          }
+
+          <p class="fecha">Enviada el {{ s.fechaSolicitud | date: 'dd/MM/yyyy HH:mm' }}</p>
+
+          <div class="acciones">
+            <button
+              type="button"
+              class="btn-aprobar"
+              [disabled]="procesandoId() === s.id"
+              (click)="aprobar(s)"
+            >
+              Aprobar
+            </button>
+            <button
+              type="button"
+              class="btn-rechazar"
+              [disabled]="procesandoId() === s.id"
+              (click)="rechazar(s)"
+            >
+              Rechazar
+            </button>
+          </div>
+        </li>
+      }
+    </ul>
+  }
+</section>

@@ -1,0 +1,319 @@
+/* =====================================================================
+   SOLICITUDES DE COMERCIO (panel de administración)
+   Misma familia que el listado de comercios: encabezado con etiqueta
+   dorada y una grilla de tarjetas, una por solicitud.
+   ===================================================================== */
+
+:host {
+  --dorado: #d8b36a;
+  --dorado-claro: #e8c987;
+  --texto: #f5f1e8;
+  --texto-suave: #cbc4b7;
+  --tarjeta: #1c1f25;
+  --borde: rgb(245 241 232 / 12%);
+
+  display: block;
+}
+
+.solicitudes {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 4rem;
+  color: var(--texto);
+}
+
+/* ===== Encabezado ===== */
+.encabezado {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.etiqueta {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  padding: 0.3rem 0.8rem;
+  border: 1px solid rgb(216 179 106 / 35%);
+  border-radius: 999px;
+  color: var(--dorado-claro);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.encabezado h1 {
+  margin: 0;
+  font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+  font-weight: 750;
+  letter-spacing: -0.04em;
+}
+
+.encabezado p {
+  margin: 0.6rem auto 0;
+  max-width: 52ch;
+  color: var(--texto-suave);
+}
+
+.resultado {
+  margin: 0 0 1rem;
+  color: var(--texto-suave);
+  font-size: 0.85rem;
+}
+
+/* ===== Grilla: tantas columnas de 320px como entren ===== */
+.grilla {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ===== Tarjeta de cada solicitud ===== */
+.tarjeta {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem;
+  border: 1px solid var(--borde);
+  border-radius: 1.1rem;
+  background:
+    linear-gradient(180deg, rgb(245 241 232 / 5%) 0%, transparent 60%),
+    var(--tarjeta);
+  transition: border-color 0.25s, box-shadow 0.25s;
+  /* entrada escalonada: --i lo pone el HTML (0, 1, 2...) */
+  animation: aparecer 0.5s ease-out both;
+  animation-delay: calc(var(--i, 0) * 70ms);
+}
+
+.tarjeta:hover {
+  border-color: rgb(216 179 106 / 40%);
+  box-shadow: 0 24px 50px -30px rgb(216 179 106 / 45%);
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+.tarjeta-cabecera {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.tarjeta h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  letter-spacing: -0.02em;
+  overflow-wrap: anywhere; /* nombres largos no rompen la tarjeta */
+}
+
+/* Pastilla "Pendiente": mismo amarillo que en Mis turnos */
+.estado {
+  flex-shrink: 0;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  background: rgb(250 204 21 / 15%);
+  color: #fde68a;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Quién lo pide */
+.solicitante {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.75rem 0.9rem;
+  border-radius: 0.8rem;
+  background: rgb(216 179 106 / 8%);
+}
+
+.solicitante-nombre {
+  color: var(--dorado-claro);
+  font-weight: 600;
+}
+
+.solicitante-email {
+  color: var(--texto-suave);
+  font-size: 0.85rem;
+  overflow-wrap: anywhere;
+}
+
+/* Dirección y teléfono en dos columnas */
+.datos {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
+  margin: 0;
+}
+
+.datos dt {
+  color: var(--texto-suave);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.datos dd {
+  margin: 0.2rem 0 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.descripcion {
+  margin: 0;
+  padding-left: 0.9rem;
+  border-left: 3px solid rgb(216 179 106 / 55%);
+  color: var(--texto-suave);
+  font-size: 0.92rem;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+.fecha {
+  margin: auto 0 0; /* empuja fecha y botones al fondo de la tarjeta */
+  color: var(--texto-suave);
+  font-size: 0.78rem;
+}
+
+/* ===== Botones ===== */
+.acciones {
+  display: flex;
+  gap: 0.6rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--borde);
+}
+
+.acciones button {
+  flex: 1;
+  padding: 0.7rem 1rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.16s, background-color 0.16s, opacity 0.16s;
+}
+
+/* ".acciones" adelante para que le ganen a la regla general ".acciones button" */
+.acciones .btn-aprobar {
+  background: linear-gradient(90deg, var(--dorado), var(--dorado-claro));
+  color: #14161a;
+}
+
+.acciones .btn-rechazar {
+  border-color: rgb(248 113 113 / 45%);
+  background: transparent;
+  color: #fca5a5;
+}
+
+.acciones .btn-rechazar:hover:not(:disabled) {
+  background: rgb(248 113 113 / 14%);
+}
+
+.acciones button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.acciones button:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.acciones button:focus-visible {
+  outline: 2px solid var(--dorado-claro);
+  outline-offset: 3px;
+}
+
+.acciones button:disabled {
+  cursor: wait;
+  opacity: 0.55;
+}
+
+/* ===== Mensajes ===== */
+.alerta {
+  max-width: 640px;
+  margin: 0 auto 1.25rem;
+  padding: 0.8rem 1rem;
+  border-radius: 0.9rem;
+  font-size: 0.92rem;
+  text-align: center;
+}
+
+.error {
+  border: 1px solid rgb(248 113 113 / 40%);
+  background: rgb(248 113 113 / 14%);
+  color: #fecaca;
+}
+
+.ok {
+  border: 1px solid rgb(74 222 128 / 40%);
+  background: rgb(74 222 128 / 12%);
+  color: #bbf7d0;
+}
+
+/* Sin solicitudes: un círculo con un ✓ (no hay nada por revisar) */
+.vacio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 3rem 1rem;
+  color: var(--texto-suave);
+}
+
+.vacio p {
+  margin: 0;
+}
+
+.vacio-icono {
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border: 1px solid rgb(216 179 106 / 35%);
+  border-radius: 50%;
+  color: var(--dorado-claro);
+  font-size: 1.4rem;
+}
+
+/* ===== Tarjetas "fantasma" mientras carga ===== */
+.esqueleto {
+  min-height: 300px;
+  background:
+    linear-gradient(100deg, transparent 30%, rgb(245 241 232 / 6%) 50%, transparent 70%) 0 0 / 200% 100%,
+    var(--tarjeta);
+  animation: brillo 1.4s linear infinite;
+}
+
+@keyframes brillo {
+  to {
+    background-position: -200% 0, 0 0;
+  }
+}
+
+@media (max-width: 520px) {
+  .solicitudes {
+    padding: 2rem 1rem 3rem;
+  }
+
+  .datos {
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tarjeta,
+  .esqueleto {
+    animation: none;
+  }
+}

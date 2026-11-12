@@ -124,6 +124,7 @@
   letter-spacing: 0.16em;
   text-decoration: none;
   text-transform: uppercase;
+  white-space: nowrap; /* "Mi comercio" no se parte en dos líneas */
   transition: color 220ms ease;
 }
 
@@ -209,11 +210,29 @@
   background: rgb(216 179 106 / 9%);
 }
 
+/* Con los links de cada rol ya no entra todo en una fila:
+   la marca queda arriba y los links bajan a una segunda línea */
+@media (max-width: 1100px) {
+  .header-content {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-block: 0.75rem;
+    row-gap: 0.6rem;
+  }
+
+  .header-nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    row-gap: 0.5rem;
+  }
+}
+
 @media (max-width: 760px) {
   .header-content {
     min-height: 4.25rem;
     gap: 1rem;
-    padding: 0 1.25rem;
+    padding-inline: 1.25rem;
   }
 
   .header-nav {
@@ -238,7 +257,7 @@
   }
 
   .header-content {
-    padding: 0 1rem;
+    padding-inline: 1rem;
   }
 
   .header-nav {

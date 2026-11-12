@@ -23,9 +23,24 @@
       </a>
 
       @if (auth.estalogueado()){
+        <!-- Links de cada rol -->
         @if (auth.rol() === 'CLIENTE') {
+          <a class="nav-link" routerLink="/comercios" routerLinkActive="is-active">Comercios</a>
           <a class="nav-link" routerLink="/mis-turnos" routerLinkActive="is-active">Mis turnos</a>
+          <a class="nav-link" routerLink="/solicitar-comercio" routerLinkActive="is-active">Ofrecer servicios</a>
         }
+        @if (auth.rol() === 'COMERCIO') {
+          <!-- exact: true para que "Mi comercio" no quede marcado también en Servicios, Horarios o Agenda -->
+          <a class="nav-link" routerLink="/mi-comercio" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }">Mi comercio</a>
+          <a class="nav-link" routerLink="/mi-comercio/servicios" routerLinkActive="is-active">Servicios</a>
+          <a class="nav-link" routerLink="/mi-comercio/horarios" routerLinkActive="is-active">Horarios</a>
+          <a class="nav-link" routerLink="/mi-comercio/agenda" routerLinkActive="is-active">Agenda</a>
+        }
+        @if (auth.rol() === 'ADMIN') {
+          <a class="nav-link" routerLink="/admin/solicitudes" routerLinkActive="is-active">Solicitudes</a>
+          <!-- Agregar cuando estén hechas: Categorías, Comercios, Usuarios, Cancelaciones -->
+        }
+
         <a class="nav-link nav-perfil" routerLink="/perfil" routerLinkActive="is-active">
           @if (auth.usuario(); as u) {
             <app-avatar [src]="fotos.url('usuario', u.idUsuario)" [nombre]="u.nombre + ' ' + u.apellido" [tamanio]="26" />
