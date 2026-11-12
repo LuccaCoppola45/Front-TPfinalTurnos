@@ -3,16 +3,17 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Auth } from '../../services/auth';
 import { UsuarioService } from '../../services/usuarioService';
 import { mensajeDeError } from '../../core/http-error';
+import { FotoEditor } from '../../components/foto-editor/foto-editor';
 
 @Component({
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, FotoEditor],
   selector: 'app-perfil',
   styleUrl: './perfil.css',
   templateUrl: './perfil.html',
 })
 export class Perfil implements OnInit {
   private readonly fb = inject(FormBuilder);
-  private readonly auth = inject(Auth);
+  protected readonly auth = inject(Auth);
   private readonly usuarioService = inject(UsuarioService);
 
   readonly error = signal('');

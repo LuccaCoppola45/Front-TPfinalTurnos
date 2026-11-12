@@ -6,9 +6,10 @@ import { CategoriaService } from "../../services/categoriaService";
 import { Categoria, Comercio } from "../../Models/catalogo";
 import { forkJoin } from "rxjs";
 import { mensajeDeError } from "../../core/http-error";
+import { FotoEditor } from "../../components/foto-editor/foto-editor";
 
 @Component({
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, FotoEditor],
   selector: "app-comercio-datos",
   styleUrl: "./comercio-datos.css",
   templateUrl: "./comercio-datos.html",

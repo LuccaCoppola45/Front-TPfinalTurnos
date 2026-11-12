@@ -63,7 +63,13 @@
         <!-- --i se usa en el CSS para que cada tarjeta entre un poquito después -->
         <li class="tarjeta" [style.--i]="i">
           <div class="tarjeta-cabecera">
-            <span class="avatar" aria-hidden="true">{{ inicial(comercio.nombre) }}</span>
+            <!-- Foto del comercio; si no tiene, muestra las iniciales -->
+            <app-avatar
+              class="avatar"
+              [src]="fotos.url('comercio', comercio.idComercio)"
+              [nombre]="comercio.nombre"
+              [tamanio]="48"
+            />
             <div>
               <h2>{{ comercio.nombre }}</h2>
               <p class="direccion">{{ comercio.direccion }}</p>

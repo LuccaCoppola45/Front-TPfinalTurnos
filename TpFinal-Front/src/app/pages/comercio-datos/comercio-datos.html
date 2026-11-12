@@ -4,6 +4,8 @@
   <p class="vacio" role="status">Cargando...</p>
 } @else if (comercio(); as c) {
   <section class="form-card">
+    <app-foto-editor class="foto-comercio" tipo="comercio" [id]="c.idComercio" [nombre]="c.nombre" />
+
     @if (c.descripcion) {
       <p class="ayuda">{{ c.descripcion }}</p>
     }

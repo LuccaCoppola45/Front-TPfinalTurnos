@@ -156,6 +156,14 @@
   transform: scaleX(1);
 }
 
+/* Link "Mi perfil": foto chiquita + nombre */
+.nav-perfil {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.2rem 0;
+}
+
 .nav-cta {
   display: inline-flex;
   align-items: center;

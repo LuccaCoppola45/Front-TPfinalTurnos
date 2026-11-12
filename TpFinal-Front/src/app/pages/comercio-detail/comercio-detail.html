@@ -3,7 +3,10 @@
 @if (error()) {
   <p class="error" role="alert">{{ error() }}</p>
 } @else if (comercio(); as c) {
-  <h2>{{ c.nombre }}</h2>
+  <div class="cabecera">
+    <app-avatar [src]="fotos.url('comercio', c.idComercio)" [nombre]="c.nombre" [tamanio]="72" />
+    <h2>{{ c.nombre }}</h2>
+  </div>
   <p>{{ c.direccion }} · Tel. {{ c.telefono }}</p>
   @if (c.descripcion) {
     <p>{{ c.descripcion }}</p>

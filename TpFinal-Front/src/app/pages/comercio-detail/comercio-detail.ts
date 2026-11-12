@@ -5,9 +5,11 @@ import { DIAS_SEMANA, NOMBRE_DIA, recortarHora } from "../../core/fechas";
 import { Comercio } from "../../Models/catalogo";
 import { mensajeDeError } from "../../core/http-error";
 import { CurrencyPipe } from "@angular/common";
+import { FotoService } from "../../services/fotoService";
+import { Avatar } from "../../components/avatar/avatar";
 
 @Component({
-  imports: [RouterLink, CurrencyPipe],
+  imports: [RouterLink, CurrencyPipe, Avatar],
   selector: "app-comercio-detail",
   styleUrl: "./comercio-detail.css",
   templateUrl: "./comercio-detail.html",
@@ -15,6 +17,7 @@ import { CurrencyPipe } from "@angular/common";
 export class ComercioDetail implements OnInit{
   private readonly route = inject(ActivatedRoute);
   private readonly comercioService = inject(ComercioService);
+  protected readonly fotos = inject(FotoService);
 
   protected readonly nombreDia = NOMBRE_DIA;
   protected readonly recortarHora = recortarHora;

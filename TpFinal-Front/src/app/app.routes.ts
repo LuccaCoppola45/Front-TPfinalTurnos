@@ -20,6 +20,13 @@ export const routes: Routes = [
 
   // CLIENTE
 
+   {
+    path: 'comercios',
+    canActivate: [rolGuard('CLIENTE')],
+    loadComponent: () =>
+      import('./pages/comercio-list/comercio-list').then((m) => m.ComercioList),
+  },
+
   {
     path: 'comercios/:id/reservar/:servicioId',
     canActivate: [rolGuard('CLIENTE')],

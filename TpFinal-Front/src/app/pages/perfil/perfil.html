@@ -1,5 +1,15 @@
 <section class="registro-container">
   <div class="registro-card">
+    <!-- Foto de perfil "a caballo" del borde de la tarjeta -->
+    @if (auth.usuario(); as u) {
+      <app-foto-editor
+        class="foto-perfil"
+        tipo="usuario"
+        [id]="u.idUsuario"
+        [nombre]="u.nombre + ' ' + u.apellido"
+      />
+    }
+
     <h2>Mi Perfil</h2>
     <p class="subtitle">Actualiza la información de tu cuenta</p>
 

@@ -11,6 +11,12 @@ import { Usuario } from "../../Models/auth";
 import { recortarHora } from "../../core/fechas";
 import { DatePipe } from "@angular/common";
 
+interface FilaAgenda {
+  turno: Turno;
+  cliente: string;
+  servicio: string;
+}
+
 @Component({
   imports: [DatePipe],
   selector: "app-comercio-agenda",

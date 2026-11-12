@@ -26,7 +26,10 @@
         @if (auth.rol() === 'CLIENTE') {
           <a class="nav-link" routerLink="/mis-turnos" routerLinkActive="is-active">Mis turnos</a>
         }
-        <a class="nav-link" routerLink="/perfil" routerLinkActive="is-active">
+        <a class="nav-link nav-perfil" routerLink="/perfil" routerLinkActive="is-active">
+          @if (auth.usuario(); as u) {
+            <app-avatar [src]="fotos.url('usuario', u.idUsuario)" [nombre]="u.nombre + ' ' + u.apellido" [tamanio]="26" />
+          }
           {{ auth.usuario()?.nombre }}
         </a>
         <button type="button" class="nav-cta" (click)="auth.logout()">

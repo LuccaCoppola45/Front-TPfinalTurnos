@@ -1,0 +1,14 @@
+/* Foto del comercio al lado del nombre */
+.cabecera {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cabecera h2 {
+  margin: 0;
+}
+
+.cabecera app-avatar {
+  --avatar-radio: 1.1rem;
+}

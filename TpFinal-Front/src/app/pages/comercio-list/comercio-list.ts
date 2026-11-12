@@ -4,15 +4,18 @@ import { RouterLink } from '@angular/router';
 import { ComercioService } from '../../services/comercioService';
 import { Comercio } from '../../Models/catalogo';
 import { mensajeDeError } from '../../core/http-error';
+import { FotoService } from '../../services/fotoService';
+import { Avatar } from '../../components/avatar/avatar';
 
 @Component({
-  imports: [RouterLink, CurrencyPipe],
+  imports: [RouterLink, CurrencyPipe, Avatar],
   selector: 'app-comercio-list',
   styleUrl: './comercio-list.css',
   templateUrl: './comercio-list.html',
 })
 export class ComercioList implements OnInit {
   private readonly comercioService = inject(ComercioService);
+  protected readonly fotos = inject(FotoService);
 
   // Datos que vienen de afuera → signal
   readonly comercios = signal<Comercio[]>([]);
@@ -66,10 +69,5 @@ export class ComercioList implements OnInit {
   /** Si tocás el chip que ya estaba elegido, se desmarca. */
   elegirCategoria(categoria: string | null): void {
     this.categoriaElegida.set(this.categoriaElegida() === categoria ? null : categoria);
-  }
-
-  /** Primera letra del nombre, para el "avatar" de la tarjeta. */
-  inicial(nombre: string): string {
-    return nombre.trim().charAt(0).toUpperCase();
   }
 }

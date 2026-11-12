@@ -200,17 +200,11 @@
   gap: 0.9rem;
 }
 
+/* <app-avatar>: cuadrado redondeado; sin foto muestra las iniciales en dorado suave */
 .avatar {
-  display: grid;
-  place-items: center; /* centra en los dos ejes con una sola línea */
-  flex-shrink: 0;
-  width: 3rem;
-  height: 3rem;
-  border-radius: 0.9rem;
-  background: rgb(216 179 106 / 14%);
-  color: var(--dorado-claro);
-  font-size: 1.3rem;
-  font-weight: 700;
+  --avatar-radio: 0.9rem;
+  --avatar-fondo: rgb(216 179 106 / 14%);
+  --avatar-texto: var(--dorado-claro);
 }
 
 .tarjeta h2 {

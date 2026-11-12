@@ -1,9 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Auth } from '../../services/auth';
+import { FotoService } from '../../services/fotoService';
+import { Avatar } from '../avatar/avatar';
 
 @Component({
-  imports: [RouterLink, RouterLinkActive],
+  imports: [RouterLink, RouterLinkActive, Avatar],
   selector: 'app-header',
   styleUrl: './header.css',
   templateUrl: './header.html',
@@ -11,4 +13,5 @@ import { Auth } from '../../services/auth';
 export class Header {
 
   protected readonly auth = inject(Auth);
+  protected readonly fotos = inject(FotoService);
 }
