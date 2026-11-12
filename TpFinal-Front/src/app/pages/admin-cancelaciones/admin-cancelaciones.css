@@ -1,0 +1,261 @@
+/* =====================================================================
+   CANCELACIONES (panel de administración)
+   Historial de turnos cancelados. Misma estructura que Usuarios:
+   encabezado en una fila + tabla. En celular cada fila es una tarjetita.
+   ===================================================================== */
+
+:host {
+  --dorado: #d8b36a;
+  --dorado-claro: #e8c987;
+  --texto: #f5f1e8;
+  --texto-suave: #cbc4b7;
+  --tarjeta: #1c1f25;
+  --borde: rgb(245 241 232 / 12%);
+
+  display: block;
+}
+
+.cancelaciones {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 1.5rem 1.5rem 4rem;
+  color: var(--texto);
+}
+
+/* ===== Encabezado en una fila ===== */
+.encabezado {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.7rem;
+  font-weight: 750;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.resultado {
+  margin: 0.35rem 0 0;
+  color: var(--texto-suave);
+  font-size: 0.85rem;
+}
+
+.buscador {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 300px;
+  padding: 0.6rem 1rem;
+  border: 1px solid var(--borde);
+  border-radius: 999px;
+  background: var(--tarjeta);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.buscador:focus-within {
+  border-color: rgb(216 179 106 / 70%);
+  box-shadow: 0 0 0 4px rgb(216 179 106 / 12%);
+}
+
+.buscador svg {
+  flex-shrink: 0;
+  width: 1.1rem;
+  height: 1.1rem;
+  stroke: var(--texto-suave);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.buscador input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--texto);
+  font: inherit;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ===== Tabla ===== */
+.tabla {
+  overflow: hidden;
+  border: 1px solid var(--borde);
+  border-radius: 1.1rem;
+  background: var(--tarjeta);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  padding: 0.75rem 1.25rem;
+  border-bottom: 1px solid var(--borde);
+  text-align: left;
+  color: var(--dorado);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+td {
+  padding: 0.85rem 1.25rem;
+  border-bottom: 1px solid rgb(245 241 232 / 6%);
+  vertical-align: top;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+tbody tr:hover {
+  background: rgb(245 241 232 / 3%);
+}
+
+/* Cada celda tiene un dato principal arriba y uno secundario abajo */
+td > span {
+  display: block;
+}
+
+.nombre {
+  font-weight: 600;
+}
+
+.secundario {
+  margin-top: 0.15rem;
+  color: var(--texto-suave);
+  font-size: 0.82rem;
+  overflow-wrap: anywhere;
+}
+
+/* Fecha en dorado, como en la Agenda */
+.fecha {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.dia {
+  color: var(--dorado-claro);
+  font-weight: 600;
+}
+
+.hora {
+  margin-top: 0.15rem;
+  color: var(--texto-suave);
+  font-size: 0.82rem;
+}
+
+/* Motivo como una cita, con una rayita roja (es una cancelación) */
+.motivo {
+  width: 38%;
+}
+
+.motivo q {
+  display: block;
+  padding-left: 0.75rem;
+  border-left: 2px solid rgb(248 113 113 / 55%);
+  color: var(--texto-suave);
+  font-style: italic;
+  line-height: 1.45;
+}
+
+/* ===== Mensajes ===== */
+.alerta {
+  padding: 0.8rem 1rem;
+  border: 1px solid rgb(248 113 113 / 40%);
+  border-radius: 0.9rem;
+  background: rgb(248 113 113 / 14%);
+  color: #fecaca;
+}
+
+.vacio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 3rem 1rem;
+  color: var(--texto-suave);
+  text-align: center;
+}
+
+.vacio p {
+  margin: 0;
+}
+
+.vacio-icono {
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border: 1px solid rgb(216 179 106 / 35%);
+  border-radius: 50%;
+  color: var(--dorado-claro);
+  font-size: 1.4rem;
+}
+
+/* ===== Celular: cada cancelación es una tarjetita ===== */
+@media (max-width: 640px) {
+  .cancelaciones {
+    padding: 1.25rem 1rem 3rem;
+  }
+
+  .encabezado {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .buscador {
+    width: 100%;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tr,
+  td {
+    display: block;
+  }
+
+  tbody tr {
+    padding: 1rem;
+    border-bottom: 1px solid rgb(245 241 232 / 6%);
+  }
+
+  td {
+    width: auto;
+    padding: 0.2rem 0;
+    border: none;
+  }
+
+  /* La fecha queda en una línea: "16/06/2026 · 00:36 hs" */
+  .fecha span {
+    display: inline;
+  }
+
+  .hora::before {
+    content: ' · ';
+  }
+
+  .motivo {
+    width: auto;
+    padding-top: 0.6rem;
+  }
+}

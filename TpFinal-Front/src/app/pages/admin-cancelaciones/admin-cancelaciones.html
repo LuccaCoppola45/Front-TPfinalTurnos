@@ -1,1 +1,91 @@
-<p>admin-cancelaciones works!</p>
+<section class="cancelaciones">
+  <!-- Una sola fila: título y cantidad | buscador (igual que Usuarios) -->
+  <header class="encabezado">
+    <div>
+      <h1>Cancelaciones</h1>
+      @if (!cargando() && cancelaciones().length > 0) {
+        <p class="resultado">
+          @if (busqueda()) {
+            {{ filtradas().length }} de {{ cancelaciones().length }} cancelaciones
+          } @else {
+            {{ cancelaciones().length }} {{ cancelaciones().length === 1 ? 'turno cancelado' : 'turnos cancelados' }}
+          }
+        </p>
+      }
+    </div>
+
+    <label class="buscador">
+      <span class="sr-only">Buscar cancelación</span>
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="m20 20-3.5-3.5" />
+      </svg>
+      <input type="search" placeholder="Usuario, comercio o motivo" [value]="busqueda()" (input)="alBuscar($event)" />
+    </label>
+  </header>
+
+  @if (error()) {
+    <p class="alerta" role="alert">{{ error() }}</p>
+  } @else if (cargando()) {
+    <p class="vacio" role="status">Cargando cancelaciones...</p>
+  } @else if (cancelaciones().length === 0) {
+    <div class="vacio">
+      <span class="vacio-icono" aria-hidden="true">✓</span>
+      <p>No hay turnos cancelados.</p>
+    </div>
+  } @else if (filtradas().length === 0) {
+    <p class="vacio">Ninguna cancelación coincide con "{{ busqueda() }}".</p>
+  } @else {
+    <div class="tabla">
+      <table>
+        <caption class="sr-only">Historial de turnos cancelados, los más recientes primero</caption>
+        <thead>
+          <tr>
+            <th scope="col">Cancelado el</th>
+            <th scope="col">Quién canceló</th>
+            <th scope="col">Turno</th>
+            <th scope="col">Motivo</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (f of filtradas(); track f.cancelacion.idCancelacion) {
+            <tr>
+              <td class="fecha">
+                <span class="dia">{{ f.cancelacion.fechaCancelacion | date: 'dd/MM/yyyy' }}</span>
+                <span class="hora">{{ f.cancelacion.fechaCancelacion | date: 'HH:mm' }} hs</span>
+              </td>
+              <td>
+                @if (f.usuario; as u) {
+                  <span class="nombre">{{ u.nombre }} {{ u.apellido }}</span>
+                  <span class="secundario">{{ u.email }}</span>
+                } @else {
+                  <span class="nombre">Usuario #{{ f.cancelacion.idUsuario }}</span>
+                }
+              </td>
+              <td>
+                @if (f.turno; as t) {
+                  <span class="nombre">{{ f.comercio || 'Comercio' }}</span>
+                  <span class="secundario">
+                    {{ t.fecha | date: 'dd/MM' }} · {{ recortarHora(t.horaInicio) }}
+                    @if (f.servicio) {
+                      · {{ f.servicio }}
+                    }
+                  </span>
+                } @else {
+                  <span class="secundario">Sin datos del turno</span>
+                }
+              </td>
+              <td class="motivo">
+                @if (f.cancelacion.motivo) {
+                  <q>{{ f.cancelacion.motivo }}</q>
+                } @else {
+                  <span class="secundario">Sin motivo</span>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</section>

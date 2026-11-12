@@ -35,6 +35,8 @@ export interface Cancelacion {
     fechaCancelacion: string;
     motivo: string;
     idUsuario: number;
+    /** Turno que se canceló (puede faltar en datos viejos) */
+    idTurno: number | null;
 }
 
 
