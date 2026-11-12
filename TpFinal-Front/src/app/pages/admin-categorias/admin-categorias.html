@@ -1,1 +1,76 @@
-<p>admin-categorias works!</p>
+<section class="categorias">
+  <header class="encabezado">
+    <span class="etiqueta">Administración</span>
+    <h1>Categorías</h1>
+    <p>Los comercios eligen una o más categorías, y los clientes las usan para filtrar.</p>
+  </header>
+
+  <!-- Formulario: sirve para crear y para editar -->
+  <form class="formulario" [class.editando]="editandoId() !== null" [formGroup]="form" (ngSubmit)="guardar()">
+    <label for="nombre">{{ editandoId() === null ? 'Nueva categoría' : 'Editar categoría' }}</label>
+    <div class="fila">
+      <input
+        #campoNombre
+        id="nombre"
+        type="text"
+        maxlength="50"
+        placeholder="Ej: Peluquería"
+        formControlName="nombreCategoria"
+      />
+      <button class="btn-principal" type="submit" [disabled]="enviando()">
+        {{ editandoId() === null ? 'Agregar' : 'Guardar' }}
+      </button>
+      @if (editandoId() !== null) {
+        <button class="btn-secundario" type="button" (click)="cancelarEdicion()">Cancelar</button>
+      }
+    </div>
+    @if (form.controls.nombreCategoria.touched && form.controls.nombreCategoria.invalid) {
+      <p class="error-campo" role="alert">Obligatorio, hasta 50 caracteres, solo letras y espacios.</p>
+    }
+  </form>
+
+  @if (error()) {
+    <p class="alerta error" role="alert">{{ error() }}</p>
+  }
+  @if (ok()) {
+    <p class="alerta ok" role="status">{{ ok() }}</p>
+  }
+
+  @if (cargando()) {
+    <p class="vacio" role="status">Cargando...</p>
+  } @else if (categorias().length === 0) {
+    <p class="vacio">Todavía no hay categorías. Agregá la primera arriba.</p>
+  } @else {
+    <p class="resultado">{{ categorias().length }} {{ categorias().length === 1 ? 'categoría' : 'categorías' }}</p>
+
+    <ul class="lista">
+      @for (c of categorias(); track c.uniqueId) {
+        <li class="item" [class.editando]="editandoId() === c.uniqueId">
+          <span class="nombre">{{ c.nombreCategoria }}</span>
+          <button
+            type="button"
+            class="btn-icono"
+            [attr.aria-label]="'Editar ' + c.nombreCategoria"
+            title="Editar"
+            (click)="editar(c)"
+          >
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M4 20h4L19 9l-4-4L4 16zM14 6l4 4" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            class="btn-icono peligro"
+            [attr.aria-label]="'Eliminar ' + c.nombreCategoria"
+            title="Eliminar"
+            (click)="eliminar(c)"
+          >
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M5 7h14M10 7V4h4v3M7 7l1 13h8l1-13" />
+            </svg>
+          </button>
+        </li>
+      }
+    </ul>
+  }
+</section>
