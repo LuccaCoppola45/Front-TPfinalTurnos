@@ -1,1 +1,80 @@
-<p>comercio-servicios works!</p>
+<h2>Servicios</h2>
+
+@if (cargando()) {
+  <p class="vacio" role="status">Cargando...</p>
+} @else if (comercio(); as c) {
+  <form [formGroup]="form" (ngSubmit)="guardar()" class="card">
+    <h3>{{ editandoId() === null ? 'Nuevo servicio' : 'Editar servicio' }}</h3>
+    <div class="fila-form">
+      <div class="campo">
+        <label for="nombre">Nombre</label>
+        <input id="nombre" type="text" formControlName="nombreServicio" />
+        @if (form.controls.nombreServicio.touched && form.controls.nombreServicio.invalid) {
+          <p class="error-campo" role="alert">El nombre es obligatorio.</p>
+        }
+      </div>
+      <div class="campo">
+        <label for="duracion">Duración (minutos)</label>
+        <input id="duracion" type="number" min="5" step="5" formControlName="duracionDelServicio" />
+        @if (form.controls.duracionDelServicio.touched && form.controls.duracionDelServicio.invalid) {
+          <p class="error-campo" role="alert">La duración mínima es de 5 minutos.</p>
+        }
+      </div>
+      <div class="campo">
+        <label for="precio">Precio</label>
+        <input id="precio" type="number" min="1" formControlName="precio" />
+        @if (form.controls.precio.touched && form.controls.precio.invalid) {
+          <p class="error-campo" role="alert">El precio debe ser mayor a cero.</p>
+        }
+      </div>
+    </div>
+
+    @if (error()) {
+      <p class="error" role="alert">{{ error() }}</p>
+    }
+
+    <div class="acciones">
+      <button class="boton" type="submit" [disabled]="enviando()">
+        {{ editandoId() === null ? 'Agregar servicio' : 'Guardar cambios' }}
+      </button>
+      @if (editandoId() !== null) {
+        <button class="boton secundario" type="button" (click)="cancelarEdicion()">Cancelar edición</button>
+      }
+    </div>
+  </form>
+
+  <div class="tabla-scroll">
+    <table>
+      <caption class="ayuda">Servicios de {{ c.nombre }}</caption>
+      <thead>
+        <tr>
+          <th scope="col">Servicio</th>
+          <th scope="col">Duración</th>
+          <th scope="col">Precio</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (s of c.servicios ?? []; track s.idServicio) {
+          <tr>
+            <td>{{ s.nombreServicio }}</td>
+            <td>{{ s.duracionDelServicio }} min</td>
+            <td>{{ s.precio | currency: 'ARS' : 'symbol-narrow' : '1.0-0' }}</td>
+            <td>
+              <div class="acciones">
+                <button type="button" class="boton secundario" (click)="editar(s)">Editar</button>
+                <button type="button" class="boton peligro" (click)="eliminar(s)">Eliminar</button>
+              </div>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="4" class="vacio">Todavía no cargaste servicios.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+} @else {
+  <p class="error" role="alert">{{ error() || 'No encontramos un comercio asociado a tu cuenta.' }}</p>
+}
