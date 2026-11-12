@@ -1,1 +1,112 @@
-<p>admin-comercios works!</p>
+<section class="comercios">
+  <!-- Barra compacta: título y cantidad a la izquierda, buscador a la derecha -->
+  <header class="encabezado">
+    <div class="titulo-pagina">
+      <span class="etiqueta">Administración</span>
+      <h1>Comercios</h1>
+      @if (!cargando() && comercios().length > 0) {
+        <p class="resultado">
+          @if (busqueda()) {
+            {{ filtrados().length }} de {{ comercios().length }} comercios
+          } @else {
+            {{ comercios().length }} {{ comercios().length === 1 ? 'comercio registrado' : 'comercios registrados' }}
+          }
+        </p>
+      }
+    </div>
+
+    <label class="buscador">
+      <span class="sr-only">Buscar comercio</span>
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="m20 20-3.5-3.5" />
+      </svg>
+      <input
+        type="search"
+        placeholder="Nombre, dirección o dueño"
+        [value]="busqueda()"
+        (input)="alBuscar($event)"
+      />
+    </label>
+  </header>
+
+  @if (error()) {
+    <p class="alerta error" role="alert">{{ error() }}</p>
+  }
+  @if (ok()) {
+    <p class="alerta ok" role="status">{{ ok() }}</p>
+  }
+
+  @if (cargando()) {
+    <!-- Tarjetas "fantasma" mientras carga -->
+    <ul class="grilla">
+      @for (n of [1, 2, 3]; track n) {
+        <li class="tarjeta esqueleto"></li>
+      }
+    </ul>
+  } @else if (comercios().length === 0) {
+    <p class="vacio">Todavía no hay comercios registrados.</p>
+  } @else if (filtrados().length === 0) {
+    <p class="vacio">Ningún comercio coincide con "{{ busqueda() }}".</p>
+  } @else {
+    <ul class="grilla">
+      @for (c of filtrados(); track c.idComercio; let i = $index) {
+        <li class="tarjeta" [style.--i]="i">
+          <div class="tarjeta-cabecera">
+            <app-avatar class="avatar" [src]="fotos.url('comercio', c.idComercio)" [nombre]="c.nombre" [tamanio]="52" />
+            <div class="titulo">
+              <h2>{{ c.nombre }}</h2>
+              <p class="direccion">{{ c.direccion }}</p>
+            </div>
+          </div>
+
+          @if (propietario(c.usuarioPropietarioId); as u) {
+            <div class="duenio">
+              <span class="duenio-etiqueta">Dueño</span>
+              <span class="duenio-nombre">{{ u.nombre }} {{ u.apellido }}</span>
+              <span class="duenio-email">{{ u.email }}</span>
+            </div>
+          } @else {
+            <div class="duenio sin-duenio">
+              <span class="duenio-etiqueta">Dueño</span>
+              <span class="duenio-nombre">Sin dueño asignado</span>
+            </div>
+          }
+
+          @if (c.categorias?.length) {
+            <div class="categorias">
+              @for (cat of c.categorias; track cat) {
+                <span class="pastilla">{{ cat }}</span>
+              }
+            </div>
+          }
+
+          <!-- Números rápidos del comercio -->
+          <dl class="datos">
+            <div>
+              <dt>Teléfono</dt>
+              <dd>{{ c.telefono }}</dd>
+            </div>
+            <div>
+              <dt>Servicios</dt>
+              <dd>{{ c.servicios?.length ?? 0 }}</dd>
+            </div>
+            <div>
+              <dt>Horarios</dt>
+              <dd>{{ c.horarios?.length ?? 0 }}</dd>
+            </div>
+          </dl>
+
+          <button
+            type="button"
+            class="btn-eliminar"
+            [disabled]="eliminandoId() === c.idComercio"
+            (click)="eliminar(c)"
+          >
+            {{ eliminandoId() === c.idComercio ? 'Eliminando...' : 'Eliminar comercio' }}
+          </button>
+        </li>
+      }
+    </ul>
+  }
+</section>
