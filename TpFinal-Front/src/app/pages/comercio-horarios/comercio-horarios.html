@@ -1,1 +1,76 @@
-<p>comercio-horarios works!</p>
+<h2>Horarios de atención</h2>
+
+@if (cargando()) {
+  <p class="vacio" role="status">Cargando...</p>
+} @else if (comercio()) {
+  <form [formGroup]="form" (ngSubmit)="guardar()" class="card">
+    <h3>{{ editandoId() === null ? 'Nuevo horario' : 'Editar horario' }}</h3>
+    <div class="fila-form">
+      <div class="campo">
+        <label for="dia">Día</label>
+        <select id="dia" formControlName="diaSemana">
+          @for (d of dias; track d) {
+            <option [value]="d">{{ nombreDia[d] }}</option>
+          }
+        </select>
+      </div>
+      <div class="campo">
+        <label for="apertura">Apertura</label>
+        <input id="apertura" type="time" formControlName="horaApertura" />
+      </div>
+      <div class="campo">
+        <label for="cierre">Cierre</label>
+        <input id="cierre" type="time" formControlName="horaCierre" />
+      </div>
+    </div>
+
+    @if (error()) {
+      <p class="error" role="alert">{{ error() }}</p>
+    }
+
+    <div class="acciones">
+      <button class="boton" type="submit" [disabled]="enviando()">
+        {{ editandoId() === null ? 'Agregar horario' : 'Guardar cambios' }}
+      </button>
+      @if (editandoId() !== null) {
+        <button class="boton secundario" type="button" (click)="cancelarEdicion()">Cancelar edición</button>
+      }
+    </div>
+  </form>
+
+  <div class="tabla-scroll">
+    <table>
+      <caption class="ayuda">Horarios cargados</caption>
+      <thead>
+        <tr>
+          <th scope="col">Día</th>
+          <th scope="col">Desde</th>
+          <th scope="col">Hasta</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (h of horarios(); track h.idHorarioAtencion) {
+          <tr>
+            <td>{{ nombreDia[h.diaSemana] }}</td>
+            <td>{{ recortarHora(h.horaApertura) }}</td>
+            <td>{{ recortarHora(h.horaCierre) }}</td>
+            <td>
+              <div class="acciones">
+                <button type="button" class="boton secundario" (click)="editar(h)">Editar</button>
+                <button type="button" class="boton peligro" (click)="eliminar(h)">Eliminar</button>
+              </div>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="4" class="vacio">Todavía no cargaste horarios. Sin horarios nadie puede reservar turnos.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+} @else {
+  <p class="error" role="alert">{{ error() || 'No encontramos un comercio asociado a tu cuenta.' }}</p>
+}
+

@@ -1,0 +1,244 @@
+/* =====================================================================
+   MI PERFIL
+   Usa las mismas clases que el registro (registro-container, registro-card...)
+   así que la base es la misma estética: fondo oscuro, tarjeta y dorado.
+   Lo distinto: un avatar arriba, los campos en una columna y el email
+   destacado como "dato de cuenta".
+   ===================================================================== */
+
+:host {
+  --dorado: #d8b36a;
+  --dorado-claro: #e8c987;
+  --texto: #f9f5ed;
+  --texto-suave: #cbc4b7;
+  --borde: rgb(245 241 232 / 14%);
+
+  display: block;
+}
+
+/* ===== Fondo de la página ===== */
+.registro-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100dvh - 160px);
+  padding: 3rem 1.5rem;
+  background:
+    radial-gradient(900px 600px at 50% -10%, rgb(216 179 106 / 12%), transparent),
+    #111317;
+  overflow: hidden;
+}
+
+/* ===== Tarjeta ===== */
+.registro-card {
+  position: relative;
+  width: min(480px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  /* padding de arriba más grande: deja lugar para el avatar */
+  padding: 4.5rem 2.25rem 2.25rem;
+  margin-top: 2.5rem;
+  border: 1px solid var(--borde);
+  border-radius: 1.2rem;
+  background:
+    linear-gradient(180deg, rgb(245 241 232 / 8%) 0%, transparent 100%),
+    linear-gradient(160deg, rgb(28 31 37 / 98%) 0%, rgb(20 22 26 / 98%) 100%);
+  box-shadow:
+    0 60px 120px -80px rgb(216 179 106 / 40%),
+    0 40px 80px -60px rgb(8 9 11 / 90%);
+  animation: subir 0.5s ease-out both;
+}
+
+/* ===== Avatar =====
+   No hay un <img> en el HTML: lo dibujamos con ::before.
+   - top: 0 + translate(-50%, -50%) lo deja "a caballo" del borde de la tarjeta.
+   - El ícono de persona es un SVG metido como imagen de fondo (data URL). */
+.registro-card::before {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 5.5rem;
+  height: 5.5rem;
+  border: 4px solid #14161a;
+  border-radius: 50%;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2314161a' stroke-width='1.8' stroke-linecap='round'%3E%3Ccircle cx='12' cy='8.5' r='4'/%3E%3Cpath d='M4.5 20c1.4-3.6 4.2-5.5 7.5-5.5s6.1 1.9 7.5 5.5'/%3E%3C/svg%3E")
+      center / 55% no-repeat,
+    linear-gradient(135deg, var(--dorado), var(--dorado-claro));
+  box-shadow: 0 18px 40px -18px rgb(216 179 106 / 70%);
+  transform: translate(-50%, -50%);
+  content: '';
+}
+
+@keyframes subir {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+/* ===== Títulos ===== */
+.registro-card h2 {
+  margin: 0;
+  text-align: center;
+  font-size: clamp(1.7rem, 4vw, 2.2rem);
+  font-weight: 750;
+  letter-spacing: -0.05em;
+  color: var(--texto);
+}
+
+.subtitle {
+  margin: -0.9rem 0 0;
+  text-align: center;
+  color: var(--texto-suave);
+  font-size: 0.95rem;
+}
+
+/* ===== Formulario: una sola columna ===== */
+.registro-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.campo label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--texto-suave);
+  transition: color 0.2s;
+}
+
+.campo:focus-within label {
+  color: var(--dorado-claro);
+}
+
+.campo input {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.9rem;
+  background: rgb(245 241 232 / 8%);
+  color: var(--texto);
+  font: inherit;
+  transition: border-color 0.16s, box-shadow 0.16s, background-color 0.16s;
+}
+
+.campo input:hover {
+  background: rgb(245 241 232 / 12%);
+}
+
+.campo input:focus-visible {
+  outline: none;
+  border-color: rgb(216 179 106 / 80%);
+  box-shadow: 0 0 0 4px rgb(216 179 106 / 14%);
+  background: rgb(245 241 232 / 14%);
+}
+
+/* El email es el dato de la cuenta: le ponemos una línea divisoria arriba
+   para separarlo de los datos personales.
+   :has() = "el .campo que TIENE adentro un input de tipo email" */
+.campo:has(input[type='email']) {
+  margin-top: 0.4rem;
+  padding-top: 1.2rem;
+  border-top: 1px dashed var(--borde);
+}
+
+/* Que el autocompletado del navegador no pinte el input de amarillo */
+.campo input:-webkit-autofill {
+  -webkit-text-fill-color: var(--texto);
+  box-shadow: 0 0 0 1000px #23262c inset;
+}
+
+/* ===== Validación ===== */
+.campo input.is-invalid {
+  border-color: rgb(248 113 113 / 80%);
+  animation: temblar 0.3s;
+}
+
+.error-message {
+  color: #fca5a5;
+  font-size: 0.85rem;
+}
+
+@keyframes temblar {
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+/* ===== Mensajes de éxito y error ===== */
+.alert-success,
+.alert-error {
+  padding: 0.8rem 1rem;
+  border-radius: 0.9rem;
+  font-size: 0.92rem;
+  animation: subir 0.3s ease-out;
+}
+
+.alert-success {
+  border: 1px solid rgb(74 222 128 / 40%);
+  background: rgb(74 222 128 / 12%);
+  color: #bbf7d0;
+}
+
+/* Tilde antes del texto, sin tocar el HTML */
+.alert-success::before {
+  margin-right: 0.5rem;
+  font-weight: 700;
+  content: '✓';
+}
+
+.alert-error {
+  border: 1px solid rgb(248 113 113 / 40%);
+  background: rgb(248 113 113 / 14%);
+  color: #fecaca;
+}
+
+/* ===== Botón ===== */
+.btn-submit {
+  margin-top: 0.4rem;
+  width: 100%;
+  padding: 0.95rem 1.2rem;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--dorado), var(--dorado-claro));
+  color: #14161a;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.16s, box-shadow 0.16s, opacity 0.16s;
+}
+
+.btn-submit:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 18px 40px -24px rgb(216 179 106 / 90%);
+}
+
+.btn-submit:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.btn-submit:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+/* ===== Celular ===== */
+@media (max-width: 520px) {
+  .registro-container {
+    padding: 2rem 1rem;
+  }
+
+  .registro-card {
+    padding: 4rem 1.4rem 1.75rem;
+  }
+}

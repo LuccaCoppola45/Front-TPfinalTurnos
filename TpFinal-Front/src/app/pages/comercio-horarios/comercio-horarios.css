@@ -1,0 +1,286 @@
+/* =====================================================================
+   HORARIOS DE ATENCIÓN (panel del comercio)
+   Misma paleta que el resto: fondo oscuro + acento dorado.
+   ===================================================================== */
+
+/* :host es la etiqueta <app-comercio-horarios> en sí.
+   Como el HTML no tiene un div contenedor, la usamos a ella como contenedor. */
+:host {
+  --dorado: #d8b36a;
+  --dorado-claro: #e8c987;
+  --texto: #f5f1e8;
+  --texto-suave: #cbc4b7;
+  --tarjeta: #1c1f25;
+  --campo: #14161a;
+  --borde: rgb(245 241 232 / 12%);
+  --rojo: #fca5a5;
+
+  display: block;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+  color: var(--texto);
+}
+
+/* ===== Título de la página ===== */
+h2 {
+  position: relative;
+  margin: 0 0 1.75rem;
+  padding-bottom: 0.75rem;
+  font-size: clamp(1.7rem, 4vw, 2.2rem);
+  letter-spacing: -0.04em;
+}
+
+/* Rayita dorada debajo del título, hecha con un pseudo-elemento */
+h2::after {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 3rem;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--dorado);
+  content: '';
+}
+
+/* ===== Tarjeta del formulario ===== */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+  padding: 1.75rem;
+  border: 1px solid var(--borde);
+  border-radius: 1.1rem;
+  background:
+    linear-gradient(180deg, rgb(245 241 232 / 5%) 0%, transparent 60%),
+    var(--tarjeta);
+  box-shadow: 0 30px 60px -45px rgb(216 179 106 / 40%);
+}
+
+.card h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--dorado-claro);
+}
+
+/* Día | Apertura | Cierre en una fila.
+   El día ocupa el doble (2fr) porque el texto es más largo que una hora. */
+.fila-form {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 1rem;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.campo label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--texto-suave);
+  transition: color 0.2s;
+}
+
+/* Cuando el campo de adentro tiene foco, el label se pone dorado */
+.campo:focus-within label {
+  color: var(--dorado-claro);
+}
+
+.campo select,
+.campo input {
+  width: 100%;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--borde);
+  border-radius: 0.7rem;
+  background: var(--campo);
+  color: var(--texto);
+  font: inherit;
+  /* color-scheme: dark hace que el reloj del input time y la flecha
+     del select se dibujen claros, para que se vean sobre el fondo oscuro */
+  color-scheme: dark;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.campo select:focus,
+.campo input:focus {
+  outline: none;
+  border-color: var(--dorado);
+  box-shadow: 0 0 0 4px rgb(216 179 106 / 15%);
+}
+
+/* Angular agrega .ng-invalid y .ng-touched solos según el estado del form */
+.campo .ng-invalid.ng-touched {
+  border-color: rgb(248 113 113 / 60%);
+}
+
+/* ===== Botones ===== */
+.acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.boton {
+  padding: 0.65rem 1.2rem;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--dorado), var(--dorado-claro));
+  color: #14161a;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s, filter 0.15s, background-color 0.15s;
+}
+
+.boton:hover:not(:disabled) {
+  transform: translateY(-1px);
+  filter: brightness(1.08);
+}
+
+/* Mientras se está guardando (enviando = true) */
+.boton:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* Variantes: se suman a .boton, por eso solo cambian lo distinto */
+.boton.secundario {
+  border: 1px solid var(--borde);
+  background: transparent;
+  color: var(--texto);
+}
+
+.boton.secundario:hover {
+  background: rgb(245 241 232 / 8%);
+}
+
+.boton.peligro {
+  border: 1px solid rgb(248 113 113 / 40%);
+  background: transparent;
+  color: var(--rojo);
+}
+
+.boton.peligro:hover {
+  background: rgb(248 113 113 / 12%);
+}
+
+/* En la tabla los botones van más chicos */
+td .boton {
+  padding: 0.4rem 0.85rem;
+  font-size: 0.8rem;
+}
+
+/* ===== Tabla de horarios ===== */
+
+/* Si la pantalla es angosta, la tabla scrollea de costado
+   en vez de romper el ancho de toda la página */
+.tabla-scroll {
+  overflow-x: auto;
+  border: 1px solid var(--borde);
+  border-radius: 1.1rem;
+  background: var(--tarjeta);
+}
+
+table {
+  width: 100%;
+  min-width: 480px;
+  border-collapse: collapse; /* une los bordes de las celdas en una sola línea */
+}
+
+caption.ayuda {
+  padding: 1rem 1.25rem 0.5rem;
+  text-align: left;
+  font-weight: 600;
+  color: var(--texto);
+}
+
+th,
+td {
+  padding: 0.85rem 1.25rem;
+  text-align: left;
+}
+
+th {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--texto-suave);
+  border-bottom: 1px solid var(--borde);
+}
+
+/* La columna de acciones va alineada a la derecha */
+th:last-child,
+td:last-child {
+  text-align: right;
+}
+
+td:last-child .acciones {
+  justify-content: flex-end;
+}
+
+tbody tr {
+  border-bottom: 1px solid var(--borde);
+  transition: background-color 0.15s;
+}
+
+tbody tr:last-child {
+  border-bottom: none;
+}
+
+tbody tr:hover {
+  background: rgb(216 179 106 / 6%);
+}
+
+/* El día en negrita; las horas con números de ancho fijo para que queden alineadas */
+td:first-child {
+  font-weight: 600;
+}
+
+td:nth-child(2),
+td:nth-child(3) {
+  font-variant-numeric: tabular-nums;
+  color: var(--texto-suave);
+}
+
+/* ===== Mensajes ===== */
+.vacio {
+  padding: 2rem 1rem;
+  text-align: center !important;
+  color: var(--texto-suave);
+}
+
+.error {
+  margin: 0;
+  padding: 0.8rem 1rem;
+  border: 1px solid rgb(248 113 113 / 40%);
+  border-radius: 0.7rem;
+  background: rgb(248 113 113 / 10%);
+  color: var(--rojo);
+  animation: aparecer 0.3s ease-out;
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+/* ===== Celular: los tres campos uno abajo del otro ===== */
+@media (max-width: 600px) {
+  .fila-form {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    padding: 1.25rem;
+  }
+}
