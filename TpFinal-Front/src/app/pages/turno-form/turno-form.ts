@@ -1,4 +1,4 @@
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, DatePipe } from '@angular/common';
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ComercioService } from '../../services/comercioService';
@@ -10,7 +10,7 @@ import { forkJoin } from 'rxjs';
 import { mensajeDeError } from '../../core/http-error';
 
 @Component({
-  imports: [RouterLink, CurrencyPipe],
+  imports: [RouterLink, CurrencyPipe, DatePipe],
   selector: 'app-turno-form',
   styleUrl: './turno-form.css',
   templateUrl: './turno-form.html',
@@ -86,6 +86,12 @@ export class TurnoForm implements OnInit{
   });
 
   readonly esReprogramacion = computed(() => this.turnoAEditar() !== null);
+
+  /** Nombre del día elegido ("Jueves"), para el título de los horarios. */
+  readonly nombreDelDia = computed(() => {
+    const fecha = this.fecha();
+    return fecha ? this.nombreDia[diaDeLaSemana(fecha)] : '';
+  });
 
   ngOnInit(): void {
     const idTurno = this.route.snapshot.paramMap.get('idTurno');

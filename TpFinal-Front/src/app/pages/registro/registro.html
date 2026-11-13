@@ -43,6 +43,7 @@
           autocomplete="off"
           [readOnly]="!camposHabilitados()"
           (focus)="camposHabilitados.set(true)"
+          (pointerdown)="camposHabilitados.set(true)"
           [class.is-invalid]="form.get('email')?.invalid && form.get('email')?.touched"
         />
         @if (form.get('email')?.invalid && form.get('email')?.touched) {
@@ -63,6 +64,7 @@
           autocomplete="new-password"
           [readOnly]="!camposHabilitados()"
           (focus)="camposHabilitados.set(true)"
+          (pointerdown)="camposHabilitados.set(true)"
           [class.is-invalid]="form.get('password')?.invalid && form.get('password')?.touched"
         />
         @if (form.get('password')?.invalid && form.get('password')?.touched) {

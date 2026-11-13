@@ -25,6 +25,7 @@
           autocomplete="off"
           [readOnly]="!camposHabilitados()"
           (focus)="camposHabilitados.set(true)"
+          (pointerdown)="camposHabilitados.set(true)"
           placeholder="tuemail@ejemplo.com"
           [class.input-invalid]="form.controls.email.touched && form.controls.email.invalid"
         />
@@ -46,6 +47,7 @@
           autocomplete="off"
           [readOnly]="!camposHabilitados()"
           (focus)="camposHabilitados.set(true)"
+          (pointerdown)="camposHabilitados.set(true)"
           placeholder="••••••"
           [class.input-invalid]="form.controls.password.touched && form.controls.password.invalid"
         />

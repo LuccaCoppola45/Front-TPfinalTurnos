@@ -1,55 +1,84 @@
-<p><a routerLink="/mis-turnos">← Volver</a></p>
+<section class="turno">
+  <!-- Al reprogramar se vuelve a Mis turnos; al reservar, al listado de comercios -->
+  <a class="volver" [routerLink]="esReprogramacion() ? '/mis-turnos' : '/comercios'">
+    ← {{ esReprogramacion() ? 'Volver a mis turnos' : 'Volver a comercios' }}
+  </a>
 
-@if (cargando()) {
-  <p class="vacio" role="status">Cargando...</p>
-} @else if (comercio(); as c) {
-  @if (servicio(); as s) {
-    <h2>{{ esReprogramacion() ? 'Reprogramar turno' : 'Reservar turno' }}</h2>
+  @if (cargando()) {
+    <p class="vacio" role="status">Cargando...</p>
+  } @else if (comercio(); as c) {
+    @if (servicio(); as s) {
+      <div class="tarjeta">
+        <h1>{{ esReprogramacion() ? 'Reprogramar turno' : 'Reservar turno' }}</h1>
 
-    <article class="card resumen">
-      <h3>{{ s.nombreServicio }}</h3>
-      <p>{{ c.nombre }} · {{ c.direccion }}</p>
-      <p>{{ s.duracionDelServicio }} minutos · {{ s.precio | currency: 'ARS' : 'symbol-narrow' : '1.0-0' }}</p>
-    </article>
+        <!-- Resumen de lo que se está reservando -->
+        <article class="resumen">
+          <h2>{{ s.nombreServicio }}</h2>
+          <p class="comercio">{{ c.nombre }} · {{ c.direccion }}</p>
+          <p class="detalle">
+            <span>{{ s.duracionDelServicio }} minutos</span>
+            <span class="precio">{{ s.precio | currency: 'ARS' : 'symbol-narrow' : '1.0-0' }}</span>
+          </p>
+        </article>
 
-    <div class="campo">
-      <label for="fecha">Fecha</label>
-      <input id="fecha" type="date" [min]="hoy" [value]="fecha()" (change)="alCambiarFecha($event)" />
-    </div>
+        <!-- Al reprogramar se muestra el turno que se va a cambiar -->
+        @if (turnoAEditar(); as t) {
+          <p class="actual">
+            Turno actual: <strong>{{ t.fecha | date: 'dd/MM/yyyy' }} a las {{ recortarHora(t.horaInicio) }}</strong>
+          </p>
+        }
 
-    @if (fecha()) {
-      @if (horariosDelDia().length === 0) {
-        <p class="ayuda">El comercio no atiende ese día. Elegí otra fecha.</p>
-      } @else if (horasDisponibles().length === 0) {
-        <p class="ayuda">No quedan horarios libres ese día. Probá con otra fecha.</p>
-      } @else {
-        <p id="titulo-horas">Horarios disponibles</p>
-        <div class="slots" role="group" aria-labelledby="titulo-horas">
-          @for (hora of horasDisponibles(); track hora) {
-            <button
-              type="button"
-              class="slot"
-              [class.elegido]="hora === horaElegida()"
-              [attr.aria-pressed]="hora === horaElegida()"
-              (click)="horaElegida.set(hora)"
-            >
-              {{ hora }}
-            </button>
-          }
+        <div class="campo">
+          <label for="fecha">{{ esReprogramacion() ? 'Nueva fecha' : 'Fecha' }}</label>
+          <input id="fecha" type="date" [min]="hoy" [value]="fecha()" (change)="alCambiarFecha($event)" />
         </div>
-      }
-    }
 
-    @if (error()) {
-      <p class="error" role="alert">{{ error() }}</p>
-    }
+        @if (fecha()) {
+          @if (horariosDelDia().length === 0) {
+            <p class="aviso">El comercio no atiende ese día. Elegí otra fecha.</p>
+          } @else if (horasDisponibles().length === 0) {
+            <p class="aviso">No quedan horarios libres ese día. Probá con otra fecha.</p>
+          } @else {
+            <p class="titulo-horas" id="titulo-horas">
+              Horarios disponibles
+              <span>· {{ nombreDelDia() }} {{ fecha() | date: 'dd/MM' }}</span>
+            </p>
+            <div class="slots" role="group" aria-labelledby="titulo-horas">
+              @for (hora of horasDisponibles(); track hora) {
+                <button
+                  type="button"
+                  class="slot"
+                  [class.elegido]="hora === horaElegida()"
+                  [attr.aria-pressed]="hora === horaElegida()"
+                  (click)="horaElegida.set(hora)"
+                >
+                  {{ hora }}
+                </button>
+              }
+            </div>
+          }
+        } @else {
+          <p class="ayuda">Elegí una fecha para ver los horarios libres.</p>
+        }
 
-    <button class="boton" type="button" [disabled]="!horaElegida() || enviando()" (click)="confirmar()">
-      {{ esReprogramacion() ? 'Guardar cambios' : 'Confirmar reserva' }}
-    </button>
+        @if (error()) {
+          <p class="error" role="alert">{{ error() }}</p>
+        }
+
+        <button class="confirmar" type="button" [disabled]="!horaElegida() || enviando()" (click)="confirmar()">
+          @if (enviando()) {
+            Guardando...
+          } @else if (horaElegida()) {
+            {{ esReprogramacion() ? 'Cambiar a las ' : 'Reservar a las ' }}{{ horaElegida() }}
+          } @else {
+            {{ esReprogramacion() ? 'Guardar cambios' : 'Confirmar reserva' }}
+          }
+        </button>
+      </div>
+    } @else {
+      <p class="error" role="alert">No se encontró el servicio elegido en este comercio.</p>
+    }
   } @else {
-    <p class="error" role="alert">No se encontró el servicio elegido en este comercio.</p>
+    <p class="error" role="alert">{{ error() || 'No se pudo cargar el comercio.' }}</p>
   }
-} @else {
-  <p class="error" role="alert">{{ error() || 'No se pudo cargar el comercio.' }}</p>
-}
+</section>

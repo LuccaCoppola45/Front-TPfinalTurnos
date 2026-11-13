@@ -1,0 +1,270 @@
+/* =====================================================================
+   RESERVAR / REPROGRAMAR TURNO (es la misma página)
+   Tarjeta centrada como Mi perfil: resumen del servicio, fecha y los
+   horarios libres como botones. Fondo oscuro + dorado.
+   ===================================================================== */
+
+:host {
+  --dorado: #d8b36a;
+  --dorado-claro: #e8c987;
+  --texto: #f9f5ed;
+  --texto-suave: #cbc4b7;
+  --borde: rgb(245 241 232 / 14%);
+
+  display: block;
+  min-height: calc(100dvh - 160px);
+  padding: 2rem 1.5rem 3rem;
+  background:
+    radial-gradient(900px 600px at 50% -10%, rgb(216 179 106 / 12%), transparent),
+    #111317;
+  color: var(--texto);
+}
+
+.turno {
+  width: min(560px, 100%);
+  margin: 0 auto;
+}
+
+.volver {
+  display: inline-block;
+  margin-bottom: 1rem;
+  color: var(--texto-suave);
+  font-size: 0.88rem;
+  text-decoration: none;
+}
+
+.volver:hover {
+  color: var(--dorado-claro);
+}
+
+/* ===== Tarjeta ===== */
+.tarjeta {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 2rem;
+  border: 1px solid var(--borde);
+  border-radius: 1.2rem;
+  background:
+    linear-gradient(180deg, rgb(245 241 232 / 8%) 0%, transparent 100%),
+    linear-gradient(160deg, rgb(28 31 37 / 98%) 0%, rgb(20 22 26 / 98%) 100%);
+  box-shadow:
+    0 60px 120px -80px rgb(216 179 106 / 40%),
+    0 40px 80px -60px rgb(8 9 11 / 90%);
+  animation: subir 0.5s ease-out both;
+}
+
+@keyframes subir {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(1.6rem, 4vw, 2rem);
+  font-weight: 750;
+  letter-spacing: -0.04em;
+}
+
+/* ===== Resumen del servicio ===== */
+.resumen {
+  padding: 1rem 1.1rem;
+  border-left: 3px solid var(--dorado);
+  border-radius: 0 0.9rem 0.9rem 0;
+  background: rgb(216 179 106 / 8%);
+}
+
+.resumen h2 {
+  margin: 0;
+  color: var(--dorado-claro);
+  font-size: 1.15rem;
+}
+
+.resumen p {
+  margin: 0.25rem 0 0;
+}
+
+.comercio {
+  color: var(--texto-suave);
+  font-size: 0.9rem;
+}
+
+.detalle {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+}
+
+.precio {
+  font-weight: 700;
+  color: var(--dorado-claro);
+}
+
+/* Turno actual (solo al reprogramar) */
+.actual {
+  margin: 0;
+  padding: 0.7rem 0.9rem;
+  border: 1px dashed var(--borde);
+  border-radius: 0.8rem;
+  color: var(--texto-suave);
+  font-size: 0.9rem;
+}
+
+.actual strong {
+  color: var(--texto);
+}
+
+/* ===== Fecha ===== */
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.campo label,
+.titulo-horas {
+  margin: 0;
+  color: var(--texto-suave);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.titulo-horas span {
+  color: var(--dorado-claro);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.campo input {
+  padding: 0.85rem 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.9rem;
+  background: rgb(245 241 232 / 8%);
+  color: var(--texto);
+  font: inherit;
+  /* calendario del navegador en modo oscuro (si no, el ícono no se ve) */
+  color-scheme: dark;
+}
+
+.campo input:focus-visible {
+  outline: none;
+  border-color: rgb(216 179 106 / 80%);
+  box-shadow: 0 0 0 4px rgb(216 179 106 / 14%);
+}
+
+/* ===== Horarios libres: grilla de botones ===== */
+.slots {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(78px, 1fr));
+  gap: 0.5rem;
+  margin-top: -0.6rem;
+}
+
+.slot {
+  padding: 0.6rem 0;
+  border: 1px solid var(--borde);
+  border-radius: 0.7rem;
+  background: rgb(245 241 232 / 4%);
+  color: var(--texto);
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition: border-color 0.16s, background-color 0.16s, transform 0.16s;
+}
+
+.slot:hover {
+  border-color: rgb(216 179 106 / 55%);
+}
+
+.slot:active {
+  transform: scale(0.96);
+}
+
+/* Horario elegido: dorado lleno */
+.slot.elegido {
+  border-color: var(--dorado);
+  background: linear-gradient(90deg, var(--dorado), var(--dorado-claro));
+  color: #14161a;
+}
+
+.slot:focus-visible,
+.confirmar:focus-visible {
+  outline: 2px solid var(--dorado-claro);
+  outline-offset: 3px;
+}
+
+/* ===== Mensajes ===== */
+.ayuda,
+.aviso {
+  margin: 0;
+  color: var(--texto-suave);
+  font-size: 0.9rem;
+}
+
+.aviso {
+  padding: 0.75rem 0.9rem;
+  border-radius: 0.8rem;
+  background: rgb(250 204 21 / 10%);
+  color: #fde68a;
+}
+
+.error {
+  margin: 0;
+  padding: 0.8rem 1rem;
+  border: 1px solid rgb(248 113 113 / 40%);
+  border-radius: 0.9rem;
+  background: rgb(248 113 113 / 14%);
+  color: #fecaca;
+  font-size: 0.92rem;
+}
+
+.vacio {
+  text-align: center;
+  color: var(--texto-suave);
+}
+
+/* ===== Botón confirmar ===== */
+.confirmar {
+  width: 100%;
+  padding: 0.95rem 1.2rem;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--dorado), var(--dorado-claro));
+  color: #14161a;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.16s, box-shadow 0.16s, opacity 0.16s;
+}
+
+.confirmar:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 18px 40px -24px rgb(216 179 106 / 90%);
+}
+
+.confirmar:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+@media (max-width: 520px) {
+  :host {
+    padding: 1.5rem 1rem 2.5rem;
+  }
+
+  .tarjeta {
+    padding: 1.5rem 1.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tarjeta {
+    animation: none;
+  }
+}
