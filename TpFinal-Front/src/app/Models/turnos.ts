@@ -24,6 +24,17 @@ export interface TurnoRequest {
     idComercio: number;
 }
 
+/** Datos que muestra la página "¿Vas a ir?" (link del mail de recordatorio). */
+export interface ConfirmacionTurno {
+    nombreCliente: string;
+    nombreComercio: string;
+    direccionComercio: string;
+    nombreServicio: string;
+    fecha: string;
+    horaInicio: string;
+    estado: EstadoTurno;
+}
+
 export interface CancelacionRequest {
     idTurno: number;
     idUsuario: number;

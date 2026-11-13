@@ -9,6 +9,20 @@ import { Turno } from '../../Models/turnos';
 import { forkJoin } from 'rxjs';
 import { mensajeDeError } from '../../core/http-error';
 
+/** Un día del selector de fecha. */
+interface DiaElegible {
+  iso: string; // 'YYYY-MM-DD'
+  nombreCorto: string; // 'Jue'
+  numero: number; // 26
+  mes: string; // 'nov' (solo en el primer día y al cambiar de mes)
+  abierto: boolean; // ¿el comercio atiende ese día?
+  esHoy: boolean;
+}
+
+const NOMBRE_CORTO = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+const MESES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+const dos = (n: number): string => String(n).padStart(2, '0');
+
 @Component({
   imports: [RouterLink, CurrencyPipe, DatePipe],
   selector: 'app-turno-form',
@@ -95,6 +109,33 @@ export class TurnoForm implements OnInit{
     return fecha ? this.nombreDia[diaDeLaSemana(fecha)] : '';
   });
 
+  /**
+   * Los próximos 28 días (4 semanas) para el selector de fecha.
+   * "abierto" = el comercio tiene horario ese día de la semana; si no, el botón se deshabilita.
+   */
+  readonly dias = computed<DiaElegible[]>(() => {
+    const diasQueAtiende = new Set((this.comercio()?.horarios ?? []).map((h) => h.diaSemana));
+    const [a, m, d] = this.hoy.split('-').map(Number);
+    return Array.from({ length: 28 }, (_, i) => {
+      const fecha = new Date(a, m - 1, d + i);
+      const iso = `${fecha.getFullYear()}-${dos(fecha.getMonth() + 1)}-${dos(fecha.getDate())}`;
+      return {
+        iso,
+        nombreCorto: NOMBRE_CORTO[fecha.getDay()],
+        numero: fecha.getDate(),
+        // El mes se muestra en el primer día y cuando cambia de mes
+        mes: i === 0 || fecha.getDate() === 1 ? MESES[fecha.getMonth()] : '',
+        abierto: diasQueAtiende.has(diaDeLaSemana(iso)),
+        esHoy: i === 0,
+      };
+    });
+  });
+
+  elegirDia(iso: string): void {
+    this.fecha.set(iso);
+    this.horaElegida.set('');
+  }
+
   ngOnInit(): void {
     const idTurno = this.route.snapshot.paramMap.get('idTurno');
     if (idTurno) {
@@ -133,10 +174,6 @@ export class TurnoForm implements OnInit{
     this.cargando.set(false);
   }
 
-  alCambiarFecha(evento: Event): void {
-    this.fecha.set((evento.target as HTMLInputElement).value);
-    this.horaElegida.set('');
-  }
 
   confirmar(): void {
     const comercio = this.comercio();

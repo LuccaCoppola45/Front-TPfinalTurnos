@@ -1,0 +1,238 @@
+/* =====================================================================
+   CONFIRMAR TURNO ("¿Vas a ir?") — se abre desde el mail de recordatorio
+   Misma estética que el mail y que Mi perfil: tarjeta oscura + dorado.
+   ===================================================================== */
+
+:host {
+  --dorado: #d8b36a;
+  --dorado-claro: #e8c987;
+  --texto: #f9f5ed;
+  --texto-suave: #cbc4b7;
+  --borde: rgb(245 241 232 / 14%);
+
+  display: block;
+  min-height: calc(100dvh - 160px);
+  padding: 3rem 1.5rem;
+  background:
+    radial-gradient(900px 600px at 50% -10%, rgb(216 179 106 / 12%), transparent),
+    #111317;
+  color: var(--texto);
+}
+
+.tarjeta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.1rem;
+  width: min(520px, 100%);
+  margin: 0 auto;
+  padding: 2.25rem 2rem;
+  border: 1px solid var(--borde);
+  border-radius: 1.2rem;
+  background:
+    linear-gradient(180deg, rgb(245 241 232 / 8%) 0%, transparent 100%),
+    linear-gradient(160deg, rgb(28 31 37 / 98%) 0%, rgb(20 22 26 / 98%) 100%);
+  box-shadow:
+    0 60px 120px -80px rgb(216 179 106 / 40%),
+    0 40px 80px -60px rgb(8 9 11 / 90%);
+  text-align: center;
+  animation: subir 0.5s ease-out both;
+}
+
+@keyframes subir {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+.etiqueta {
+  margin: 0;
+  color: var(--dorado);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(1.5rem, 4vw, 1.9rem);
+  font-weight: 750;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+
+.bajada {
+  margin: -0.3rem 0 0;
+  color: var(--texto-suave);
+  line-height: 1.5;
+}
+
+/* Círculo con ícono para los resultados (confirmado / cancelado) */
+.icono {
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background: rgb(216 179 106 / 14%);
+  color: var(--dorado-claro);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.icono.ok {
+  background: rgb(74 222 128 / 15%);
+  color: #86efac;
+}
+
+.icono.cancelado {
+  background: rgb(248 113 113 / 15%);
+  color: #fca5a5;
+}
+
+/* ===== Datos del turno (igual que en el mail) ===== */
+.resumen {
+  width: 100%;
+  padding: 1rem 1.1rem;
+  border-left: 3px solid var(--dorado);
+  border-radius: 0 0.9rem 0.9rem 0;
+  background: rgb(216 179 106 / 8%);
+  text-align: left;
+}
+
+.resumen p {
+  margin: 0;
+}
+
+.servicio {
+  color: var(--dorado-claro);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.comercio {
+  margin-top: 0.2rem !important;
+  color: var(--texto-suave);
+  font-size: 0.9rem;
+}
+
+.cuando {
+  display: flex;
+  gap: 1.25rem;
+  margin-top: 0.7rem !important;
+  font-weight: 600;
+}
+
+/* Turno cancelado: borde rojo y fecha tachada */
+.resumen.tachado {
+  border-left-color: #f87171;
+  background: rgb(248 113 113 / 8%);
+}
+
+.resumen.tachado .cuando {
+  color: var(--texto-suave);
+  text-decoration: line-through;
+}
+
+/* ===== Botones ===== */
+.botones {
+  display: flex;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.btn-si,
+.btn-no {
+  flex: 1;
+  padding: 0.9rem 1.2rem;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.16s, box-shadow 0.16s, background-color 0.16s;
+}
+
+.btn-si {
+  border: none;
+  background: linear-gradient(90deg, var(--dorado), var(--dorado-claro));
+  color: #14161a;
+}
+
+.btn-no {
+  border: 1px solid rgb(248 113 113 / 55%);
+  background: transparent;
+  color: #fca5a5;
+}
+
+.btn-no:hover:not(:disabled) {
+  background: rgb(248 113 113 / 12%);
+}
+
+.btn-si:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 18px 40px -24px rgb(216 179 106 / 90%);
+}
+
+/* El botón que tocó en el mail se resalta con un aro */
+.sugerido {
+  box-shadow: 0 0 0 3px rgb(245 241 232 / 22%);
+}
+
+.btn-si:disabled,
+.btn-no:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+.btn-si:focus-visible,
+.btn-no:focus-visible {
+  outline: 2px solid var(--dorado-claro);
+  outline-offset: 3px;
+}
+
+/* Link con forma de botón (después de responder) */
+.enlace {
+  flex: none;
+  width: 100%;
+  text-align: center;
+}
+
+/* ===== Mensajes ===== */
+.error {
+  width: 100%;
+  margin: 0;
+  padding: 0.8rem 1rem;
+  border: 1px solid rgb(248 113 113 / 40%);
+  border-radius: 0.9rem;
+  background: rgb(248 113 113 / 14%);
+  color: #fecaca;
+  font-size: 0.92rem;
+}
+
+.vacio {
+  text-align: center;
+  color: var(--texto-suave);
+}
+
+@media (max-width: 520px) {
+  :host {
+    padding: 2rem 1rem;
+  }
+
+  .tarjeta {
+    padding: 1.75rem 1.25rem;
+  }
+
+  .botones {
+    flex-direction: column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tarjeta {
+    animation: none;
+  }
+}

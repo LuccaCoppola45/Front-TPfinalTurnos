@@ -1,0 +1,80 @@
+<section class="confirmar">
+  @if (cargando()) {
+    <p class="vacio" role="status">Cargando tu turno...</p>
+  } @else if (turno(); as t) {
+    <div class="tarjeta">
+      <!-- Según el estado del turno se muestra la pregunta o el resultado -->
+      @switch (t.estado) {
+        @case ('CONFIRMADO') {
+          <span class="icono ok" aria-hidden="true">✓</span>
+          <h1>{{ respondio() === 'si' ? '¡Gracias, te esperamos!' : 'Ya confirmaste tu turno' }}</h1>
+          <p class="bajada">Tu turno quedó confirmado.</p>
+        }
+        @case ('CANCELADO') {
+          <span class="icono cancelado" aria-hidden="true">✕</span>
+          <h1>{{ respondio() === 'no' ? 'Listo, cancelamos tu turno' : 'Este turno está cancelado' }}</h1>
+          <p class="bajada">Gracias por avisar: el comercio ya puede darle el horario a otra persona.</p>
+        }
+        @case ('FINALIZADO') {
+          <span class="icono" aria-hidden="true">🕒</span>
+          <h1>Este turno ya pasó</h1>
+          <p class="bajada">El horario del turno ya terminó.</p>
+        }
+        @default {
+          <p class="etiqueta">Recordatorio</p>
+          <h1>{{ t.nombreCliente }}, ¿vas a ir a tu turno?</h1>
+          <p class="bajada">Confirmanos si vas a ir. Si no podés, avisanos así el comercio libera el horario.</p>
+        }
+      }
+
+      <!-- Datos del turno -->
+      <div class="resumen" [class.tachado]="t.estado === 'CANCELADO'">
+        <p class="servicio">{{ t.nombreServicio }}</p>
+        <p class="comercio">{{ t.nombreComercio }} · {{ t.direccionComercio }}</p>
+        <p class="cuando">
+          <span>📅 {{ t.fecha | date: 'dd/MM/yyyy' }}</span>
+          <span>🕒 {{ recortarHora(t.horaInicio) }} hs</span>
+        </p>
+      </div>
+
+      @if (error()) {
+        <p class="error" role="alert">{{ error() }}</p>
+      }
+
+      <!-- Botones: solo si todavía no respondió -->
+      @if (t.estado === 'PENDIENTE' || t.estado === 'RESERVADO') {
+        <div class="botones">
+          <button
+            type="button"
+            class="btn-si"
+            [class.sugerido]="sugerida === 'si'"
+            [disabled]="enviando()"
+            (click)="responder(true)"
+          >
+            Sí, voy a ir
+          </button>
+          <button
+            type="button"
+            class="btn-no"
+            [class.sugerido]="sugerida === 'no'"
+            [disabled]="enviando()"
+            (click)="responder(false)"
+          >
+            No puedo ir
+          </button>
+        </div>
+      } @else if (t.estado === 'CANCELADO') {
+        <a class="btn-si enlace" routerLink="/comercios">Reservar otro turno</a>
+      } @else {
+        <a class="btn-si enlace" routerLink="/mis-turnos">Ver mis turnos</a>
+      }
+    </div>
+  } @else {
+    <div class="tarjeta">
+      <span class="icono cancelado" aria-hidden="true">!</span>
+      <h1>No encontramos el turno</h1>
+      <p class="bajada">{{ error() }}</p>
+      <a class="btn-si enlace" routerLink="/">Ir al inicio</a>
+    </div>
+  }
+</section>

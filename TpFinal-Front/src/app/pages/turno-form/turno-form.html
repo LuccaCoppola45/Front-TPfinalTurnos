@@ -28,9 +28,28 @@
           </p>
         }
 
+        <!-- Selector de fecha propio (en vez del calendario del navegador):
+             las próximas 4 semanas; los días que el comercio no atiende están deshabilitados -->
         <div class="campo">
-          <label for="fecha">{{ esReprogramacion() ? 'Nueva fecha' : 'Fecha' }}</label>
-          <input id="fecha" type="date" [min]="hoy" [value]="fecha()" (change)="alCambiarFecha($event)" />
+          <p class="titulo-campo" id="titulo-fecha">{{ esReprogramacion() ? 'Nueva fecha' : 'Fecha' }}</p>
+          <div class="dias" role="group" aria-labelledby="titulo-fecha">
+            @for (d of dias(); track d.iso) {
+              <button
+                type="button"
+                class="dia"
+                [class.elegido]="d.iso === fecha()"
+                [class.hoy]="d.esHoy"
+                [disabled]="!d.abierto"
+                [attr.aria-pressed]="d.iso === fecha()"
+                [attr.aria-label]="d.nombreCorto + ' ' + d.numero + (d.abierto ? '' : ', cerrado')"
+                (click)="elegirDia(d.iso)"
+              >
+                <span class="dia-nombre">{{ d.esHoy ? 'Hoy' : d.nombreCorto }}</span>
+                <span class="dia-numero">{{ d.numero }}</span>
+                <span class="dia-mes">{{ d.mes }}</span>
+              </button>
+            }
+          </div>
         </div>
 
         @if (fecha()) {

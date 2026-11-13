@@ -123,7 +123,7 @@ h1 {
   gap: 0.5rem;
 }
 
-.campo label,
+.titulo-campo,
 .titulo-horas {
   margin: 0;
   color: var(--texto-suave);
@@ -139,21 +139,81 @@ h1 {
   letter-spacing: 0;
 }
 
-.campo input {
-  padding: 0.85rem 1rem;
-  border: 1px solid transparent;
-  border-radius: 0.9rem;
-  background: rgb(245 241 232 / 8%);
-  color: var(--texto);
-  font: inherit;
-  /* calendario del navegador en modo oscuro (si no, el ícono no se ve) */
-  color-scheme: dark;
+/* ===== Selector de días: 4 semanas en 7 columnas, como un calendario ===== */
+.dias {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.4rem;
 }
 
-.campo input:focus-visible {
-  outline: none;
-  border-color: rgb(216 179 106 / 80%);
-  box-shadow: 0 0 0 4px rgb(216 179 106 / 14%);
+.dia {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.45rem 0 0.35rem;
+  border: 1px solid var(--borde);
+  border-radius: 0.7rem;
+  background: rgb(245 241 232 / 4%);
+  color: var(--texto);
+  font: inherit;
+  line-height: 1.15;
+  cursor: pointer;
+  transition: border-color 0.16s, background-color 0.16s, transform 0.16s;
+}
+
+.dia-nombre {
+  color: var(--texto-suave);
+  font-size: 0.66rem;
+  text-transform: uppercase;
+}
+
+.dia-numero {
+  font-size: 1.05rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Mes chiquito (solo el primer día y cuando cambia el mes); deja el alto parejo */
+.dia-mes {
+  min-height: 0.75rem;
+  color: var(--dorado);
+  font-size: 0.6rem;
+}
+
+.dia:hover:not(:disabled) {
+  border-color: rgb(216 179 106 / 55%);
+}
+
+.dia:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+/* Hoy: borde dorado aunque no esté elegido */
+.dia.hoy {
+  border-color: rgb(216 179 106 / 45%);
+}
+
+/* Elegido: dorado lleno, como los horarios */
+.dia.elegido {
+  border-color: var(--dorado);
+  background: linear-gradient(160deg, var(--dorado), var(--dorado-claro));
+  color: #14161a;
+}
+
+.dia.elegido .dia-nombre,
+.dia.elegido .dia-mes {
+  color: #14161a;
+}
+
+/* Días que el comercio no atiende */
+.dia:disabled {
+  cursor: not-allowed;
+  opacity: 0.3;
+}
+
+.dia:focus-visible {
+  outline: 2px solid var(--dorado-claro);
+  outline-offset: 2px;
 }
 
 /* ===== Horarios libres: grilla de botones ===== */

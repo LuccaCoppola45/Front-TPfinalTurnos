@@ -8,6 +8,12 @@ export const routes: Routes = [
   { path: '', component: Home },
   { path: 'login', component: Login },
   { path: 'registro', component: Registro },
+  // Link del mail de recordatorio "¿Vas a ir?": público, no hace falta iniciar sesión
+  {
+    path: 'confirmar-turno/:codigo',
+    loadComponent: () =>
+      import('./pages/confirmar-turno/confirmar-turno').then((m) => m.ConfirmarTurno),
+  },
   //Esto es para cualquier usuario Logeado
   {path: 'home', canActivate: [authGuard], loadComponent: () => import('./pages/home/home').then((m) => m.Home), },
   

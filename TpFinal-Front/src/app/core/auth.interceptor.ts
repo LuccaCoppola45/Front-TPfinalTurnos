@@ -10,7 +10,10 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
 const auth = inject(Auth);
   const token = auth.token();
-  const esPublica = req.url.startsWith(`${API_URL}/api/auth/`);
+  // Rutas que no usan el token: login/registro y el link del mail "¿Vas a ir?"
+  // (si quedó un token vencido guardado, no tiene que bloquear la confirmación)
+  const esPublica =
+    req.url.startsWith(`${API_URL}/api/auth/`) || req.url.startsWith(`${API_URL}/api/turnos/confirmacion/`);
 
   if (token && !esPublica && tokenVencido(token)) {
     auth.logout();
