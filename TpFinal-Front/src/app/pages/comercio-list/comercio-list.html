@@ -62,6 +62,8 @@
       @for (comercio of comerciosFiltrados(); track comercio.idComercio; let i = $index) {
         <!-- --i se usa en el CSS para que cada tarjeta entre un poquito después -->
         <li class="tarjeta" [style.--i]="i">
+          <!-- Toda la tarjeta es un link al detalle del comercio, donde se reserva -->
+          <a class="tarjeta-link" [routerLink]="['/comercios', comercio.idComercio]">
           <div class="tarjeta-cabecera">
             <!-- Foto del comercio; si no tiene, muestra las iniciales -->
             <app-avatar
@@ -88,27 +90,19 @@
             <p class="descripcion">{{ comercio.descripcion }}</p>
           }
 
-          @if (comercio.servicios?.length) {
-            <ul class="servicios">
-              @for (s of comercio.servicios; track s.idServicio) {
-                <li>
-                  <div class="servicio-info">
-                    <span class="servicio-nombre">{{ s.nombreServicio }}</span>
-                    <span class="servicio-meta">
-                      {{ s.duracionDelServicio }} min · {{ s.precio | currency: 'ARS' : 'symbol-narrow' : '1.0-0' }}
-                    </span>
-                  </div>
-                  <a class="btn-reservar" [routerLink]="['/comercios', comercio.idComercio, 'reservar', s.idServicio]">
-                    Reservar
-                  </a>
-                </li>
-              }
-            </ul>
-          } @else {
-            <p class="sin-servicios">Este comercio todavía no cargó servicios.</p>
-          }
-
-          <a class="telefono" [href]="'tel:' + comercio.telefono">📞 {{ comercio.telefono }}</a>
+          <!-- Pie: cuántos servicios tiene y desde qué precio, y la invitación a entrar -->
+          <div class="pie">
+            @if (comercio.servicios?.length) {
+              <span class="servicios-resumen">
+                {{ comercio.servicios?.length }} {{ comercio.servicios?.length === 1 ? 'servicio' : 'servicios' }}
+                · desde {{ precioDesde(comercio) | currency: 'ARS' : 'symbol-narrow' : '1.0-0' }}
+              </span>
+            } @else {
+              <span class="servicios-resumen">Todavía sin servicios</span>
+            }
+            <span class="ver">Ver y reservar <span aria-hidden="true">→</span></span>
+          </div>
+          </a>
         </li>
       }
     </ul>

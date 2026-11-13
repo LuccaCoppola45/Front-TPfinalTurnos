@@ -26,6 +26,13 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/comercio-list/comercio-list').then((m) => m.ComercioList),
   },
+  {
+    // Detalle del comercio (RF-28): datos, horarios y servicios para reservar
+    path: 'comercios/:id',
+    canActivate: [rolGuard('CLIENTE')],
+    loadComponent: () =>
+      import('./pages/comercio-detail/comercio-detail').then((m) => m.ComercioDetail),
+  },
 
   {
     path: 'comercios/:id/reservar/:servicioId',

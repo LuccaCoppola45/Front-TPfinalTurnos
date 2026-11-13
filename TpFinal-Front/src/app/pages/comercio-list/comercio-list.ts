@@ -70,4 +70,9 @@ export class ComercioList implements OnInit {
   elegirCategoria(categoria: string | null): void {
     this.categoriaElegida.set(this.categoriaElegida() === categoria ? null : categoria);
   }
+
+  /** Precio del servicio más barato, para mostrar "desde $X" en la tarjeta. */
+  precioDesde(comercio: Comercio): number {
+    return Math.min(...(comercio.servicios ?? []).map((s) => s.precio));
+  }
 }

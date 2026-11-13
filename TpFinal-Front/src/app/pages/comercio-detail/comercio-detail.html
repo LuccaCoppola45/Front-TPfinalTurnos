@@ -1,40 +1,88 @@
-<p><a routerLink="/comercios">← Volver a comercios</a></p>
+<section class="detalle">
+  <a class="volver" routerLink="/comercios">← Volver a comercios</a>
 
-@if (error()) {
-  <p class="error" role="alert">{{ error() }}</p>
-} @else if (comercio(); as c) {
-  <div class="cabecera">
-    <app-avatar [src]="fotos.url('comercio', c.idComercio)" [nombre]="c.nombre" [tamanio]="72" />
-    <h2>{{ c.nombre }}</h2>
-  </div>
-  <p>{{ c.direccion }} · Tel. {{ c.telefono }}</p>
-  @if (c.descripcion) {
-    <p>{{ c.descripcion }}</p>
-  }
-
-  <h3>Horarios de atención</h3>
-  @if (horarios().length === 0) {
-    <p class="ayuda">Este comercio todavía no cargó sus horarios.</p>
-  } @else {
-    <ul>
-      @for (h of horarios(); track h.idHorarioAtencion) {
-        <li>{{ nombreDia[h.diaSemana] }}: {{ recortarHora(h.horaApertura) }} a {{ recortarHora(h.horaCierre) }}</li>
+  @if (error()) {
+    <p class="error" role="alert">{{ error() }}</p>
+  } @else if (comercio(); as c) {
+    <!-- ===== Cabecera: la "tarjeta" del comercio ===== -->
+    <header class="cabecera">
+      <app-avatar class="foto" [src]="fotos.url('comercio', c.idComercio)" [nombre]="c.nombre" [tamanio]="96" />
+      <div class="datos">
+        <h1>{{ c.nombre }}</h1>
+        @if (c.categorias?.length) {
+          <div class="categorias">
+            @for (cat of c.categorias; track cat) {
+              <span class="pastilla">{{ cat }}</span>
+            }
+          </div>
+        }
+        <p class="contacto">
+          <span>📍 {{ c.direccion }}</span>
+          <a [href]="'tel:' + c.telefono">📞 {{ c.telefono }}</a>
+        </p>
+      </div>
+      @if (c.descripcion) {
+        <p class="descripcion">{{ c.descripcion }}</p>
       }
-    </ul>
-  }
+    </header>
 
-  <h3>Servicios</h3>
-  <div class="grilla">
-    @for (s of c.servicios ?? []; track s.idServicio) {
-      <article class="card">
-        <h3>{{ s.nombreServicio }}</h3>
-        <p>{{ s.duracionDelServicio }} minutos · {{ s.precio | currency: 'ARS' : 'symbol-narrow' : '1.0-0' }}</p>
-        <a class="boton" [routerLink]="['/comercios', c.idComercio, 'reservar', s.idServicio]">Reservar turno</a>
-      </article>
-    } @empty {
-      <p class="vacio">Este comercio todavía no cargó servicios.</p>
-    }
-  </div>
-} @else {
-  <p class="vacio" role="status">Cargando...</p>
-}
+    <div class="columnas">
+      <!-- ===== Servicios: elegís uno y reservás ===== -->
+      <section class="bloque" aria-labelledby="titulo-servicios">
+        <h2 id="titulo-servicios">Servicios</h2>
+        @if (c.servicios?.length) {
+          <ul class="servicios">
+            @for (s of c.servicios; track s.idServicio) {
+              <li class="servicio">
+                <div class="servicio-info">
+                  <span class="servicio-nombre">{{ s.nombreServicio }}</span>
+                  <span class="servicio-meta">{{ s.duracionDelServicio }} min</span>
+                </div>
+                <span class="precio">{{ s.precio | currency: 'ARS' : 'symbol-narrow' : '1.0-0' }}</span>
+                <a
+                  class="btn-reservar"
+                  [routerLink]="['/comercios', c.idComercio, 'reservar', s.idServicio]"
+                  [attr.aria-label]="'Reservar ' + s.nombreServicio"
+                >
+                  Reservar
+                </a>
+              </li>
+            }
+          </ul>
+        } @else {
+          <p class="vacio">Este comercio todavía no cargó servicios.</p>
+        }
+      </section>
+
+      <!-- ===== Horarios de la semana ===== -->
+      <section class="bloque" aria-labelledby="titulo-horarios">
+        <h2 id="titulo-horarios">Horarios</h2>
+        @if (tieneHorarios()) {
+          <ul class="semana">
+            @for (d of semana(); track d.nombre) {
+              <li class="dia" [class.hoy]="d.esHoy" [class.cerrado]="d.franjas.length === 0">
+                <span class="dia-nombre">
+                  {{ d.nombre }}
+                  @if (d.esHoy) {
+                    <span class="etiqueta-hoy">Hoy</span>
+                  }
+                </span>
+                <span class="dia-horas">
+                  @for (f of d.franjas; track f) {
+                    <span>{{ f }}</span>
+                  } @empty {
+                    Cerrado
+                  }
+                </span>
+              </li>
+            }
+          </ul>
+        } @else {
+          <p class="vacio">Este comercio todavía no cargó sus horarios.</p>
+        }
+      </section>
+    </div>
+  } @else {
+    <p class="vacio" role="status">Cargando...</p>
+  }
+</section>

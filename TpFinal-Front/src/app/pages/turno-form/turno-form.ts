@@ -24,6 +24,8 @@ export class TurnoForm implements OnInit{
   protected readonly hoy = hoyISO();
   protected readonly nombreDia = NOMBRE_DIA;
   protected readonly recortarHora = recortarHora;
+  /** Id del comercio de la ruta /comercios/:id/reservar/... (para el link "Volver al comercio") */
+  protected readonly idComercioRuta = this.route.snapshot.paramMap.get('id');
 
   readonly comercio = signal<Comercio | null>(null);
   readonly turnos = signal<Turno[]>([]);

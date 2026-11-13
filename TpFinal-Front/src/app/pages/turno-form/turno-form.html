@@ -1,7 +1,7 @@
 <section class="turno">
-  <!-- Al reprogramar se vuelve a Mis turnos; al reservar, al listado de comercios -->
-  <a class="volver" [routerLink]="esReprogramacion() ? '/mis-turnos' : '/comercios'">
-    ← {{ esReprogramacion() ? 'Volver a mis turnos' : 'Volver a comercios' }}
+  <!-- Al reprogramar se vuelve a Mis turnos; al reservar, a la página del comercio -->
+  <a class="volver" [routerLink]="esReprogramacion() ? '/mis-turnos' : ['/comercios', idComercioRuta]">
+    ← {{ esReprogramacion() ? 'Volver a mis turnos' : 'Volver al comercio' }}
   </a>
 
   @if (cargando()) {
