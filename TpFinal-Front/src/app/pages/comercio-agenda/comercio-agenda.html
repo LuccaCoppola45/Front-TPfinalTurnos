@@ -5,6 +5,13 @@
 } @else if (cargando()) {
   <p class="vacio" role="status">Cargando...</p>
 } @else {
+  @if (errorAccion()) {
+    <p class="aviso aviso-error" role="alert">{{ errorAccion() }}</p>
+  }
+  @if (ok()) {
+    <p class="aviso aviso-ok" role="status">{{ ok() }}</p>
+  }
+
   <div class="tabla-scroll">
     <table>
       <caption class="ayuda">Turnos reservados en tu comercio</caption>
@@ -15,6 +22,7 @@
           <th scope="col">Cliente</th>
           <th scope="col">Servicio</th>
           <th scope="col">Estado</th>
+          <th scope="col"><span class="sr-only">Acciones</span></th>
         </tr>
       </thead>
       <tbody>
@@ -25,10 +33,24 @@
             <td>{{ f.cliente }}</td>
             <td>{{ f.servicio }}</td>
             <td><span class="badge" [attr.data-estado]="f.turno.estado">{{ f.turno.estado }}</span></td>
+            <td class="acciones">
+              <!-- RF-19: el comercio puede cancelar turnos que todavía no pasaron -->
+              @if (puedeCancelar(f.turno)) {
+                <button
+                  type="button"
+                  class="btn-cancelar"
+                  [disabled]="cancelandoId() === f.turno.idTurno"
+                  [attr.aria-label]="'Cancelar el turno de ' + f.cliente"
+                  (click)="cancelar(f)"
+                >
+                  {{ cancelandoId() === f.turno.idTurno ? 'Cancelando...' : 'Cancelar' }}
+                </button>
+              }
+            </td>
           </tr>
         } @empty {
           <tr>
-            <td colspan="5" class="vacio">Todavía no hay turnos reservados.</td>
+            <td colspan="6" class="vacio">Todavía no hay turnos reservados.</td>
           </tr>
         }
       </tbody>

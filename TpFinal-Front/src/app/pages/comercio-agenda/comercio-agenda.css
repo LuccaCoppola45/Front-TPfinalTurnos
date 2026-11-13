@@ -170,6 +170,67 @@ td.vacio {
   font-size: 0.92rem;
 }
 
+/* ===== RF-19: botón para que el comercio cancele un turno ===== */
+td.acciones {
+  text-align: right;
+}
+
+.btn-cancelar {
+  padding: 0.4rem 0.9rem;
+  border: 1px solid rgb(248 113 113 / 45%);
+  border-radius: 999px;
+  background: transparent;
+  color: #fca5a5;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-cancelar:hover:not(:disabled) {
+  background: rgb(248 113 113 / 14%);
+}
+
+.btn-cancelar:focus-visible {
+  outline: 2px solid #fca5a5;
+  outline-offset: 3px;
+}
+
+.btn-cancelar:disabled {
+  cursor: wait;
+  opacity: 0.55;
+}
+
+/* Resultado de cancelar (arriba de la tabla, sin taparla) */
+.aviso {
+  width: min(960px, 100%);
+  margin: 0 auto 1rem;
+  padding: 0.8rem 1rem;
+  border-radius: 0.9rem;
+  font-size: 0.92rem;
+}
+
+.aviso-error {
+  border: 1px solid rgb(248 113 113 / 40%);
+  background: rgb(248 113 113 / 14%);
+  color: #fecaca;
+}
+
+.aviso-ok {
+  border: 1px solid rgb(74 222 128 / 40%);
+  background: rgb(74 222 128 / 12%);
+  color: #bbf7d0;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 /* ===== Celular: cada turno es una tarjeta ===== */
 @media (max-width: 640px) {
   :host {
@@ -204,17 +265,32 @@ td.vacio {
     grid-row: 1;
   }
 
-  td:last-child {
+  td:nth-child(5) {
     grid-column: 2;
     grid-row: 1;
     text-align: right;
   }
 
-  /* Filas siguientes: horario, cliente y servicio a lo ancho */
+  /* Filas siguientes: horario, cliente, servicio y el botón, a lo ancho */
   td:nth-child(2),
   td:nth-child(3),
-  td:nth-child(4) {
+  td:nth-child(4),
+  td.acciones {
     grid-column: 1 / -1;
+  }
+
+  td.acciones {
+    padding-top: 0.5rem;
+    text-align: left;
+  }
+
+  /* Sin botón (turno pasado o cancelado) no deja un hueco */
+  td.acciones:empty {
+    display: none;
+  }
+
+  .btn-cancelar {
+    width: 100%;
   }
 
   td:nth-child(2) {
