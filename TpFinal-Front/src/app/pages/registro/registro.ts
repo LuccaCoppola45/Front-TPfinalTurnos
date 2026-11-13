@@ -20,6 +20,9 @@ export class Registro {
   readonly error = signal('');
   readonly enviado = signal(false);
 
+  /** Igual que en el login: evita que el navegador complete email y contraseña solo al cargar. */
+  readonly camposHabilitados = signal(false);
+
   readonly form = this.fb.group({
     nombre: ['',[Validators.required, Validators.minLength(3)]],
     apellido: ['',[Validators.required, Validators.minLength(3)]],

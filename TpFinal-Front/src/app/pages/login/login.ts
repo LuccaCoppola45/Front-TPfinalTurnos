@@ -23,6 +23,13 @@ export class Login {
   readonly error = signal('');
   readonly enviado = signal(false);
 
+  /**
+   * Los campos arrancan en solo lectura y se habilitan al enfocarlos.
+   * Así el administrador de contraseñas del navegador no los completa solo
+   * al cargar la página (por ejemplo, después de cerrar sesión).
+   */
+  readonly camposHabilitados = signal(false);
+
   readonly form = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]],
