@@ -1,9 +1,4 @@
-/* =====================================================================
-   LISTADO DE COMERCIOS
-   Misma paleta que mis-turnos y registro: fondo oscuro + acento dorado.
-   ===================================================================== */
 
-/* Colores en variables: si querés cambiar el dorado, lo cambiás acá y listo */
 :host {
   --dorado: #d8b36a;
   --dorado-claro: #e8c987;
@@ -15,7 +10,6 @@
   display: block;
 }
 
-/* ===== Contenedor ===== */
 .comercios {
   max-width: 1120px;
   margin: 0 auto;
@@ -23,13 +17,11 @@
   color: var(--texto);
 }
 
-/* ===== Encabezado ===== */
 .encabezado {
   margin-bottom: 2rem;
   text-align: center;
 }
 
-/* La "etiqueta" chiquita arriba del título */
 .etiqueta {
   display: inline-block;
   margin-bottom: 0.75rem;
@@ -45,7 +37,6 @@
 
 .encabezado h1 {
   margin: 0;
-  /* clamp(mínimo, ideal, máximo): el título crece con la pantalla pero con topes */
   font-size: clamp(1.9rem, 4.5vw, 2.8rem);
   font-weight: 750;
   letter-spacing: -0.04em;
@@ -53,11 +44,10 @@
 
 .encabezado p {
   margin: 0.6rem auto 0;
-  max-width: 46ch; /* "ch" = ancho de un carácter: limita el largo de la línea */
+  max-width: 46ch;
   color: var(--texto-suave);
 }
 
-/* ===== Buscador + chips ===== */
 .filtros {
   display: flex;
   flex-direction: column;
@@ -66,7 +56,6 @@
   margin-bottom: 2rem;
 }
 
-/* El label envuelve el ícono y el input, así todo parece una sola caja */
 .buscador {
   display: flex;
   align-items: center;
@@ -79,7 +68,6 @@
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-/* :focus-within = "cuando algo de adentro tiene foco" (el input) */
 .buscador:focus-within {
   border-color: var(--dorado);
   box-shadow: 0 0 0 4px rgb(216 179 106 / 15%);
@@ -132,7 +120,6 @@
   color: var(--texto);
 }
 
-/* El chip elegido se pinta de dorado */
 .chip.activo {
   border-color: transparent;
   background: linear-gradient(90deg, var(--dorado), var(--dorado-claro));
@@ -146,9 +133,6 @@
   color: var(--texto-suave);
 }
 
-/* ===== Grilla de tarjetas =====
-   auto-fill + minmax: entran tantas columnas de mínimo 300px como quepan.
-   En celu queda 1 columna, en notebook 2 o 3, sin escribir media queries. */
 .grilla {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
@@ -166,13 +150,10 @@
     var(--tarjeta);
   transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
 
-  /* Entrada escalonada: cada tarjeta espera 70ms más que la anterior.
-     --i lo pone el HTML con [style.--i]="i" (0, 1, 2, ...) */
   animation: aparecer 0.5s ease-out both;
   animation-delay: calc(var(--i, 0) * 70ms);
 }
 
-/* :has(:focus-visible) = también se levanta si llegás con el teclado (Tab) */
 .tarjeta:hover,
 .tarjeta:has(:focus-visible) {
   border-color: rgb(216 179 106 / 40%);
@@ -180,7 +161,6 @@
   box-shadow: 0 24px 50px -30px rgb(216 179 106 / 45%);
 }
 
-/* El link ocupa toda la tarjeta: se toca en cualquier parte y entra al comercio */
 .tarjeta-link {
   display: flex;
   flex-direction: column;
@@ -208,14 +188,12 @@
   }
 }
 
-/* Avatar con la inicial + nombre + dirección */
 .tarjeta-cabecera {
   display: flex;
   align-items: center;
   gap: 0.9rem;
 }
 
-/* <app-avatar>: cuadrado redondeado; sin foto muestra las iniciales en dorado suave */
 .avatar {
   --avatar-radio: 0.9rem;
   --avatar-fondo: rgb(216 179 106 / 14%);
@@ -250,7 +228,6 @@
   color: var(--texto-suave);
 }
 
-/* La descripción se corta en 2 líneas: la completa está en el detalle */
 .descripcion {
   display: -webkit-box;
   margin: 0;
@@ -263,8 +240,6 @@
   color: var(--texto-suave);
 }
 
-/* margin-top: auto empuja el pie al fondo de la tarjeta,
-   así todas las tarjetas de una fila terminan alineadas */
 .pie {
   display: flex;
   justify-content: space-between;
@@ -295,7 +270,6 @@
   transform: translateX(3px);
 }
 
-/* ===== Cargando: tarjetas "esqueleto" con un brillo que pasa ===== */
 .esqueleto {
   min-height: 260px;
   background:
@@ -310,7 +284,6 @@
   }
 }
 
-/* ===== Mensajes ===== */
 .vacio {
   padding: 3rem 1rem;
   border: 1px dashed var(--borde);

@@ -27,7 +27,7 @@ export class SolicitarComercio {
 
   enviar(): void {
     if (this.form.invalid) {
-      this.form.markAllAsTouched(); // Nota: es más común usar markAllAsTouched() para formularios
+      this.form.markAllAsTouched();
       return;
     }
     this.enviado.set(true);
@@ -36,8 +36,7 @@ export class SolicitarComercio {
 
     const rawValues = this.form.getRawValue();
 
-    // Mapeamos asegurando que no viajen nulos para cumplir con el tipo estricto del servicio
-    const datos /*: SolicitudRequest*/ = {
+    const datos = {
       nombreComercioPropuesto: rawValues.nombreComercioPropuesto ?? '',
       direccion: rawValues.direccion ?? '',
       telefono: rawValues.telefono ?? '',

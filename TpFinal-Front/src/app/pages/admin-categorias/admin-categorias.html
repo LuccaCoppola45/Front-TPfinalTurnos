@@ -5,7 +5,6 @@
     <p>Los comercios eligen una o más categorías, y los clientes las usan para filtrar.</p>
   </header>
 
-  <!-- Formulario: sirve para crear y para editar -->
   <form class="formulario" [class.editando]="editandoId() !== null" [formGroup]="form" (ngSubmit)="guardar()">
     <label for="nombre">{{ editandoId() === null ? 'Nueva categoría' : 'Editar categoría' }}</label>
     <div class="fila">

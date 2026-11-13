@@ -18,7 +18,6 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes), provideClientHydration(),
     provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
-    // Al arrancar, recupera la sesión guardada en localStorage (solo existe en el navegador)
     provideAppInitializer(() => {
       if (isPlatformBrowser(inject(PLATFORM_ID))) {
         return inject(Auth).restaurarSesion();

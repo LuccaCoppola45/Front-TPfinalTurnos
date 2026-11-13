@@ -1,8 +1,3 @@
-/* =====================================================================
-   CANCELACIONES (panel de administración)
-   Historial de turnos cancelados. Misma estructura que Usuarios:
-   encabezado en una fila + tabla. En celular cada fila es una tarjetita.
-   ===================================================================== */
 
 :host {
   --dorado: #d8b36a;
@@ -22,7 +17,6 @@
   color: var(--texto);
 }
 
-/* ===== Encabezado en una fila ===== */
 .encabezado {
   display: flex;
   align-items: center;
@@ -90,7 +84,6 @@ h1 {
   white-space: nowrap;
 }
 
-/* ===== Tabla ===== */
 .tabla {
   overflow: hidden;
   border: 1px solid var(--borde);
@@ -129,7 +122,6 @@ tbody tr:hover {
   background: rgb(245 241 232 / 3%);
 }
 
-/* Cada celda tiene un dato principal arriba y uno secundario abajo */
 td > span {
   display: block;
 }
@@ -145,7 +137,6 @@ td > span {
   overflow-wrap: anywhere;
 }
 
-/* Fecha en dorado, como en la Agenda */
 .fecha {
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
@@ -162,7 +153,6 @@ td > span {
   font-size: 0.82rem;
 }
 
-/* Motivo como una cita, con una rayita roja (es una cancelación) */
 .motivo {
   width: 38%;
 }
@@ -176,7 +166,6 @@ td > span {
   line-height: 1.45;
 }
 
-/* ===== Mensajes ===== */
 .alerta {
   padding: 0.8rem 1rem;
   border: 1px solid rgb(248 113 113 / 40%);
@@ -210,7 +199,6 @@ td > span {
   font-size: 1.4rem;
 }
 
-/* ===== Celular: cada cancelación es una tarjetita ===== */
 @media (max-width: 640px) {
   .cancelaciones {
     padding: 1.25rem 1rem 3rem;
@@ -245,7 +233,6 @@ td > span {
     border: none;
   }
 
-  /* La fecha queda en una línea: "16/06/2026 · 00:36 hs" */
   .fecha span {
     display: inline;
   }

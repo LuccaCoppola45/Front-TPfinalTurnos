@@ -1,5 +1,4 @@
 <section class="comercios">
-  <!-- Barra compacta: título y cantidad a la izquierda, buscador a la derecha -->
   <header class="encabezado">
     <div class="titulo-pagina">
       <span class="etiqueta">Administración</span>
@@ -38,7 +37,6 @@
   }
 
   @if (cargando()) {
-    <!-- Tarjetas "fantasma" mientras carga -->
     <ul class="grilla">
       @for (n of [1, 2, 3]; track n) {
         <li class="tarjeta esqueleto"></li>
@@ -81,7 +79,6 @@
             </div>
           }
 
-          <!-- Números rápidos del comercio -->
           <dl class="datos">
             <div>
               <dt>Teléfono</dt>

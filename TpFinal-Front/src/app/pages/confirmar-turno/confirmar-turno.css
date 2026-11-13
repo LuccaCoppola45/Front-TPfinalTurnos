@@ -1,7 +1,3 @@
-/* =====================================================================
-   CONFIRMAR TURNO ("¿Vas a ir?") — se abre desde el mail de recordatorio
-   Misma estética que el mail y que Mi perfil: tarjeta oscura + dorado.
-   ===================================================================== */
 
 :host {
   --dorado: #d8b36a;
@@ -69,7 +65,6 @@ h1 {
   line-height: 1.5;
 }
 
-/* Círculo con ícono para los resultados (confirmado / cancelado) */
 .icono {
   display: grid;
   place-items: center;
@@ -92,7 +87,6 @@ h1 {
   color: #fca5a5;
 }
 
-/* ===== Datos del turno (igual que en el mail) ===== */
 .resumen {
   width: 100%;
   padding: 1rem 1.1rem;
@@ -125,7 +119,6 @@ h1 {
   font-weight: 600;
 }
 
-/* Turno cancelado: borde rojo y fecha tachada */
 .resumen.tachado {
   border-left-color: #f87171;
   background: rgb(248 113 113 / 8%);
@@ -136,7 +129,6 @@ h1 {
   text-decoration: line-through;
 }
 
-/* ===== Botones ===== */
 .botones {
   display: flex;
   gap: 0.75rem;
@@ -176,7 +168,6 @@ h1 {
   box-shadow: 0 18px 40px -24px rgb(216 179 106 / 90%);
 }
 
-/* El botón que tocó en el mail se resalta con un aro */
 .sugerido {
   box-shadow: 0 0 0 3px rgb(245 241 232 / 22%);
 }
@@ -193,14 +184,12 @@ h1 {
   outline-offset: 3px;
 }
 
-/* Link con forma de botón (después de responder) */
 .enlace {
   flex: none;
   width: 100%;
   text-align: center;
 }
 
-/* ===== Mensajes ===== */
 .error {
   width: 100%;
   margin: 0;

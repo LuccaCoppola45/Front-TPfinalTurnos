@@ -5,7 +5,6 @@ import { API_URL } from '../core/api';
 
 export type TipoFoto = 'usuario' | 'comercio';
 
-/** Tamaño máximo que acepta el backend (spring.servlet.multipart.max-file-size). */
 export const TAMANIO_MAXIMO_FOTO = 2 * 1024 * 1024;
 export const FORMATOS_FOTO = ['image/jpeg', 'image/png', 'image/webp'];
 
@@ -18,10 +17,6 @@ const RUTAS: Record<TipoFoto, string> = {
 export class FotoService {
   private readonly http = inject(HttpClient);
 
-  /**
-   * Cada vez que se sube o borra una foto se cambia su "versión", así todas las
-   * <img> que la muestran (por ejemplo la del menú) se vuelven a pedir al backend.
-   */
   private readonly versiones = signal<Record<string, number>>({});
 
   url(tipo: TipoFoto, id: number): string {

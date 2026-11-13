@@ -17,24 +17,18 @@ export class ComercioList implements OnInit {
   private readonly comercioService = inject(ComercioService);
   protected readonly fotos = inject(FotoService);
 
-  // Datos que vienen de afuera → signal
   readonly comercios = signal<Comercio[]>([]);
   readonly cargando = signal(true);
   readonly error = signal('');
 
-  // Lo que elige el usuario → signal
   readonly busqueda = signal('');
   readonly categoriaElegida = signal<string | null>(null);
 
-  // Todo lo que se deduce de lo anterior → computed
-
-  /** Categorías sin repetir, sacadas de los comercios (para los chips de filtro). */
   readonly categorias = computed(() => {
     const todas = this.comercios().flatMap((c) => c.categorias ?? []);
     return [...new Set(todas)].sort();
   });
 
-  /** Comercios que coinciden con la búsqueda y la categoría elegida. */
   readonly comerciosFiltrados = computed(() => {
     const texto = this.busqueda().trim().toLowerCase();
     const categoria = this.categoriaElegida();
@@ -66,12 +60,10 @@ export class ComercioList implements OnInit {
     this.busqueda.set((evento.target as HTMLInputElement).value);
   }
 
-  /** Si tocás el chip que ya estaba elegido, se desmarca. */
   elegirCategoria(categoria: string | null): void {
     this.categoriaElegida.set(this.categoriaElegida() === categoria ? null : categoria);
   }
 
-  /** Precio del servicio más barato, para mostrar "desde $X" en la tarjeta. */
   precioDesde(comercio: Comercio): number {
     return Math.min(...(comercio.servicios ?? []).map((s) => s.precio));
   }

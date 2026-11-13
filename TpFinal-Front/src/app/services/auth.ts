@@ -13,18 +13,13 @@ export class Auth {
     private readonly http = inject(HttpClient);
     private readonly router = inject(Router);
 
-    //Este es un signal que usamos basicamente para guardar el token de autenticacion, empieza en null porque no hay un token cargado
     readonly token = signal<string| null>(null);
-    //Este es otro signal pero que lo suamos para guardar los datos del usuario, y empieza en null por lo mismo que antes
     readonly usuario = signal<Usuario | null>(null)
-    // es true solo si hay token y también hay datos del usuario.
     readonly estalogueado = computed(() => this.token() !== null && this.usuario() !== null);
 
-    //esto te devuelv eel rol del usuario, y si el usuario es todavia null. devuelve null
     readonly rol = computed(() => this.usuario()?.rol ?? null);
     
      
-     // Se ejecuta al arrancar la app: recupera la sesión guardada si el token sigue vigente. 
   async restaurarSesion(): Promise<void> {
     const guardado = localStorage.getItem(CLAVE_TOKEN);
     if (!guardado || tokenVencido(guardado)) {
@@ -39,7 +34,6 @@ export class Auth {
     }
   }
 
-  /** Registra al usuario. El backend responde texto plano, no JSON. */
   registrar(datos: RegistroRequest): Observable<string> {
     return this.http.post(`${API_URL}/api/auth/register`, datos, { responseType: 'text' });
   }
@@ -58,10 +52,6 @@ export class Auth {
     );
   }
 
-  /**
-   * El token solo trae el email, así que el id y el rol se buscan en /usuarios.
-   * Sirve también para refrescar el rol (por ejemplo, cuando el admin aprueba una solicitud).
-   */
   cargarUsuario(): Observable<Usuario> {
     const email = emailDelToken(this.token());
     return this.http.get<Usuario[] | null>(`${API_URL}/usuarios`).pipe(
@@ -87,6 +77,4 @@ export class Auth {
     this.usuario.set(null);
   }
 }
-
-
 

@@ -5,7 +5,6 @@
     <p>Elegí un comercio, mirá sus servicios y reservá en un par de clics.</p>
   </header>
 
-  <!-- Buscador + filtros por categoría -->
   <div class="filtros">
     <label class="buscador">
       <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -47,7 +46,6 @@
   }
 
   @if (cargando()) {
-    <!-- Tarjetas "fantasma" mientras carga (skeleton) -->
     <ul class="grilla">
       @for (n of [1, 2, 3]; track n) {
         <li class="tarjeta esqueleto"></li>
@@ -60,12 +58,9 @@
 
     <ul class="grilla">
       @for (comercio of comerciosFiltrados(); track comercio.idComercio; let i = $index) {
-        <!-- --i se usa en el CSS para que cada tarjeta entre un poquito después -->
         <li class="tarjeta" [style.--i]="i">
-          <!-- Toda la tarjeta es un link al detalle del comercio, donde se reserva -->
           <a class="tarjeta-link" [routerLink]="['/comercios', comercio.idComercio]">
           <div class="tarjeta-cabecera">
-            <!-- Foto del comercio; si no tiene, muestra las iniciales -->
             <app-avatar
               class="avatar"
               [src]="fotos.url('comercio', comercio.idComercio)"
@@ -90,7 +85,6 @@
             <p class="descripcion">{{ comercio.descripcion }}</p>
           }
 
-          <!-- Pie: cuántos servicios tiene y desde qué precio, y la invitación a entrar -->
           <div class="pie">
             @if (comercio.servicios?.length) {
               <span class="servicios-resumen">

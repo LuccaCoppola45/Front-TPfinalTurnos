@@ -1,4 +1,3 @@
-/* ===== Colores que se repiten (se cambian en un solo lugar) ===== */
 :host {
   --dorado: #d8b36a;
   --dorado-claro: #e8c987;
@@ -10,7 +9,6 @@
   display: block;
 }
 
-/* ===== Contenedor de la página ===== */
 .mis-turnos {
   max-width: 860px;
   margin: 0 auto;
@@ -18,7 +16,6 @@
   color: var(--texto);
 }
 
-/* ===== Título + botón "Nuevo turno" ===== */
 .encabezado {
   display: flex;
   justify-content: space-between;
@@ -39,7 +36,6 @@
   color: var(--texto-suave);
 }
 
-/* ===== Lista de turnos ===== */
 .lista {
   display: flex;
   flex-direction: column;
@@ -49,7 +45,6 @@
   list-style: none;
 }
 
-/* Cada turno: fecha | info | estado | botones */
 .tarjeta {
   display: flex;
   align-items: center;
@@ -67,7 +62,6 @@
   transform: translateY(-2px);
 }
 
-/* Cuadrito con el día y el mes */
 .fecha {
   display: flex;
   flex-direction: column;
@@ -91,7 +85,6 @@
   text-transform: uppercase;
 }
 
-/* Nombre del comercio y horario (ocupa el espacio que sobra) */
 .info {
   flex: 1;
   min-width: 160px;
@@ -107,7 +100,6 @@
   color: var(--texto-suave);
 }
 
-/* ===== Estado del turno: una "pastilla" de color ===== */
 .estado {
   padding: 0.35rem 0.8rem;
   border-radius: 999px;
@@ -137,7 +129,6 @@
   color: var(--texto-suave);
 }
 
-/* ===== Botones ===== */
 .acciones {
   display: flex;
   gap: 0.5rem;
@@ -188,7 +179,6 @@
   background: rgb(248 113 113 / 12%);
 }
 
-/* ===== Mensajes: cargando, vacío y error ===== */
 .mensaje {
   color: var(--texto-suave);
   text-align: center;
@@ -219,7 +209,6 @@
   color: #fecaca;
 }
 
-/* ===== Celular: los botones bajan y ocupan todo el ancho ===== */
 @media (max-width: 600px) {
   .mis-turnos {
     padding: 1.5rem 1rem;

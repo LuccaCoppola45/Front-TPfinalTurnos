@@ -42,24 +42,20 @@ export function minutosAhora(): number {
   return d.getHours() * 60 + d.getMinutes();
 }
 
-/** Recibe 'YYYY-MM-DD' y devuelve el día de la semana con el mismo formato que el backend. */
 export function diaDeLaSemana(fechaISO: string): DiaSemana {
   const [a, m, d] = fechaISO.split('-').map(Number);
   return POR_INDICE_JS[new Date(a, m - 1, d).getDay()];
 }
 
-/** '09:30' o '09:30:00' -> 570 */
 export function aMinutos(hora: string): number {
   const [h, m] = hora.split(':').map(Number);
   return h * 60 + m;
 }
 
-/** 570 -> '09:30' */
 export function aHora(minutos: number): string {
   return `${dos(Math.floor(minutos / 60))}:${dos(minutos % 60)}`;
 }
 
-/** '09:30:00' -> '09:30' */
 export function recortarHora(hora: string): string {
   return hora.slice(0, 5);
 }

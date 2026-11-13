@@ -1,12 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
 
-/**
- * Convierte el error del backend en un texto para mostrar.
- * El backend responde de tres formas distintas:
- *  - ErrorResponse { status, error, message, path, timestamp }
- *  - un mapa { campo: mensaje } cuando falla @Valid
- *  - el error genérico de Spring (sin "message") para las excepciones sin handler
- */
 export function mensajeDeError(
   error: unknown,
   porDefecto = 'Ocurrió un error inesperado. Intentá de nuevo.',
@@ -23,7 +16,6 @@ export function mensajeDeError(
     try {
       cuerpo = JSON.parse(cuerpo);
     } catch {
-      // era texto plano
     }
   }
 

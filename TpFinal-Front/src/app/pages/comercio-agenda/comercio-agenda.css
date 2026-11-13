@@ -1,8 +1,3 @@
-/* =====================================================================
-   AGENDA (Mi comercio > Agenda)
-   Misma estética que Servicios: fondo oscuro + dorado.
-   Los colores de estado son los mismos que en "Mis turnos".
-   ===================================================================== */
 
 :host {
   --dorado: #d8b36a;
@@ -28,7 +23,6 @@ h2 {
   letter-spacing: -0.05em;
 }
 
-/* ===== Tarjeta con la tabla ===== */
 .tabla-scroll {
   width: min(960px, 100%);
   margin: 0 auto;
@@ -76,7 +70,7 @@ th {
 td {
   padding: 0.9rem 1.5rem;
   border-bottom: 1px solid rgb(245 241 232 / 6%);
-  font-variant-numeric: tabular-nums; /* fechas y horas alineadas */
+  font-variant-numeric: tabular-nums;
 }
 
 tbody tr:last-child td {
@@ -91,7 +85,6 @@ tbody tr:hover {
   background: rgb(245 241 232 / 4%);
 }
 
-/* Fecha en dorado y horario en negrita: es lo primero que mira el comercio */
 td:first-child {
   color: var(--dorado-claro);
   font-weight: 600;
@@ -107,7 +100,6 @@ td:nth-child(4) {
   color: var(--texto-suave);
 }
 
-/* Turnos que ya no van a ocurrir: más apagados, así resaltan los activos */
 tr:has([data-estado='CANCELADO']),
 tr:has([data-estado='FINALIZADO']) {
   opacity: 0.55;
@@ -117,7 +109,6 @@ tr:has([data-estado='CANCELADO']) td:nth-child(2) {
   text-decoration: line-through;
 }
 
-/* ===== Estado del turno: pastilla de color (igual que en Mis turnos) ===== */
 .badge {
   display: inline-block;
   padding: 0.35rem 0.8rem;
@@ -149,8 +140,6 @@ tr:has([data-estado='CANCELADO']) td:nth-child(2) {
   color: var(--texto-suave);
 }
 
-/* ===== Mensajes ===== */
-/* td.vacio le gana a td:first-child (si no, el texto saldría dorado) */
 .vacio,
 td.vacio {
   padding: 2rem 1rem;
@@ -170,7 +159,6 @@ td.vacio {
   font-size: 0.92rem;
 }
 
-/* ===== RF-19: botón para que el comercio cancele un turno ===== */
 td.acciones {
   text-align: right;
 }
@@ -201,7 +189,6 @@ td.acciones {
   opacity: 0.55;
 }
 
-/* Resultado de cancelar (arriba de la tabla, sin taparla) */
 .aviso {
   width: min(960px, 100%);
   margin: 0 auto 1rem;
@@ -231,7 +218,6 @@ td.acciones {
   white-space: nowrap;
 }
 
-/* ===== Celular: cada turno es una tarjeta ===== */
 @media (max-width: 640px) {
   :host {
     padding: 2rem 1rem;
@@ -259,7 +245,6 @@ td.acciones {
     border: none;
   }
 
-  /* Fila 1: fecha a la izquierda, estado a la derecha */
   td:first-child {
     grid-column: 1;
     grid-row: 1;
@@ -271,7 +256,6 @@ td.acciones {
     text-align: right;
   }
 
-  /* Filas siguientes: horario, cliente, servicio y el botón, a lo ancho */
   td:nth-child(2),
   td:nth-child(3),
   td:nth-child(4),
@@ -284,7 +268,6 @@ td.acciones {
     text-align: left;
   }
 
-  /* Sin botón (turno pasado o cancelado) no deja un hueco */
   td.acciones:empty {
     display: none;
   }

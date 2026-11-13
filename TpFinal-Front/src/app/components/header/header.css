@@ -1,7 +1,6 @@
 :host {
   display: block;
 
-  /* Paleta del header: grafito, marfil y dorado champagne */
   --header-bg-top: #14161a;
   --header-bg-bottom: #1c1f25;
   --header-text: #f5f1e8;
@@ -124,7 +123,7 @@
   letter-spacing: 0.16em;
   text-decoration: none;
   text-transform: uppercase;
-  white-space: nowrap; /* "Mi comercio" no se parte en dos líneas */
+  white-space: nowrap;
   transition: color 220ms ease;
 }
 
@@ -157,7 +156,6 @@
   transform: scaleX(1);
 }
 
-/* Link "Mi perfil": foto chiquita + nombre */
 .nav-perfil {
   display: inline-flex;
   align-items: center;
@@ -210,21 +208,17 @@
   background: rgb(216 179 106 / 9%);
 }
 
-/* El admin tiene muchos links: que la marca y "Cerrar sesión" no se partan */
 .brand-name,
 .nav-cta {
   white-space: nowrap;
 }
 
-/* En pantallas medianas, menos espacio entre links para que entren en una fila */
 @media (max-width: 1440px) {
   .header-nav {
     gap: 1.4rem;
   }
 }
 
-/* Con los links de cada rol ya no entra todo en una fila:
-   la marca queda arriba y los links bajan a una segunda línea */
 @media (max-width: 1200px) {
   .header-content {
     flex-wrap: wrap;

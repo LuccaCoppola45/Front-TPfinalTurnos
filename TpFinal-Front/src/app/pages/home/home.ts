@@ -11,7 +11,6 @@ import { RouterLink } from '@angular/router';
 export class Home {
   protected readonly auth = inject(Auth);
 
-  //Refresca el usuario por si el admid le cambiop el rol(acepto la solicitud de conversion)
   ngOnInit(): void{
     this.auth.cargarUsuario().subscribe({error: ()=>undefined})
   }

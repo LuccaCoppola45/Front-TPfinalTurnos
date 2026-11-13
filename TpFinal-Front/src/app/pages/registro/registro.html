@@ -11,7 +11,6 @@
 
     <form [formGroup]="form" (ngSubmit)="registrar()">
       
-      <!-- Campo Nombre -->
       <div class="campo">
         <label for="nombre">Nombre:</label>
         <input id="nombre" type="text" formControlName="nombre" [class.is-invalid]="form.get('nombre')?.invalid && form.get('nombre')?.touched" />
@@ -22,7 +21,6 @@
         }
       </div>
 
-      <!-- Campo Apellido -->
       <div class="campo">
         <label for="apellido">Apellido:</label>
         <input id="apellido" type="text" formControlName="apellido" [class.is-invalid]="form.get('apellido')?.invalid && form.get('apellido')?.touched" />
@@ -33,7 +31,6 @@
         }
       </div>
 
-      <!-- Campo Email -->
       <div class="campo">
         <label for="email">Correo electrónico:</label>
         <input
@@ -53,10 +50,8 @@
         }
       </div>
 
-      <!-- Campo Password -->
       <div class="campo">
         <label for="password">Contraseña:</label>
-        <!-- new-password: le dice al navegador que es una cuenta nueva y que no ponga la contraseña guardada -->
         <input
           id="password"
           type="password"

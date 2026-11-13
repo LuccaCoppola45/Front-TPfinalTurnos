@@ -1,8 +1,3 @@
-/* =====================================================================
-   RESERVAR / REPROGRAMAR TURNO (es la misma página)
-   Tarjeta centrada como Mi perfil: resumen del servicio, fecha y los
-   horarios libres como botones. Fondo oscuro + dorado.
-   ===================================================================== */
 
 :host {
   --dorado: #d8b36a;
@@ -37,7 +32,6 @@
   color: var(--dorado-claro);
 }
 
-/* ===== Tarjeta ===== */
 .tarjeta {
   display: flex;
   flex-direction: column;
@@ -68,7 +62,6 @@ h1 {
   letter-spacing: -0.04em;
 }
 
-/* ===== Resumen del servicio ===== */
 .resumen {
   padding: 1rem 1.1rem;
   border-left: 3px solid var(--dorado);
@@ -102,7 +95,6 @@ h1 {
   color: var(--dorado-claro);
 }
 
-/* Turno actual (solo al reprogramar) */
 .actual {
   margin: 0;
   padding: 0.7rem 0.9rem;
@@ -116,7 +108,6 @@ h1 {
   color: var(--texto);
 }
 
-/* ===== Fecha ===== */
 .campo {
   display: flex;
   flex-direction: column;
@@ -139,7 +130,6 @@ h1 {
   letter-spacing: 0;
 }
 
-/* ===== Selector de días: 4 semanas en 7 columnas, como un calendario ===== */
 .dias {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -173,7 +163,6 @@ h1 {
   font-variant-numeric: tabular-nums;
 }
 
-/* Mes chiquito (solo el primer día y cuando cambia el mes); deja el alto parejo */
 .dia-mes {
   min-height: 0.75rem;
   color: var(--dorado);
@@ -188,12 +177,10 @@ h1 {
   transform: scale(0.95);
 }
 
-/* Hoy: borde dorado aunque no esté elegido */
 .dia.hoy {
   border-color: rgb(216 179 106 / 45%);
 }
 
-/* Elegido: dorado lleno, como los horarios */
 .dia.elegido {
   border-color: var(--dorado);
   background: linear-gradient(160deg, var(--dorado), var(--dorado-claro));
@@ -205,7 +192,6 @@ h1 {
   color: #14161a;
 }
 
-/* Días que el comercio no atiende */
 .dia:disabled {
   cursor: not-allowed;
   opacity: 0.3;
@@ -216,7 +202,6 @@ h1 {
   outline-offset: 2px;
 }
 
-/* ===== Horarios libres: grilla de botones ===== */
 .slots {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(78px, 1fr));
@@ -246,7 +231,6 @@ h1 {
   transform: scale(0.96);
 }
 
-/* Horario elegido: dorado lleno */
 .slot.elegido {
   border-color: var(--dorado);
   background: linear-gradient(90deg, var(--dorado), var(--dorado-claro));
@@ -259,7 +243,6 @@ h1 {
   outline-offset: 3px;
 }
 
-/* ===== Mensajes ===== */
 .ayuda,
 .aviso {
   margin: 0;
@@ -289,7 +272,6 @@ h1 {
   color: var(--texto-suave);
 }
 
-/* ===== Botón confirmar ===== */
 .confirmar {
   width: 100%;
   padding: 0.95rem 1.2rem;

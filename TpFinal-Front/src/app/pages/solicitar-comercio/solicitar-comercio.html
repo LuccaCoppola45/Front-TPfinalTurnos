@@ -3,14 +3,12 @@
     <h2>Solicitar Comercio</h2>
     <p class="subtitle">Envía tu propuesta de comercio para revisión</p>
 
-    <!-- Mensaje de éxito -->
     @if (ok()) {
       <div class="alert-success" role="alert">
         {{ ok() }}
       </div>
     }
 
-    <!-- Mensaje de error general -->
     @if (error()) {
       <div class="alert-error" role="alert">
         {{ error() }}
@@ -19,7 +17,6 @@
 
     <form [formGroup]="form" (ngSubmit)="enviar()">
       
-      <!-- Campo Nombre del Comercio Propuesto -->
       <div class="campo">
         <label for="nombreComercioPropuesto">Nombre del comercio:</label>
         <input 
@@ -35,7 +32,6 @@
         }
       </div>
 
-      <!-- Campo Dirección -->
       <div class="campo">
         <label for="direccion">Dirección:</label>
         <input 
@@ -51,7 +47,6 @@
         }
       </div>
 
-      <!-- Campo Teléfono -->
       <div class="campo">
         <label for="telefono">Teléfono:</label>
         <input 
@@ -67,7 +62,6 @@
         }
       </div>
 
-      <!-- Campo Descripción -->
       <div class="campo">
         <label for="descripcion">Descripción:</label>
         <textarea 
@@ -83,7 +77,6 @@
         }
       </div>
 
-      <!-- Botón de Envío -->
       <button type="submit" class="btn-submit" [disabled]="enviado()">
         @if (enviado()) {
           Enviando...

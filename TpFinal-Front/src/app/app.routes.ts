@@ -8,13 +8,11 @@ export const routes: Routes = [
   { path: '', component: Home },
   { path: 'login', component: Login },
   { path: 'registro', component: Registro },
-  // Link del mail de recordatorio "¿Vas a ir?": público, no hace falta iniciar sesión
   {
     path: 'confirmar-turno/:codigo',
     loadComponent: () =>
       import('./pages/confirmar-turno/confirmar-turno').then((m) => m.ConfirmarTurno),
   },
-  //Esto es para cualquier usuario Logeado
   {path: 'home', canActivate: [authGuard], loadComponent: () => import('./pages/home/home').then((m) => m.Home), },
   
   {
@@ -23,9 +21,6 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/perfil/perfil').then((m) => m.Perfil),
   },
 
-
-  // CLIENTE
-
    {
     path: 'comercios',
     canActivate: [rolGuard('CLIENTE')],
@@ -33,7 +28,6 @@ export const routes: Routes = [
       import('./pages/comercio-list/comercio-list').then((m) => m.ComercioList),
   },
   {
-    // Detalle del comercio (RF-28): datos, horarios y servicios para reservar
     path: 'comercios/:id',
     canActivate: [rolGuard('CLIENTE')],
     loadComponent: () =>
@@ -61,7 +55,6 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/solicitar-comercio/solicitar-comercio').then((m) => m.SolicitarComercio),
   },
-  // COMERCIO
   {
     path: 'mi-comercio',
     canActivate: [rolGuard('COMERCIO')],
@@ -87,7 +80,6 @@ export const routes: Routes = [
       import('./pages/comercio-agenda/comercio-agenda').then((m) => m.ComercioAgenda),
   },
 
-  // ADMIN
   {
     path: 'admin/categorias',
     canActivate: [rolGuard('ADMIN')],
@@ -119,6 +111,5 @@ export const routes: Routes = [
       import('./pages/admin-cancelaciones/admin-cancelaciones').then((m) => m.AdminCancelaciones),
   },
 
-  // Siempre al final: Angular prueba las rutas en orden y '**' atrapa cualquier cosa
   { path: '**', redirectTo: '' },
 ];

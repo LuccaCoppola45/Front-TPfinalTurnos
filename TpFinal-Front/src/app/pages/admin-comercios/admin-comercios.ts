@@ -25,10 +25,8 @@ export class AdminComercios implements OnInit {
   readonly cargando = signal(true);
   readonly error = signal('');
   readonly ok = signal('');
-  /** Id del comercio que se está borrando (para deshabilitar su botón). */
   readonly eliminandoId = signal<number | null>(null);
 
-  /** Filtra por nombre, dirección o nombre/email del dueño. */
   readonly filtrados = computed(() => {
     const texto = this.busqueda().trim().toLowerCase();
     if (!texto) {
@@ -66,7 +64,6 @@ export class AdminComercios implements OnInit {
     });
   }
 
-  /** El backend solo manda el id del dueño: lo buscamos en la lista de usuarios. */
   propietario(id: number | null): Usuario | undefined {
     return this.usuarios().find((u) => u.idUsuario === id);
   }
@@ -90,7 +87,6 @@ export class AdminComercios implements OnInit {
       },
       error: (e: unknown) => {
         this.eliminandoId.set(null);
-        // La base no deja borrar un comercio con servicios o turnos y el backend responde un error genérico
         this.error.set(
           mensajeDeError(
             e,

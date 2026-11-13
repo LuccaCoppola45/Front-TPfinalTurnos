@@ -9,13 +9,12 @@ import { Turno } from '../../Models/turnos';
 import { forkJoin } from 'rxjs';
 import { mensajeDeError } from '../../core/http-error';
 
-/** Un día del selector de fecha. */
 interface DiaElegible {
-  iso: string; // 'YYYY-MM-DD'
-  nombreCorto: string; // 'Jue'
-  numero: number; // 26
-  mes: string; // 'nov' (solo en el primer día y al cambiar de mes)
-  abierto: boolean; // ¿el comercio atiende ese día?
+  iso: string;
+  nombreCorto: string;
+  numero: number;
+  mes: string;
+  abierto: boolean;
   esHoy: boolean;
 }
 
@@ -38,7 +37,6 @@ export class TurnoForm implements OnInit{
   protected readonly hoy = hoyISO();
   protected readonly nombreDia = NOMBRE_DIA;
   protected readonly recortarHora = recortarHora;
-  /** Id del comercio de la ruta /comercios/:id/reservar/... (para el link "Volver al comercio") */
   protected readonly idComercioRuta = this.route.snapshot.paramMap.get('id');
 
   readonly comercio = signal<Comercio | null>(null);
@@ -65,7 +63,6 @@ export class TurnoForm implements OnInit{
     return (this.comercio()?.horarios ?? []).filter((h) => h.diaSemana === dia);
   });
 
-  /** Horas de inicio posibles: dentro del horario de atención y sin chocar con otros turnos. */
   readonly horasDisponibles = computed(() => {
     const servicio = this.servicio();
     const fecha = this.fecha();
@@ -103,16 +100,11 @@ export class TurnoForm implements OnInit{
 
   readonly esReprogramacion = computed(() => this.turnoAEditar() !== null);
 
-  /** Nombre del día elegido ("Jueves"), para el título de los horarios. */
   readonly nombreDelDia = computed(() => {
     const fecha = this.fecha();
     return fecha ? this.nombreDia[diaDeLaSemana(fecha)] : '';
   });
 
-  /**
-   * Los próximos 28 días (4 semanas) para el selector de fecha.
-   * "abierto" = el comercio tiene horario ese día de la semana; si no, el botón se deshabilita.
-   */
   readonly dias = computed<DiaElegible[]>(() => {
     const diasQueAtiende = new Set((this.comercio()?.horarios ?? []).map((h) => h.diaSemana));
     const [a, m, d] = this.hoy.split('-').map(Number);
@@ -123,7 +115,6 @@ export class TurnoForm implements OnInit{
         iso,
         nombreCorto: NOMBRE_CORTO[fecha.getDay()],
         numero: fecha.getDate(),
-        // El mes se muestra en el primer día y cuando cambia de mes
         mes: i === 0 || fecha.getDate() === 1 ? MESES[fecha.getMonth()] : '',
         abierto: diasQueAtiende.has(diaDeLaSemana(iso)),
         esHoy: i === 0,
@@ -173,7 +164,6 @@ export class TurnoForm implements OnInit{
     this.error.set(mensajeDeError(e, 'No se pudo cargar la información para reservar.'));
     this.cargando.set(false);
   }
-
 
   confirmar(): void {
     const comercio = this.comercio();

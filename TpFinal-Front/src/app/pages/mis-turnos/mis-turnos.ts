@@ -25,7 +25,6 @@ export class MisTurnos implements OnInit {
   readonly cargando = signal(true);
   readonly error = signal('');
 
-  // idComercio -> nombre, para mostrar "Barbería X" en vez de un número
   private nombresComercios = new Map<number, string>();
 
   ngOnInit(): void {
@@ -42,7 +41,6 @@ export class MisTurnos implements OnInit {
     }).subscribe({
       next: ({ turnos, comercios }) => {
         comercios.forEach((c) => this.nombresComercios.set(c.idComercio, c.nombre));
-        // TODO RF-13: cuando el backend filtre por usuario, sacar este filter
         this.turnos.set(turnos.filter((t) => t.usuarioId === idUsuario));
         this.cargando.set(false);
       },
@@ -57,7 +55,6 @@ export class MisTurnos implements OnInit {
     return this.nombresComercios.get(idComercio) ?? 'Comercio';
   }
 
-  // Solo se puede cancelar o reprogramar un turno que sigue activo
   puedeModificar(turno: Turno): boolean {
     return turno.estado === 'PENDIENTE' || turno.estado === 'CONFIRMADO' || turno.estado === 'RESERVADO';
   }

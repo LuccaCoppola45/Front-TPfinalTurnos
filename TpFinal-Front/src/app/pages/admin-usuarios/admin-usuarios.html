@@ -1,9 +1,7 @@
 <section class="usuarios">
-  <!-- Una sola fila: título | filtros por rol | buscador (así la lista empieza bien arriba) -->
   <header class="encabezado">
     <h1>Usuarios</h1>
 
-    <!-- Filtro por rol, con la cantidad de cada uno -->
     <div class="filtros" role="group" aria-label="Filtrar por rol">
       @for (f of filtros; track f.texto) {
         <button
@@ -28,7 +26,6 @@
     </label>
   </header>
 
-  <!-- La cantidad solo hace falta cuando buscás algo (los filtros ya muestran los totales) -->
   @if (busqueda() && !cargando()) {
     <p class="resultado" role="status">{{ filtrados().length }} de {{ usuarios().length }} usuarios</p>
   }
@@ -74,12 +71,10 @@
                 </div>
               </td>
               <td>
-                <!-- data-rol define el color de la pastilla en el CSS -->
                 <span class="rol" [attr.data-rol]="u.rol">{{ u.rol }}</span>
               </td>
               <td class="turnos">{{ u.turnosIds?.length ?? 0 }}</td>
               <td class="acciones">
-                <!-- El admin no se puede borrar a sí mismo -->
                 @if (!esUsuarioActual(u)) {
                   <button
                     type="button"

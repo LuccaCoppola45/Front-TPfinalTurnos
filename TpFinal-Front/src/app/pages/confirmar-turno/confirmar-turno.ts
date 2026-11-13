@@ -6,11 +6,6 @@ import { ConfirmacionTurno } from '../../Models/turnos';
 import { recortarHora } from '../../core/fechas';
 import { mensajeDeError } from '../../core/http-error';
 
-/**
- * Página que se abre desde el mail de recordatorio (24 h antes).
- * No pide iniciar sesión: el código del link identifica el turno.
- * El cliente toca "Sí, voy" (CONFIRMADO) o "No puedo ir" (CANCELADO).
- */
 @Component({
   imports: [DatePipe, RouterLink],
   selector: 'app-confirmar-turno',
@@ -24,14 +19,12 @@ export class ConfirmarTurno implements OnInit {
   protected readonly recortarHora = recortarHora;
   private readonly codigo = this.route.snapshot.paramMap.get('codigo') ?? '';
 
-  /** Lo que tocó en el mail (?respuesta=si|no): se resalta ese botón, pero igual hay que confirmar. */
   protected readonly sugerida = this.route.snapshot.queryParamMap.get('respuesta');
 
   readonly turno = signal<ConfirmacionTurno | null>(null);
   readonly cargando = signal(true);
   readonly enviando = signal(false);
   readonly error = signal('');
-  /** Respuesta que se acaba de mandar (para mostrar el mensaje final) */
   readonly respondio = signal<'si' | 'no' | null>(null);
 
   ngOnInit(): void {

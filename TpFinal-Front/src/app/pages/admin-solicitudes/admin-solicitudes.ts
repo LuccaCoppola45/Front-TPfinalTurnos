@@ -22,7 +22,6 @@ export class AdminSolicitudes implements OnInit {
   readonly cargando = signal(true);
   readonly error = signal('');
   readonly ok = signal('');
-  /** Id de la solicitud que se está aprobando o rechazando (para deshabilitar sus botones). */
   readonly procesandoId = signal<number | null>(null);
 
   ngOnInit(): void {
@@ -46,7 +45,6 @@ export class AdminSolicitudes implements OnInit {
     });
   }
 
-  /** Busca al usuario que hizo la solicitud (el backend solo manda su id). */
   solicitante(idUsuario: number): Usuario | undefined {
     return this.usuarios().find((u) => u.idUsuario === idUsuario);
   }

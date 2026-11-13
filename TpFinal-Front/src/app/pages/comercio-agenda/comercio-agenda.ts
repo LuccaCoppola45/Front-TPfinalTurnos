@@ -37,12 +37,9 @@ export class ComercioAgenda implements OnInit{
   readonly turnos = signal<Turno[]>([]);
   readonly usuarios = signal<Usuario[]>([]);
   readonly cargando = signal(true);
-  /** Error al cargar la agenda (reemplaza la tabla) */
   readonly error = signal('');
-  /** Resultado de cancelar un turno (se muestra arriba de la tabla) */
   readonly errorAccion = signal('');
   readonly ok = signal('');
-  /** Id del turno que se está cancelando (para deshabilitar su botón) */
   readonly cancelandoId = signal<number | null>(null);
 
   readonly filas = computed<FilaAgenda[]>(() => {
@@ -68,7 +65,6 @@ export class ComercioAgenda implements OnInit{
     this.cargar();
   }
 
-  /** RF-19: el comercio puede cancelar un turno que todavía no pasó ni terminó. */
   puedeCancelar(turno: Turno): boolean {
     const activo = turno.estado === 'PENDIENTE' || turno.estado === 'CONFIRMADO' || turno.estado === 'RESERVADO';
     const inicio = new Date(`${turno.fecha}T${turno.horaInicio}`);
@@ -80,13 +76,12 @@ export class ComercioAgenda implements OnInit{
     if (!idUsuario) {
       return;
     }
-    // El motivo le llega al cliente por mail (el backend pide entre 10 y 500 caracteres)
     const motivo = prompt(
       `Vas a cancelar el turno de ${fila.cliente}. ¿Por qué? (le llega por mail)`,
       'El comercio no puede atender en ese horario.',
     );
     if (motivo === null) {
-      return; // tocó "Cancelar" en el cuadro
+      return;
     }
     if (motivo.trim().length < 10) {
       this.errorAccion.set('El motivo tiene que tener al menos 10 caracteres.');

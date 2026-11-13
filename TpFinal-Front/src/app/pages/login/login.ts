@@ -19,22 +19,15 @@ export class Login {
   private readonly auth = inject(Auth)
   private readonly router = inject(Router)
 
-
   readonly error = signal('');
   readonly enviado = signal(false);
 
-  /**
-   * Los campos arrancan en solo lectura y se habilitan al enfocarlos.
-   * Así el administrador de contraseñas del navegador no los completa solo
-   * al cargar la página (por ejemplo, después de cerrar sesión).
-   */
   readonly camposHabilitados = signal(false);
 
   readonly form = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]],
   })
-
 
   entrar(): void {
     if (this.form.invalid) {
@@ -48,7 +41,6 @@ export class Login {
       next: () => this.router.navigate(['/home']),
       error: (e: unknown) => {
         this.enviado.set(false);
-        // Spring responde 403 vacío cuando las credenciales son incorrectas
         const credenciales =
           e instanceof HttpErrorResponse && (e.status === 401 || e.status === 403);
         this.error.set(credenciales ? 'Email o contraseña incorrectos.' : mensajeDeError(e));

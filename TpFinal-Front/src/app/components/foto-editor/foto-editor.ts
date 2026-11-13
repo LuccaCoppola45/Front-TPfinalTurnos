@@ -3,10 +3,6 @@ import { Avatar } from '../avatar/avatar';
 import { FORMATOS_FOTO, FotoService, TAMANIO_MAXIMO_FOTO, TipoFoto } from '../../services/fotoService';
 import { mensajeDeError } from '../../core/http-error';
 
-/**
- * Foto grande con un botón de cámara para cambiarla y un link para quitarla.
- * Se usa en "Mi perfil" (foto del usuario) y en "Mi comercio" (foto del comercio).
- */
 @Component({
   imports: [Avatar],
   selector: 'app-foto-editor',
@@ -34,7 +30,6 @@ import { mensajeDeError } from '../../core/http-error';
       </button>
     </div>
 
-    <!-- El input real queda oculto: lo abre el botón de la cámara -->
     <input
       #archivo
       class="oculto"
@@ -200,7 +195,7 @@ export class FotoEditor {
 
   alElegir(campo: HTMLInputElement): void {
     const archivo = campo.files?.[0];
-    campo.value = ''; // permite volver a elegir el mismo archivo
+    campo.value = '';
     if (!archivo) {
       return;
     }

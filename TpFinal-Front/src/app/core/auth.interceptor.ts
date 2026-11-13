@@ -5,13 +5,10 @@ import { API_URL } from './api';
 import { tokenVencido } from './jwt';
 import { Auth } from '../services/auth';
 
-
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
 const auth = inject(Auth);
   const token = auth.token();
-  // Rutas que no usan el token: login/registro y el link del mail "¿Vas a ir?"
-  // (si quedó un token vencido guardado, no tiene que bloquear la confirmación)
   const esPublica =
     req.url.startsWith(`${API_URL}/api/auth/`) || req.url.startsWith(`${API_URL}/api/turnos/confirmacion/`);
 

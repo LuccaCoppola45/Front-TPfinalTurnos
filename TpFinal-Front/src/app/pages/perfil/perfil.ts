@@ -52,12 +52,10 @@ export class Perfil implements OnInit {
 
   const rawValues = this.form.getRawValue();
 
-  // Mapeamos y aseguramos valores por defecto para evitar tipos null
   const datos = {
     nombre: rawValues.nombre ?? '',
     apellido: rawValues.apellido ?? '',
     email: rawValues.email ?? '',
-    // (Agrega aquí el resto de campos que tenga tu formulario de perfil/edición)
   };
 
   const cambioElEmail = datos.email.trim().toLowerCase() !== usuario.email.toLowerCase();
@@ -66,7 +64,6 @@ export class Perfil implements OnInit {
     next: (respuesta) => {
       this.enviando.set(false);
       if (cambioElEmail) {
-        // El token está firmado con el email viejo: hay que volver a iniciar sesión
         this.auth.logout();
         return;
       }

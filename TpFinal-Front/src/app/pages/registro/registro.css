@@ -1,4 +1,3 @@
-/* Registro: misma estética que el login (fondo oscuro, tarjeta y acento dorado) */
 :host {
   display: block;
 }
@@ -45,7 +44,6 @@
   backdrop-filter: blur(12px);
 }
 
-/* Encabezado */
 .registro-card h2 {
   margin: 0;
   text-align: center;
@@ -62,7 +60,6 @@
   font-size: 0.98rem;
 }
 
-/* Formulario: nombre y apellido lado a lado, el resto ocupa todo el ancho */
 .registro-card form {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -117,7 +114,6 @@
   background: rgb(245 241 232 / 14%);
 }
 
-/* Autocompletado del navegador: que no pinte el input de blanco/amarillo */
 .campo input:-webkit-autofill {
   -webkit-text-fill-color: #f9f5ed;
   box-shadow: 0 0 0 1000px #23262c inset;
@@ -139,7 +135,6 @@
   font-size: 0.85rem;
 }
 
-/* Error que viene del backend (ej.: email ya registrado) */
 .alert-error {
   padding: 0.8rem 1rem;
   border: 1px solid rgb(248 113 113 / 40%);
@@ -149,7 +144,6 @@
   font-size: 0.92rem;
 }
 
-/* Botón */
 .btn-submit {
   margin-top: 0.4rem;
   width: 100%;
@@ -189,7 +183,6 @@
   opacity: 0.7;
 }
 
-/* Link a login */
 .footer-link {
   text-align: center;
   color: #cbc4b7;
@@ -216,7 +209,6 @@
   border-radius: 0.4rem;
 }
 
-/* Celular: una sola columna */
 @media (max-width: 520px) {
   .registro-container {
     min-height: calc(100dvh - 140px);

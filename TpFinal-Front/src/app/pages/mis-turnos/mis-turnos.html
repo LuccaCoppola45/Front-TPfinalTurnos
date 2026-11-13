@@ -22,7 +22,6 @@
     <ul class="lista">
       @for (turno of turnos(); track turno.idTurno) {
         <li class="tarjeta">
-          <!-- Fecha grande a la izquierda -->
           <div class="fecha">
             <span class="dia">{{ turno.fecha | date: 'dd' }}</span>
             <span class="mes">{{ turno.fecha | date: 'MMM' }}</span>
@@ -33,7 +32,6 @@
             <p>{{ turno.horaInicio.slice(0, 5) }} a {{ turno.horaFin.slice(0, 5) }} hs</p>
           </div>
 
-          <!-- La clase del estado (estado-pendiente, estado-cancelado...) define el color -->
           <span [class]="'estado estado-' + turno.estado.toLowerCase()">
             {{ turno.estado }}
           </span>

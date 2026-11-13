@@ -1,4 +1,3 @@
-/* Reset global: sin márgenes del navegador ni fondo blanco alrededor de la app */
 *,
 *::before,
 *::after {
@@ -31,7 +30,6 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* Evita cualquier desborde horizontal que deje una franja visible */
 html,
 body {
   overflow-x: hidden;

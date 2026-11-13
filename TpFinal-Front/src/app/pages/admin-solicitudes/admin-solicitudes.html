@@ -13,7 +13,6 @@
   }
 
   @if (cargando()) {
-    <!-- Tarjetas "fantasma" mientras carga -->
     <ul class="grilla">
       @for (n of [1, 2]; track n) {
         <li class="tarjeta esqueleto"></li>
@@ -31,7 +30,6 @@
 
     <ul class="grilla">
       @for (s of solicitudes(); track s.id; let i = $index) {
-        <!-- --i se usa en el CSS para que cada tarjeta entre un poquito después -->
         <li class="tarjeta" [style.--i]="i">
           <div class="tarjeta-cabecera">
             <h2>{{ s.nombreComercioPropuesto }}</h2>

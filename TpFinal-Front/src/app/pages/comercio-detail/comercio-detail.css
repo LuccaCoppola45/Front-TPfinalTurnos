@@ -1,8 +1,3 @@
-/* =====================================================================
-   DETALLE DEL COMERCIO (RF-28)
-   Se entra tocando una tarjeta del listado. Arriba la "tarjeta" del
-   comercio; abajo servicios (con Reservar) y horarios de la semana.
-   ===================================================================== */
 
 :host {
   --dorado: #d8b36a;
@@ -34,7 +29,6 @@
   color: var(--dorado-claro);
 }
 
-/* ===== Cabecera ===== */
 .cabecera {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -57,7 +51,6 @@
   }
 }
 
-/* Foto: cuadrado redondeado como en el listado */
 .foto {
   --avatar-radio: 1.2rem;
   --avatar-fondo: rgb(216 179 106 / 14%);
@@ -106,7 +99,6 @@ h1 {
   color: var(--dorado-claro);
 }
 
-/* La descripción ocupa todo el ancho, debajo de foto y datos */
 .descripcion {
   grid-column: 1 / -1;
   margin: 0;
@@ -116,7 +108,6 @@ h1 {
   line-height: 1.55;
 }
 
-/* ===== Servicios (más ancho) | Horarios ===== */
 .columnas {
   display: grid;
   grid-template-columns: 1.6fr 1fr;
@@ -147,7 +138,6 @@ ul {
   list-style: none;
 }
 
-/* Cada servicio: nombre y duración | precio | botón */
 .servicio {
   display: flex;
   align-items: center;
@@ -204,7 +194,6 @@ ul {
   outline-offset: 3px;
 }
 
-/* ===== Semana ===== */
 .dia {
   display: flex;
   justify-content: space-between;
@@ -226,7 +215,6 @@ ul {
   opacity: 0.6;
 }
 
-/* El día de hoy resaltado en dorado */
 .hoy {
   background: rgb(216 179 106 / 12%);
   color: var(--dorado-claro);
@@ -244,7 +232,6 @@ ul {
   text-transform: uppercase;
 }
 
-/* ===== Mensajes ===== */
 .vacio {
   margin: 0;
   color: var(--texto-suave);
@@ -259,7 +246,6 @@ ul {
   color: #fecaca;
 }
 
-/* ===== Tablet y celular: una columna ===== */
 @media (max-width: 760px) {
   .columnas {
     grid-template-columns: 1fr;
@@ -281,7 +267,6 @@ ul {
     padding: 1.25rem;
   }
 
-  /* El botón Reservar baja abajo, a lo ancho */
   .servicio {
     flex-wrap: wrap;
   }

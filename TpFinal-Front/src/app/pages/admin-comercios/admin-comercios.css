@@ -1,8 +1,3 @@
-/* =====================================================================
-   COMERCIOS (panel de administración)
-   Misma familia que Solicitudes y el listado de comercios:
-   encabezado + buscador + una tarjeta por comercio.
-   ===================================================================== */
 
 :host {
   --dorado: #d8b36a;
@@ -22,8 +17,6 @@
   color: var(--texto);
 }
 
-/* ===== Encabezado compacto: título a la izquierda, buscador a la derecha =====
-   Así las tarjetas empiezan bien arriba y no hay que bajar para verlas */
 .encabezado {
   display: flex;
   align-items: flex-end;
@@ -34,7 +27,6 @@
   border-bottom: 1px solid var(--borde);
 }
 
-/* "Administración" chiquito arriba del título (sin pastilla, ocupa menos) */
 .etiqueta {
   display: block;
   margin-bottom: 0.2rem;
@@ -53,7 +45,6 @@
   line-height: 1.1;
 }
 
-/* ===== Buscador (igual que el listado de comercios) ===== */
 .buscador {
   display: flex;
   align-items: center;
@@ -90,7 +81,6 @@
   font: inherit;
 }
 
-/* Texto solo para lectores de pantalla */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -100,14 +90,12 @@
   white-space: nowrap;
 }
 
-/* Cantidad de comercios, debajo del título */
 .resultado {
   margin: 0.35rem 0 0;
   color: var(--texto-suave);
   font-size: 0.85rem;
 }
 
-/* ===== Grilla ===== */
 .grilla {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
@@ -144,14 +132,12 @@
   }
 }
 
-/* Foto + nombre + dirección */
 .tarjeta-cabecera {
   display: flex;
   align-items: center;
   gap: 0.9rem;
 }
 
-/* Avatar cuadrado redondeado, igual que en el listado de comercios */
 .avatar {
   --avatar-radio: 0.9rem;
   --avatar-fondo: rgb(216 179 106 / 14%);
@@ -174,7 +160,6 @@
   font-size: 0.85rem;
 }
 
-/* Dueño del comercio */
 .duenio {
   display: flex;
   flex-direction: column;
@@ -204,7 +189,6 @@
   overflow-wrap: anywhere;
 }
 
-/* Comercio sin dueño (por ejemplo, si lo creó el admin): en gris */
 .sin-duenio {
   background: rgb(245 241 232 / 5%);
 }
@@ -229,7 +213,6 @@
   font-weight: 600;
 }
 
-/* Teléfono | servicios | horarios */
 .datos {
   display: grid;
   grid-template-columns: 1.6fr 1fr 1fr;
@@ -243,7 +226,6 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* ===== Botón eliminar (al fondo de la tarjeta) ===== */
 .btn-eliminar {
   margin-top: auto;
   padding: 0.65rem 1rem;
@@ -276,7 +258,6 @@
   opacity: 0.55;
 }
 
-/* ===== Mensajes ===== */
 .alerta {
   max-width: 640px;
   margin: 0 auto 1.25rem;
@@ -304,7 +285,6 @@
   color: var(--texto-suave);
 }
 
-/* ===== Tarjetas "fantasma" mientras carga ===== */
 .esqueleto {
   min-height: 340px;
   background:
@@ -319,7 +299,6 @@
   }
 }
 
-/* En pantallas angostas el buscador baja debajo del título, a lo ancho */
 @media (max-width: 640px) {
   .encabezado {
     flex-direction: column;

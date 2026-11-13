@@ -1,9 +1,3 @@
-/* =====================================================================
-   MI COMERCIO (editar datos del comercio)
-   Misma estética que Mi perfil y Solicitar comercio: fondo oscuro,
-   tarjeta y acento dorado. Las categorías son "pastillas" que se
-   pintan de dorado cuando están marcadas (todo con CSS, sin tocar el HTML).
-   ===================================================================== */
 
 :host {
   --dorado: #d8b36a;
@@ -20,7 +14,6 @@
     #111317;
 }
 
-/* ===== Título ===== */
 h2 {
   margin: 0 0 1.75rem;
   text-align: center;
@@ -30,7 +23,6 @@ h2 {
   letter-spacing: -0.05em;
 }
 
-/* ===== Tarjeta ===== */
 .form-card {
   display: flex;
   flex-direction: column;
@@ -56,7 +48,6 @@ h2 {
   }
 }
 
-/* Descripción del comercio: como una cita */
 .ayuda {
   margin: 0;
   padding: 0.8rem 1rem;
@@ -68,7 +59,6 @@ h2 {
   font-style: italic;
 }
 
-/* ===== Formulario ===== */
 form {
   display: flex;
   flex-direction: column;
@@ -123,7 +113,6 @@ legend {
   background: rgb(245 241 232 / 14%);
 }
 
-/* Campo inválido: borde rojo (Angular le pone .ng-invalid y .ng-touched) */
 .campo input.ng-invalid.ng-touched {
   border-color: rgb(248 113 113 / 80%);
 }
@@ -134,7 +123,6 @@ legend {
   font-size: 0.85rem;
 }
 
-/* ===== Categorías como pastillas ===== */
 fieldset.campo {
   flex-flow: row wrap;
   gap: 0.5rem;
@@ -144,7 +132,7 @@ fieldset.campo {
 }
 
 legend {
-  float: left; /* hace que el legend se comporte como un bloque normal */
+  float: left;
   width: 100%;
   margin-bottom: 0.3rem;
 }
@@ -154,7 +142,6 @@ fieldset.campo > div {
   display: inline-flex;
 }
 
-/* El checkbox real queda invisible pero sigue funcionando con el teclado */
 fieldset.campo input[type='checkbox'] {
   position: absolute;
   opacity: 0;
@@ -177,7 +164,6 @@ label.inline:hover {
   color: var(--texto);
 }
 
-/* :checked + label = la pastilla de la categoría marcada */
 input[type='checkbox']:checked + label.inline {
   border-color: var(--dorado);
   background: rgb(216 179 106 / 16%);
@@ -194,7 +180,6 @@ input[type='checkbox']:focus-visible + label.inline {
   outline-offset: 2px;
 }
 
-/* ===== Mensajes ===== */
 .error,
 .ok {
   margin: 0;
@@ -216,7 +201,6 @@ input[type='checkbox']:focus-visible + label.inline {
   color: #bbf7d0;
 }
 
-/* El error de "no tenés comercio" aparece fuera de la tarjeta */
 :host > .error {
   width: min(560px, 100%);
   margin: 0 auto;
@@ -227,7 +211,6 @@ input[type='checkbox']:focus-visible + label.inline {
   color: var(--texto-suave);
 }
 
-/* ===== Botón ===== */
 .boton {
   margin-top: 0.4rem;
   width: 100%;
@@ -261,7 +244,6 @@ input[type='checkbox']:focus-visible + label.inline {
   opacity: 0.65;
 }
 
-/* ===== Celular ===== */
 @media (max-width: 520px) {
   :host {
     padding: 2rem 1rem;

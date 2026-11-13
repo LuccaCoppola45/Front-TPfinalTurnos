@@ -1,5 +1,4 @@
 <section class="turno">
-  <!-- Al reprogramar se vuelve a Mis turnos; al reservar, a la página del comercio -->
   <a class="volver" [routerLink]="esReprogramacion() ? '/mis-turnos' : ['/comercios', idComercioRuta]">
     ← {{ esReprogramacion() ? 'Volver a mis turnos' : 'Volver al comercio' }}
   </a>
@@ -11,7 +10,6 @@
       <div class="tarjeta">
         <h1>{{ esReprogramacion() ? 'Reprogramar turno' : 'Reservar turno' }}</h1>
 
-        <!-- Resumen de lo que se está reservando -->
         <article class="resumen">
           <h2>{{ s.nombreServicio }}</h2>
           <p class="comercio">{{ c.nombre }} · {{ c.direccion }}</p>
@@ -21,15 +19,12 @@
           </p>
         </article>
 
-        <!-- Al reprogramar se muestra el turno que se va a cambiar -->
         @if (turnoAEditar(); as t) {
           <p class="actual">
             Turno actual: <strong>{{ t.fecha | date: 'dd/MM/yyyy' }} a las {{ recortarHora(t.horaInicio) }}</strong>
           </p>
         }
 
-        <!-- Selector de fecha propio (en vez del calendario del navegador):
-             las próximas 4 semanas; los días que el comercio no atiende están deshabilitados -->
         <div class="campo">
           <p class="titulo-campo" id="titulo-fecha">{{ esReprogramacion() ? 'Nueva fecha' : 'Fecha' }}</p>
           <div class="dias" role="group" aria-labelledby="titulo-fecha">

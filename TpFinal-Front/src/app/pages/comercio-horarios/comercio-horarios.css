@@ -1,10 +1,4 @@
-/* =====================================================================
-   HORARIOS DE ATENCIÓN (panel del comercio)
-   Misma paleta que el resto: fondo oscuro + acento dorado.
-   ===================================================================== */
 
-/* :host es la etiqueta <app-comercio-horarios> en sí.
-   Como el HTML no tiene un div contenedor, la usamos a ella como contenedor. */
 :host {
   --dorado: #d8b36a;
   --dorado-claro: #e8c987;
@@ -22,7 +16,6 @@
   color: var(--texto);
 }
 
-/* ===== Título de la página ===== */
 h2 {
   position: relative;
   margin: 0 0 1.75rem;
@@ -31,7 +24,6 @@ h2 {
   letter-spacing: -0.04em;
 }
 
-/* Rayita dorada debajo del título, hecha con un pseudo-elemento */
 h2::after {
   position: absolute;
   left: 0;
@@ -43,7 +35,6 @@ h2::after {
   content: '';
 }
 
-/* ===== Tarjeta del formulario ===== */
 .card {
   display: flex;
   flex-direction: column;
@@ -64,8 +55,6 @@ h2::after {
   color: var(--dorado-claro);
 }
 
-/* Día | Apertura | Cierre en una fila.
-   El día ocupa el doble (2fr) porque el texto es más largo que una hora. */
 .fila-form {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr;
@@ -87,7 +76,6 @@ h2::after {
   transition: color 0.2s;
 }
 
-/* Cuando el campo de adentro tiene foco, el label se pone dorado */
 .campo:focus-within label {
   color: var(--dorado-claro);
 }
@@ -101,8 +89,6 @@ h2::after {
   background: var(--campo);
   color: var(--texto);
   font: inherit;
-  /* color-scheme: dark hace que el reloj del input time y la flecha
-     del select se dibujen claros, para que se vean sobre el fondo oscuro */
   color-scheme: dark;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
@@ -114,12 +100,10 @@ h2::after {
   box-shadow: 0 0 0 4px rgb(216 179 106 / 15%);
 }
 
-/* Angular agrega .ng-invalid y .ng-touched solos según el estado del form */
 .campo .ng-invalid.ng-touched {
   border-color: rgb(248 113 113 / 60%);
 }
 
-/* ===== Botones ===== */
 .acciones {
   display: flex;
   flex-wrap: wrap;
@@ -144,13 +128,11 @@ h2::after {
   filter: brightness(1.08);
 }
 
-/* Mientras se está guardando (enviando = true) */
 .boton:disabled {
   opacity: 0.55;
   cursor: not-allowed;
 }
 
-/* Variantes: se suman a .boton, por eso solo cambian lo distinto */
 .boton.secundario {
   border: 1px solid var(--borde);
   background: transparent;
@@ -171,16 +153,11 @@ h2::after {
   background: rgb(248 113 113 / 12%);
 }
 
-/* En la tabla los botones van más chicos */
 td .boton {
   padding: 0.4rem 0.85rem;
   font-size: 0.8rem;
 }
 
-/* ===== Tabla de horarios ===== */
-
-/* Si la pantalla es angosta, la tabla scrollea de costado
-   en vez de romper el ancho de toda la página */
 .tabla-scroll {
   overflow-x: auto;
   border: 1px solid var(--borde);
@@ -191,7 +168,7 @@ td .boton {
 table {
   width: 100%;
   min-width: 480px;
-  border-collapse: collapse; /* une los bordes de las celdas en una sola línea */
+  border-collapse: collapse;
 }
 
 caption.ayuda {
@@ -216,7 +193,6 @@ th {
   border-bottom: 1px solid var(--borde);
 }
 
-/* La columna de acciones va alineada a la derecha */
 th:last-child,
 td:last-child {
   text-align: right;
@@ -239,7 +215,6 @@ tbody tr:hover {
   background: rgb(216 179 106 / 6%);
 }
 
-/* El día en negrita; las horas con números de ancho fijo para que queden alineadas */
 td:first-child {
   font-weight: 600;
 }
@@ -250,7 +225,6 @@ td:nth-child(3) {
   color: var(--texto-suave);
 }
 
-/* ===== Mensajes ===== */
 .vacio {
   padding: 2rem 1rem;
   text-align: center !important;
@@ -274,7 +248,6 @@ td:nth-child(3) {
   }
 }
 
-/* ===== Celular: los tres campos uno abajo del otro ===== */
 @media (max-width: 600px) {
   .fila-form {
     grid-template-columns: 1fr;

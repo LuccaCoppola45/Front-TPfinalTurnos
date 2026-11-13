@@ -4,7 +4,6 @@
   @if (error()) {
     <p class="error" role="alert">{{ error() }}</p>
   } @else if (comercio(); as c) {
-    <!-- ===== Cabecera: la "tarjeta" del comercio ===== -->
     <header class="cabecera">
       <app-avatar class="foto" [src]="fotos.url('comercio', c.idComercio)" [nombre]="c.nombre" [tamanio]="96" />
       <div class="datos">
@@ -27,7 +26,6 @@
     </header>
 
     <div class="columnas">
-      <!-- ===== Servicios: elegís uno y reservás ===== -->
       <section class="bloque" aria-labelledby="titulo-servicios">
         <h2 id="titulo-servicios">Servicios</h2>
         @if (c.servicios?.length) {
@@ -54,7 +52,6 @@
         }
       </section>
 
-      <!-- ===== Horarios de la semana ===== -->
       <section class="bloque" aria-labelledby="titulo-horarios">
         <h2 id="titulo-horarios">Horarios</h2>
         @if (tieneHorarios()) {

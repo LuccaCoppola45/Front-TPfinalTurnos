@@ -34,7 +34,6 @@
             <td>{{ f.servicio }}</td>
             <td><span class="badge" [attr.data-estado]="f.turno.estado">{{ f.turno.estado }}</span></td>
             <td class="acciones">
-              <!-- RF-19: el comercio puede cancelar turnos que todavía no pasaron -->
               @if (puedeCancelar(f.turno)) {
                 <button
                   type="button"

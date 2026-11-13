@@ -6,7 +6,6 @@ import { Rol, Usuario } from "../../Models/auth";
 import { mensajeDeError } from "../../core/http-error";
 import { Avatar } from "../../components/avatar/avatar";
 
-/** null = mostrar todos los roles */
 type FiltroRol = Rol | null;
 
 @Component({
@@ -20,7 +19,6 @@ export class AdminUsuarios implements OnInit {
   protected readonly auth = inject(Auth);
   protected readonly fotos = inject(FotoService);
 
-  /** Botones de filtro: texto y rol que filtran */
   protected readonly filtros: { texto: string; rol: FiltroRol }[] = [
     { texto: 'Todos', rol: null },
     { texto: 'Clientes', rol: 'CLIENTE' },
@@ -36,7 +34,6 @@ export class AdminUsuarios implements OnInit {
   readonly ok = signal('');
   readonly eliminandoId = signal<number | null>(null);
 
-  /** Primero filtra por rol y después por el texto buscado (nombre, apellido o email). */
   readonly filtrados = computed(() => {
     const texto = this.busqueda().trim().toLowerCase();
     const rol = this.rolElegido();
@@ -67,7 +64,6 @@ export class AdminUsuarios implements OnInit {
     });
   }
 
-  /** Cuántos usuarios hay de cada rol (para mostrar en los botones de filtro). */
   cantidad(rol: FiltroRol): number {
     return rol === null ? this.usuarios().length : this.usuarios().filter((u) => u.rol === rol).length;
   }
@@ -93,7 +89,6 @@ export class AdminUsuarios implements OnInit {
         this.ok.set(`${usuario.nombre} ${usuario.apellido} fue eliminado.`);
         this.cargar();
       },
-      // Si tiene turnos, el backend no deja borrarlo y manda su propio mensaje
       error: (e: unknown) => {
         this.eliminandoId.set(null);
         this.error.set(mensajeDeError(e, `No se pudo eliminar a ${usuario.nombre}.`));

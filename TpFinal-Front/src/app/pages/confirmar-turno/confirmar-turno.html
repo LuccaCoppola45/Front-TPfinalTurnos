@@ -3,7 +3,6 @@
     <p class="vacio" role="status">Cargando tu turno...</p>
   } @else if (turno(); as t) {
     <div class="tarjeta">
-      <!-- Según el estado del turno se muestra la pregunta o el resultado -->
       @switch (t.estado) {
         @case ('CONFIRMADO') {
           <span class="icono ok" aria-hidden="true">✓</span>
@@ -27,7 +26,6 @@
         }
       }
 
-      <!-- Datos del turno -->
       <div class="resumen" [class.tachado]="t.estado === 'CANCELADO'">
         <p class="servicio">{{ t.nombreServicio }}</p>
         <p class="comercio">{{ t.nombreComercio }} · {{ t.direccionComercio }}</p>
@@ -41,7 +39,6 @@
         <p class="error" role="alert">{{ error() }}</p>
       }
 
-      <!-- Botones: solo si todavía no respondió -->
       @if (t.estado === 'PENDIENTE' || t.estado === 'RESERVADO') {
         <div class="botones">
           <button

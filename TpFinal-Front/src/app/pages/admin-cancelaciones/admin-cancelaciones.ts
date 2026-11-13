@@ -11,7 +11,6 @@ import { Comercio } from "../../Models/catalogo";
 import { recortarHora } from "../../core/fechas";
 import { mensajeDeError } from "../../core/http-error";
 
-/** Una fila de la tabla: la cancelación con los datos ya buscados (quién y qué turno). */
 interface FilaCancelacion {
   cancelacion: Cancelacion;
   usuario: Usuario | undefined;
@@ -42,7 +41,6 @@ export class AdminCancelaciones implements OnInit {
   readonly cargando = signal(true);
   readonly error = signal('');
 
-  /** El backend solo manda ids: acá se juntan con el usuario, el turno y el comercio. */
   readonly filas = computed<FilaCancelacion[]>(() =>
     this.cancelaciones().map((cancelacion) => {
       const turno = this.turnos().find((t) => t.idTurno === cancelacion.idTurno);
@@ -58,7 +56,6 @@ export class AdminCancelaciones implements OnInit {
     }),
   );
 
-  /** Busca en el nombre/email de quien canceló, el comercio y el motivo. */
   readonly filtradas = computed(() => {
     const texto = this.busqueda().trim().toLowerCase();
     if (!texto) {
@@ -80,7 +77,6 @@ export class AdminCancelaciones implements OnInit {
       comercios: this.comercioService.listar(),
     }).subscribe({
       next: ({ cancelaciones, usuarios, turnos, comercios }) => {
-        // Las más recientes primero
         this.cancelaciones.set(
           [...(cancelaciones ?? [])].sort((a, b) => b.fechaCancelacion.localeCompare(a.fechaCancelacion)),
         );

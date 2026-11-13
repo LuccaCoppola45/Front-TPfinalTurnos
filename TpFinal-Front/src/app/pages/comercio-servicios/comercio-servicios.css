@@ -1,8 +1,3 @@
-/* =====================================================================
-   GESTIONAR SERVICIOS (Mi comercio > Servicios)
-   Misma estética que Mi comercio y Mi perfil: fondo oscuro + dorado.
-   Arriba el formulario (alta / edición) y abajo la tabla de servicios.
-   ===================================================================== */
 
 :host {
   --dorado: #d8b36a;
@@ -29,7 +24,6 @@ h2 {
   letter-spacing: -0.05em;
 }
 
-/* ===== Tarjetas (formulario y tabla) ===== */
 .card,
 .tabla-scroll {
   width: min(880px, 100%);
@@ -50,7 +44,6 @@ h2 {
   }
 }
 
-/* ===== Formulario ===== */
 .card {
   display: flex;
   flex-direction: column;
@@ -59,7 +52,6 @@ h2 {
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-/* Modo edición: solo existe el botón "Cancelar edición" cuando estás editando */
 .card:has(.secundario) {
   border-color: rgb(216 179 106 / 55%);
   box-shadow: 0 0 0 4px rgb(216 179 106 / 8%), 0 40px 80px -60px rgb(8 9 11 / 90%);
@@ -71,7 +63,6 @@ h2 {
   font-size: 1.1rem;
 }
 
-/* Nombre más ancho; duración y precio más angostos */
 .fila-form {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr;
@@ -130,7 +121,6 @@ h2 {
   font-size: 0.82rem;
 }
 
-/* ===== Botones ===== */
 .acciones {
   display: flex;
   flex-wrap: wrap;
@@ -188,13 +178,11 @@ h2 {
   background: rgb(248 113 113 / 14%);
 }
 
-/* Botones chicos dentro de la tabla */
 td .boton {
   padding: 0.45rem 0.95rem;
   font-size: 0.8rem;
 }
 
-/* ===== Tabla ===== */
 .tabla-scroll {
   overflow-x: auto;
   animation-delay: 80ms;
@@ -226,7 +214,7 @@ th {
 td {
   padding: 0.9rem 1.5rem;
   border-bottom: 1px solid rgb(245 241 232 / 6%);
-  font-variant-numeric: tabular-nums; /* los números quedan alineados */
+  font-variant-numeric: tabular-nums;
 }
 
 tbody tr:last-child td {
@@ -241,7 +229,6 @@ tbody tr:hover {
   background: rgb(245 241 232 / 4%);
 }
 
-/* Nombre del servicio destacado; precio en dorado */
 td:first-child {
   font-weight: 600;
 }
@@ -251,7 +238,6 @@ td:nth-child(3) {
   font-weight: 600;
 }
 
-/* ===== Mensajes ===== */
 .vacio {
   padding: 1rem;
   text-align: center;
@@ -268,13 +254,11 @@ td:nth-child(3) {
   font-size: 0.92rem;
 }
 
-/* El error de "no tenés comercio" aparece fuera de la tarjeta */
 :host > .error {
   width: min(880px, 100%);
   margin: 0 auto;
 }
 
-/* ===== Tablet: el nombre ocupa toda la fila ===== */
 @media (max-width: 720px) {
   .fila-form {
     grid-template-columns: 1fr 1fr;
@@ -285,7 +269,6 @@ td:nth-child(3) {
   }
 }
 
-/* ===== Celular: la tabla se convierte en tarjetas ===== */
 @media (max-width: 560px) {
   :host {
     padding: 2rem 1rem;
@@ -320,7 +303,6 @@ td:nth-child(3) {
     border: none;
   }
 
-  /* Etiqueta de cada dato (reemplaza al encabezado de la tabla) */
   td:nth-child(2)::before {
     content: 'Duración';
   }

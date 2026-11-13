@@ -1,12 +1,5 @@
 import { Component, computed, input, linkedSignal, output } from '@angular/core';
 
-/**
- * Muestra una foto (de usuario o de comercio). Si no hay foto cargada
- * (el backend responde 404) muestra las iniciales del nombre.
- *
- * Los colores y la forma se pueden cambiar desde la página que lo usa:
- *   app-avatar { --avatar-radio: 0.9rem; --avatar-fondo: ...; --avatar-texto: ...; }
- */
 @Component({
   selector: 'app-avatar',
   template: `
@@ -42,7 +35,6 @@ import { Component, computed, input, linkedSignal, output } from '@angular/core'
 
     img {
       object-fit: cover;
-      /* borde sutil para que una foto clara no se "pierda" contra el fondo */
       outline: 1px solid rgb(245 241 232 / 12%);
       outline-offset: -1px;
     }
@@ -64,13 +56,10 @@ export class Avatar {
   readonly src = input.required<string>();
   readonly nombre = input('');
   readonly tamanio = input(40);
-  /** Texto alternativo. Vacío cuando el nombre ya aparece al lado (la imagen es decorativa). */
   readonly alt = input('');
 
-  /** Avisa si la foto existe (true) o no (false). */
   readonly estado = output<boolean>();
 
-  /** Vuelve a false cada vez que cambia la URL (por ejemplo, después de subir una foto nueva). */
   readonly sinFoto = linkedSignal({ source: this.src, computation: () => false });
 
   readonly iniciales = computed(() =>

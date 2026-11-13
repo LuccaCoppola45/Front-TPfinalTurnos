@@ -49,7 +49,6 @@ export class ComercioDatos implements OnInit{
             direccion: comercio.direccion,
             telefono: comercio.telefono,
           });
-          // El backend devuelve los nombres de las categorías; se buscan sus ids
           const nombres = comercio.categorias ?? [];
           this.seleccionadas.set(
             categorias.filter((c) => nombres.includes(c.nombreCategoria)).map((c) => c.uniqueId),

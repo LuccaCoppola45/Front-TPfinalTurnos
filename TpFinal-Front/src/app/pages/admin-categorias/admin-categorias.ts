@@ -14,18 +14,15 @@ export class AdminCategorias implements OnInit {
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly categoriaService = inject(CategoriaService);
 
-  /** El input del nombre: se enfoca al tocar "Editar". */
   private readonly campoNombre = viewChild<ElementRef<HTMLInputElement>>('campoNombre');
 
   readonly categorias = signal<Categoria[]>([]);
-  /** null = creando una nueva; un número = editando esa categoría. */
   readonly editandoId = signal<number | null>(null);
   readonly cargando = signal(true);
   readonly enviando = signal(false);
   readonly error = signal('');
   readonly ok = signal('');
 
-  // Mismas reglas que valida el backend (categoriaRequest)
   readonly form = this.fb.group({
     nombreCategoria: [
       '',
@@ -40,7 +37,6 @@ export class AdminCategorias implements OnInit {
   private cargar(): void {
     this.categoriaService.listar().subscribe({
       next: (lista) => {
-        // Ordenadas alfabéticamente para encontrarlas fácil
         this.categorias.set(
           [...(lista ?? [])].sort((a, b) => a.nombreCategoria.localeCompare(b.nombreCategoria)),
         );
@@ -107,7 +103,6 @@ export class AdminCategorias implements OnInit {
         }
         this.cargar();
       },
-      // El backend no deja borrar una categoría que usa algún comercio: muestra su mensaje
       error: (e: unknown) => this.error.set(mensajeDeError(e, 'No se pudo eliminar la categoría.')),
     });
   }

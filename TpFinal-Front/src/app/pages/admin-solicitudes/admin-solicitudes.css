@@ -1,8 +1,3 @@
-/* =====================================================================
-   SOLICITUDES DE COMERCIO (panel de administración)
-   Misma familia que el listado de comercios: encabezado con etiqueta
-   dorada y una grilla de tarjetas, una por solicitud.
-   ===================================================================== */
 
 :host {
   --dorado: #d8b36a;
@@ -22,7 +17,6 @@
   color: var(--texto);
 }
 
-/* ===== Encabezado ===== */
 .encabezado {
   margin-bottom: 2rem;
   text-align: center;
@@ -60,7 +54,6 @@
   font-size: 0.85rem;
 }
 
-/* ===== Grilla: tantas columnas de 320px como entren ===== */
 .grilla {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
@@ -70,7 +63,6 @@
   list-style: none;
 }
 
-/* ===== Tarjeta de cada solicitud ===== */
 .tarjeta {
   display: flex;
   flex-direction: column;
@@ -82,7 +74,6 @@
     linear-gradient(180deg, rgb(245 241 232 / 5%) 0%, transparent 60%),
     var(--tarjeta);
   transition: border-color 0.25s, box-shadow 0.25s;
-  /* entrada escalonada: --i lo pone el HTML (0, 1, 2...) */
   animation: aparecer 0.5s ease-out both;
   animation-delay: calc(var(--i, 0) * 70ms);
 }
@@ -110,10 +101,9 @@
   margin: 0;
   font-size: 1.2rem;
   letter-spacing: -0.02em;
-  overflow-wrap: anywhere; /* nombres largos no rompen la tarjeta */
+  overflow-wrap: anywhere;
 }
 
-/* Pastilla "Pendiente": mismo amarillo que en Mis turnos */
 .estado {
   flex-shrink: 0;
   padding: 0.3rem 0.75rem;
@@ -126,7 +116,6 @@
   text-transform: uppercase;
 }
 
-/* Quién lo pide */
 .solicitante {
   display: flex;
   flex-direction: column;
@@ -147,7 +136,6 @@
   overflow-wrap: anywhere;
 }
 
-/* Dirección y teléfono en dos columnas */
 .datos {
   display: grid;
   grid-template-columns: 1fr auto;
@@ -179,12 +167,11 @@
 }
 
 .fecha {
-  margin: auto 0 0; /* empuja fecha y botones al fondo de la tarjeta */
+  margin: auto 0 0;
   color: var(--texto-suave);
   font-size: 0.78rem;
 }
 
-/* ===== Botones ===== */
 .acciones {
   display: flex;
   gap: 0.6rem;
@@ -204,7 +191,6 @@
   transition: transform 0.16s, background-color 0.16s, opacity 0.16s;
 }
 
-/* ".acciones" adelante para que le ganen a la regla general ".acciones button" */
 .acciones .btn-aprobar {
   background: linear-gradient(90deg, var(--dorado), var(--dorado-claro));
   color: #14161a;
@@ -238,7 +224,6 @@
   opacity: 0.55;
 }
 
-/* ===== Mensajes ===== */
 .alerta {
   max-width: 640px;
   margin: 0 auto 1.25rem;
@@ -260,7 +245,6 @@
   color: #bbf7d0;
 }
 
-/* Sin solicitudes: un círculo con un ✓ (no hay nada por revisar) */
 .vacio {
   display: flex;
   flex-direction: column;
@@ -285,7 +269,6 @@
   font-size: 1.4rem;
 }
 
-/* ===== Tarjetas "fantasma" mientras carga ===== */
 .esqueleto {
   min-height: 300px;
   background:
