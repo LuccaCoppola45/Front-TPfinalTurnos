@@ -38,6 +38,19 @@ export class Auth {
     return this.http.post(`${API_URL}/api/auth/register`, datos, { responseType: 'text' });
   }
 
+  /** Pide el mail con el enlace para restablecer la contraseña. El backend responde texto plano. */
+  solicitarRecuperacion(email: string): Observable<string> {
+    return this.http.post(`${API_URL}/api/auth/forgot-password`, { email }, { responseType: 'text' });
+  }
+
+  restablecerPassword(token: string, nuevaPassword: string): Observable<string> {
+    return this.http.post(
+      `${API_URL}/api/auth/reset-password`,
+      { token, nuevaPassword },
+      { responseType: 'text' },
+    );
+  }
+
   login(datos: LoginRequest): Observable<Usuario> {
     return this.http.post<LoginResponse>(`${API_URL}/api/auth/login`, datos).pipe(
       tap((respuesta) => {

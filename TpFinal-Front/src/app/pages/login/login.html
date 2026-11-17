@@ -57,6 +57,7 @@
         @if (form.controls.password.touched && form.controls.password.hasError('minlength')) {
           <p class="field-error">Debe tener al menos 6 caracteres.</p>
         }
+        <a class="olvide-link" routerLink="/olvide-password">¿Olvidaste tu contraseña?</a>
       </div>
 
       @if (error()) {

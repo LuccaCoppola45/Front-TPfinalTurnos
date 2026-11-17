@@ -9,6 +9,18 @@ export const routes: Routes = [
   { path: 'login', component: Login },
   { path: 'registro', component: Registro },
   {
+    path: 'olvide-password',
+    loadComponent: () =>
+      import('./pages/olvide-password/olvide-password').then((m) => m.OlvidePassword),
+  },
+  {
+    path: 'restablecer-password',
+    loadComponent: () =>
+      import('./pages/restablecer-password/restablecer-password').then(
+        (m) => m.RestablecerPassword,
+      ),
+  },
+  {
     path: 'confirmar-turno/:codigo',
     loadComponent: () =>
       import('./pages/confirmar-turno/confirmar-turno').then((m) => m.ConfirmarTurno),

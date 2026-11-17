@@ -240,6 +240,24 @@
   box-shadow: none;
 }
 
+.olvide-link {
+  align-self: flex-end;
+  color: #e8c987;
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.olvide-link:hover {
+  text-decoration: underline;
+}
+
+.olvide-link:focus-visible {
+  outline: 2px solid #e8c987;
+  outline-offset: 3px;
+  border-radius: 0.4rem;
+}
+
 .login-footer {
   text-align: center;
   color: #cbc4b7;
